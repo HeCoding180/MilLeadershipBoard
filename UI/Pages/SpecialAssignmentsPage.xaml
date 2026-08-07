@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="MilLeadershipBoard.UI.Pages.SpecialCommandsPage"
+    x:Class="MilLeadershipBoard.UI.Pages.SpecialAssignmentsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MilLeadershipBoard.UI.Pages"
@@ -11,7 +11,7 @@
     <Grid
         Padding="16,8,16,16">
         <TextBlock
-            x:Uid="SpecialCommandsPage_Title"
+            x:Uid="SpecialAssignmentsPage_Title"
             Style="{StaticResource TitleTextBlockStyle}"/>
     </Grid>
 </Page>

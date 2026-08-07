@@ -121,7 +121,7 @@
     <value>Breaks</value>
   </data>
   <data name="DailySchedulePage_Title.Text" xml:space="preserve">
-    <value>Daily Schedule</value>
+    <value>Daily Schedules</value>
   </data>
   <data name="LessionsPage_Title.Text" xml:space="preserve">
     <value>Lessions</value>
@@ -129,8 +129,8 @@
   <data name="LocationsPage_Title.Text" xml:space="preserve">
     <value>Locations</value>
   </data>
-  <data name="SpecialCommandsPage_Title.Text" xml:space="preserve">
-    <value>Spacial Orders</value>
+  <data name="SpecialAssignmentsPage_Title.Text" xml:space="preserve">
+    <value>Spacial Assignments</value>
   </data>
   <data name="WeeklySchedulePage_Title.Text" xml:space="preserve">
     <value>Weekly Schedule</value>
