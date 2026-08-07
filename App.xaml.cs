@@ -6,8 +6,10 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
+using MilLeadershipBoard.UI.Windows;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -35,6 +37,8 @@ namespace MilLeadershipBoard
         public App()
         {
             InitializeComponent();
+
+            UnhandledException += (s, e) => Debugger.Break();
         }
 
         /// <summary>

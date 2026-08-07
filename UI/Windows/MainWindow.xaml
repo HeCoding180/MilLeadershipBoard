@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="MilLeadershipBoard.UI.Windows.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MilLeadershipBoard.UI.Windows"
+    xmlns:pages="using:MilLeadershipBoard.UI.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="MilLeadershipBoard">
+
+    <Window.SystemBackdrop>
+        <MicaBackdrop Kind="BaseAlt"/>
+    </Window.SystemBackdrop>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TitleBar
+            Grid.Row="0"
+            Title="MilLeadershipBoard"/>
+
+        <Grid
+            Grid.Row="1"
+            ColumnSpacing="16"
+            Padding="16,8,16,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Locations -->
+            <Border
+                Grid.Column="0"
+                Style="{StaticResource DefaultDashboardTileStyle}">
+
+                <pages:LocationsPage/>
+            </Border>
+
+            <!-- Special Commands & Weekly Schedule -->
+            <Grid
+                Grid.Column="1"
+                RowSpacing="16">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Border
+                    Grid.Row="0"
+                    Style="{StaticResource DefaultDashboardTileStyle}">
+
+                    <pages:SpecialCommandsPage/>
+                </Border>
+
+                <Border
+                    Grid.Row="1"
+                    Style="{StaticResource DefaultDashboardTileStyle}">
+
+                    <pages:WeeklySchedulePage/>
+                </Border>
+            </Grid>
+
+            <!-- Lessions & Breaks -->
+            <Grid
+                Grid.Column="2"
+                RowSpacing="16">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Border
+                    Grid.Row="0"
+                    Style="{StaticResource DefaultDashboardTileStyle}">
+
+                    <pages:LessionsPage/>
+                </Border>
+
+                <Border
+                    Grid.Row="1"
+                    Style="{StaticResource DefaultDashboardTileStyle}">
+
+                    <pages:BreaksPage/>
+                </Border>
+            </Grid>
+            
+            <!-- Daily Schedule -->
+            <Border
+                Grid.Column="3"
+                Style="{StaticResource DefaultDashboardTileStyle}">
+
+                <pages:DailySchedulePage/>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

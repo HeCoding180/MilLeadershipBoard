@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MilLeadershipBoard">
+
+    <Style
+        x:Key="DefaultDashboardTileStyle"
+        TargetType="Border">
+
+        <Setter Property="Background" Value="{StaticResource CardBackgroundFillColorDefault}"/>
+        <Setter Property="CornerRadius" Value="8"/>
+    </Style>
+</ResourceDictionary>
