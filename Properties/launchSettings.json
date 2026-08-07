@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MilLeadershipBoard (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "MilLeadershipBoard (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
