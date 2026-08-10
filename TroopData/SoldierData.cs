@@ -37,6 +37,11 @@ namespace MilLeadershipBoard.TroopData
         /// </summary>
         private Guid _platoonId = Guid.Empty;
 
+        /// <summary>
+        /// Field containing the value of the <see cref="Rank"/> property.
+        /// </summary>
+        private string _rank = string.Empty;
+
         //   ---   Public Properties   ---
 
         /// <summary>
@@ -56,6 +61,7 @@ namespace MilLeadershipBoard.TroopData
 
                 OnPropertyChanged();
             }
+            get => _firstName;
         }
 
         /// <summary>
@@ -81,6 +87,7 @@ namespace MilLeadershipBoard.TroopData
 
                 OnPropertyChanged();
             }
+            get => _lastName;
         }
 
         /// <summary>
@@ -121,6 +128,25 @@ namespace MilLeadershipBoard.TroopData
                 OnPropertyChanged();
             }
             get => _platoonId;
+        }
+
+        /// <summary>
+        /// Sets or gets the military rank of this soldier.
+        /// </summary>
+        public string Rank
+        {
+            set
+            {
+                if (value == _rank)
+                {
+                    return;
+                }
+
+                _rank = value;
+
+                OnPropertyChanged();
+            }
+            get => _rank;
         }
 
         //   ---   Public Events   ---
