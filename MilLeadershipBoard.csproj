@@ -16,6 +16,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\DataTemplates.xaml" />
     <None Remove="Resources\Geometry.xaml" />
     <None Remove="Resources\Styles.xaml" />
     <None Remove="UI\Pages\BreaksPage.xaml" />
@@ -54,6 +55,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\Windows\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="UI\UserControl\TroopLocationUser.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Resources\DataTemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Resources\Geometry.xaml">

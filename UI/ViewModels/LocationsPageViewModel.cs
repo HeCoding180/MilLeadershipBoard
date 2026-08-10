@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace MilLeadershipBoard.UI.ViewModels
 {
-    internal class LocationsPageViewModel
+    internal class LocationsPageViewModel : IDisposable
     {
         //   ---   Private Fields   ---
 
@@ -42,6 +42,14 @@ namespace MilLeadershipBoard.UI.ViewModels
         private void AddLocation()
         {
 
+        }
+
+        //   ---   Public Methods   ---
+
+        /// <inheritdoc cref="IDisposable.Dispose"/>
+        void IDisposable.Dispose()
+        {
+            
         }
     }
 }

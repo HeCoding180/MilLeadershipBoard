@@ -23,9 +23,24 @@ namespace MilLeadershipBoard.UI.Pages
     /// </summary>
     public sealed partial class LocationsPage : Page
     {
+        //   ---   Constructors   ---
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="LocationsPage"/> class.
+        /// </summary>
         public LocationsPage()
         {
             InitializeComponent();
+        }
+
+        //   ---   Private Methods   ---
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is IDisposable viewModel)
+            {
+                viewModel.Dispose();
+            }
         }
     }
 }
