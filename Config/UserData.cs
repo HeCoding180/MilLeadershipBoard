@@ -1,5 +1,8 @@
-﻿using System;
+﻿using MilLeadershipBoard.TroopData;
+using MilLeadershipBoard.TroopData.Location;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -14,6 +17,16 @@ namespace MilLeadershipBoard.Config
 
         //   ---   Public Properties   ---
 
+        /// <summary>
+        /// Sets or gets an <see cref="ObservableCollection{T}"/> containing all <see cref="SoldierData"/> instances.
+        /// </summary>
+        public ObservableCollection<SoldierData> Soldiers { set; get; } = new ObservableCollection<SoldierData>();
+
+        /// <summary>
+        /// Sets or gets an <see cref="ObservableCollection{T}"/> containing all <see cref="SoldierLocation"/> instances.
+        /// </summary>
+        public ObservableCollection<SoldierLocation> Locations { set; get; } = new ObservableCollection<SoldierLocation>();
+
         //   ---   Public Events   ---
 
         /// <summary>
@@ -26,10 +39,10 @@ namespace MilLeadershipBoard.Config
         /// <summary>
         /// Method used to raise the <see cref="PropertyChanged"/> event.
         /// </summary>
-        /// <param name="name">Name of the property whose value has changed.</param>
-        private void OnPropertyChanged([CallerMemberName] string name = "")
+        /// <param name="propertyName">Name of the property whose value has changed.</param>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

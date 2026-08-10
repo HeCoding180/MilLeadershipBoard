@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MilLeadershipBoard.Config;
+using MilLeadershipBoard.Util;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -49,6 +51,12 @@ namespace MilLeadershipBoard.TroopData.Location
             get => _name;
         }
 
+        /// <summary>
+        /// Gets a <see cref="ObservableFilteredList{T}"/> containing all <see cref="SoldierData"/> instances whose location is at the current 
+        /// </summary>
+        [JsonIgnore]
+        public ObservableFilteredList<SoldierData> Soldiers;
+
         //   ---   Public Events   ---
 
         /// <inheritdoc cref="INotifyPropertyChanged.PropertyChanged"/>
@@ -63,6 +71,9 @@ namespace MilLeadershipBoard.TroopData.Location
         public SoldierLocation(string name)
         {
             _name = name;
+
+            // Create the filtered list
+            Soldiers = new ObservableFilteredList<SoldierData>(ConfigManager.UserData.Soldiers, (s) => s.LocationId == Id);
         }
 
         /// <summary>
@@ -71,10 +82,9 @@ namespace MilLeadershipBoard.TroopData.Location
         /// <param name="id">Identifier of the <see cref="SoldierLocation"/>.</param>
         /// <param name="name">Name of the troop location.</param>
         [JsonConstructor]
-        public SoldierLocation(Guid id, string name)
+        public SoldierLocation(Guid id, string name) : this(name)
         {
             Id = id;
-            _name = name;
         }
 
         //   ---   Protected Methods   ---

@@ -28,10 +28,10 @@ namespace MilLeadershipBoard.Config
         /// <summary>
         /// Method used to raise the <see cref="PropertyChanged"/> event.
         /// </summary>
-        /// <param name="name">Name of the property whose value has changed.</param>
-        private void OnPropertyChanged([CallerMemberName] string name = "")
+        /// <param name="propertyName">Name of the property whose value has changed.</param>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
