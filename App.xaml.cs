@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
+using MilLeadershipBoard.Config;
 using MilLeadershipBoard.UI.Windows;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,11 @@ namespace MilLeadershipBoard
     /// </summary>
     public partial class App : Application
     {
+        //   ---   Private Fields   ---
+
         private Window? _window;
+
+        //   ---   Constructors   ---
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -38,8 +43,21 @@ namespace MilLeadershipBoard
         {
             InitializeComponent();
 
+            // Unhandled exception debugging callback
             UnhandledException += (s, e) => Debugger.Break();
+
+            ConfigManager.LoadData();
         }
+
+        //   ---   Private Methods   ---
+
+        private void _window_Closed(object sender, WindowEventArgs args)
+        {
+            // Save config and user data
+            ConfigManager.SaveData();
+        }
+
+        //   ---   Protected Methods   ---
 
         /// <summary>
         /// Invoked when the application is launched.
@@ -48,6 +66,8 @@ namespace MilLeadershipBoard
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             _window = new MainWindow();
+            _window.Closed += _window_Closed;
+
             _window.Activate();
         }
     }
