@@ -150,11 +150,20 @@
   <data name="SoldierLocationView.MakeDefaultDialog.AcceptButtonText" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="SoldierLocationView.DeleteDialog.AcceptButtonText" xml:space="preserve">
+    <value>Yes</value>
+  </data>
   <data name="SoldierLocationView.MakeDefaultDialog.Content" xml:space="preserve">
     <value>Do you really want to make this location the default location?</value>
   </data>
+  <data name="SoldierLocationView.DeleteDialog.Content" xml:space="preserve">
+    <value>Do you really want to delete this location?</value>
+  </data>
   <data name="SoldierLocationView.MakeDefaultDialog.Title" xml:space="preserve">
     <value>Make Default?</value>
+  </data>
+  <data name="SoldierLocationView.DeleteDialog.Title" xml:space="preserve">
+    <value>Delete Location?</value>
   </data>
   <data name="SoldierLocationView.MakeDefaultFlyoutButton.Text" xml:space="preserve">
     <value>Make Default</value>
@@ -169,6 +178,9 @@
     <value>Weekly Schedule</value>
   </data>
   <data name="SoldierLocationView.MakeDefaultDialog.RejectButtonText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="SoldierLocationView.DeleteDialog.RejectButtonText" xml:space="preserve">
     <value>No</value>
   </data>
   <data name="SoldierLocationView.RenameDialog.Title" xml:space="preserve">

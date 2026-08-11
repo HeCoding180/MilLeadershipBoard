@@ -52,10 +52,10 @@ namespace MilLeadershipBoard.TroopData.Location
         }
 
         /// <summary>
-        /// Gets a <see cref="ObservableFilteredList{T}"/> containing all <see cref="SoldierData"/> instances whose location is at the current 
+        /// Gets a <see cref="ObservableFilteredList{T}"/> containing all <see cref="SoldierData"/> instances whose location is at this location.
         /// </summary>
         [JsonIgnore]
-        public ObservableFilteredList<SoldierData> Soldiers;
+        public ObservableFilteredList<SoldierData> Soldiers { get; }
 
         //   ---   Public Events   ---
 
@@ -73,7 +73,7 @@ namespace MilLeadershipBoard.TroopData.Location
             _name = name;
 
             // Create the filtered list
-            Soldiers = new ObservableFilteredList<SoldierData>(ConfigManager.UserData.Soldiers, (s) => s.LocationId == Id);
+            Soldiers = new ObservableFilteredList<SoldierData>(ConfigManager.UserData.Soldiers, (s) => s.LocationId == Id, nameof(SoldierData.LocationId));
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using MilLeadershipBoard.Config;
 using MilLeadershipBoard.Resources;
+using MilLeadershipBoard.TroopData;
 using MilLeadershipBoard.TroopData.Location;
 using System;
 using System.Collections.Generic;
@@ -141,7 +142,22 @@ namespace MilLeadershipBoard.UI.ViewModels
 
             ContentDialog dialog = new ContentDialog()
             {
+                Title = ResourceManager.GetString("SoldierLocationView/DeleteDialog/Title"),
+                Content = ResourceManager.GetString("SoldierLocationView/DeleteDialog/Content"),
+                DefaultButton = ContentDialogButton.Primary,
+                PrimaryButtonText = ResourceManager.GetString("SoldierLocationView/DeleteDialog/AcceptButtonText"),
+                PrimaryButtonCommand = new RelayCommand(() =>
+                {
+                    while (Location.Soldiers.Any())
+                    {
+                        // Unassign all soldiers from this location.
+                        Location.Soldiers[0].LocationId = ConfigManager.UserData.DefaultLocationId;
+                    }
 
+                    ConfigManager.UserData.Locations.Remove(Location);
+                }),
+                SecondaryButtonText = ResourceManager.GetString("SoldierLocationView/DeleteDialog/RejectButtonText"),
+                XamlRoot = XamlRoot
             };
 
             await dialog.ShowAsync();
