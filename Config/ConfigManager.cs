@@ -51,7 +51,7 @@ namespace MilLeadershipBoard.Config
         {
             get
             {
-                return ApplicationData.Current.LocalFolder.Path;
+                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MilLeadershipBoard");
             }
         }
 
@@ -150,7 +150,14 @@ namespace MilLeadershipBoard.Config
         /// </summary>
         private static void SaveSettingsFile()
         {
-            File.WriteAllText(Path.Combine(LocalFolderPath, SETTINGS_FILE_NAME), JsonSerializer.Serialize(Settings, serializerOptions));
+            string settingsFilePath = Path.Combine(LocalFolderPath, SETTINGS_FILE_NAME);
+
+            if (!File.Exists(settingsFilePath))
+            {
+                File.Create(settingsFilePath);
+            }
+
+            File.WriteAllText(settingsFilePath, JsonSerializer.Serialize(Settings, serializerOptions));
         }
 
         /// <summary>
@@ -158,7 +165,14 @@ namespace MilLeadershipBoard.Config
         /// </summary>
         private static void SaveUserDataFile()
         {
-            File.WriteAllText(Path.Combine(LocalFolderPath, USER_DATA_FILE_NAME), JsonSerializer.Serialize(UserData, serializerOptions));
+            string userDataFilePath = Path.Combine(LocalFolderPath, USER_DATA_FILE_NAME);
+
+            if (!File.Exists(userDataFilePath))
+            {
+                File.Create(userDataFilePath);
+            }
+
+            File.WriteAllText(userDataFilePath, JsonSerializer.Serialize(UserData, serializerOptions));
         }
     }
 }

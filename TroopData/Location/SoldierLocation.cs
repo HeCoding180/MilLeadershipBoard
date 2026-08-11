@@ -14,7 +14,7 @@ namespace MilLeadershipBoard.TroopData.Location
     /// <summary>
     /// Class used to specify a troop location that will be shown under the 
     /// </summary>
-    internal class SoldierLocation : IEquatable<SoldierLocation>, INotifyPropertyChanged
+    public class SoldierLocation : IEquatable<SoldierLocation>, INotifyPropertyChanged
     {
         //   ---   Private Fields   ---
 

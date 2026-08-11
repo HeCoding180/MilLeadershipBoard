@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using MilLeadershipBoard.TroopData.Location;
+using MilLeadershipBoard.UI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -54,11 +55,25 @@ namespace MilLeadershipBoard.UI.UserControls
             InitializeComponent();
         }
 
-        //   ---   Public Methods   ---
+        //   ---   Private Methods (static)   ---
 
         private static void OnItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            SoldierLocationView view = (SoldierLocationView)d;
+            if (d is not SoldierLocationView view)
+            {
+                return;
+            }
+        }
+
+        //   ---   Private Methods   ---
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (RootBorder.DataContext is SoldierLocationViewModel vm)
+            {
+                vm.XamlRoot = this.XamlRoot;
+                vm.Location = this.Location;
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MilLeadershipBoard.TroopData
 {
-    internal class PlatoonData : IEquatable<PlatoonData>, INotifyPropertyChanged
+    public class PlatoonData : IEquatable<PlatoonData>, INotifyPropertyChanged
     {
         //   ---   Private Fields   ---
 

@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using MilLeadershipBoard.UI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,6 +35,14 @@ namespace MilLeadershipBoard.UI.Pages
         }
 
         //   ---   Private Methods   ---
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is LocationsPageViewModel vm)
+            {
+                vm.XamlRoot = this.XamlRoot;
+            }
+        }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {

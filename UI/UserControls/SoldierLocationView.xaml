@@ -4,33 +4,67 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MilLeadershipBoard.UI.UserControls"
+    xmlns:vm="using:MilLeadershipBoard.UI.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="UserControl_Loaded">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        
-        <!-- Header Grid -->
+    <Border
+        x:Name="RootBorder"
+        Style="{StaticResource DefaultDashboardTileStyle}"
+        HorizontalAlignment="Stretch">
+
+        <Border.DataContext>
+            <vm:SoldierLocationViewModel/>
+        </Border.DataContext>
+
         <Grid
-            Grid.Row="0"
-            ColumnSpacing="8">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            
+            Padding="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header Grid -->
+            <Grid
+                Grid.Row="0"
+                ColumnSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource SubtitleTextBlockStyle}"
+                    Text="{Binding LocationName, Mode=OneWay}"
+                    Margin="8,0,0,2"/>
+
+                <Button
+                    Grid.Column="1"
+                    Command="{Binding RenameLocationCommand}">
+
+                    <SymbolIcon Symbol="Edit"/>
+                </Button>
+
+                <Button
+                    Grid.Column="2"
+                    Command="{Binding DeleteLocationCommand}">
+
+                    <SymbolIcon Symbol="Delete"/>
+                </Button>
+            </Grid>
+
+            <!-- Content ListView -->
+            <ListView
+                Grid.Row="1"
+                ItemTemplate="{StaticResource SimpleSoldierDataTemplate}"
+                ItemsSource="{x:Bind Location.Soldiers, Mode=OneWay}">
+
+            </ListView>
         </Grid>
-        
-        <!-- Content ListView -->
-        <ListView
-            ItemTemplate="{StaticResource SimpleSoldierDataTemplate}"
-            ItemsSource="{x:Bind Location.Soldiers, Mode=OneWay}">
-            
-        </ListView>
-    </Grid>
+    </Border>
 </UserControl>

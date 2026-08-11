@@ -20,7 +20,7 @@ namespace MilLeadershipBoard.Util
     /// such as Add, Remove, or item re-ordering directly.
     /// </summary>
     /// <typeparam name="T">The type of elements in the list.</typeparam>
-    internal class ObservableFilteredList<T> : IReadOnlyList<T>, INotifyCollectionChanged, INotifyPropertyChanged, IDisposable
+    public class ObservableFilteredList<T> : IReadOnlyList<T>, INotifyCollectionChanged, INotifyPropertyChanged, IDisposable
     {
         //   ---   Private Fields   ---
 

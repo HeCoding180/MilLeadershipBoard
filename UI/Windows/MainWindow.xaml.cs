@@ -28,6 +28,7 @@ namespace MilLeadershipBoard.UI.Windows
             InitializeComponent();
 
             this.ExtendsContentIntoTitleBar = true;
+            this.SetTitleBar(MainWindowTitleBar);
         }
     }
 }

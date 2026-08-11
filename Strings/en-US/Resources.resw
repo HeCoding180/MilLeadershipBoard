@@ -126,6 +126,21 @@
   <data name="LessionsPage_Title.Text" xml:space="preserve">
     <value>Lessions</value>
   </data>
+  <data name="LocationsPage.AddLocationDialog.NameTextBox.HeaderText" xml:space="preserve">
+    <value>Location Name</value>
+  </data>
+  <data name="LocationsPage.AddLocationDialog.NameTextBox.PlaceholderText" xml:space="preserve">
+    <value>Enter a name for the Location</value>
+  </data>
+  <data name="LocationsPage.AddLocationDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="LocationsPage.AddLocationDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="LocationsPage.AddLocationDialog.Title" xml:space="preserve">
+    <value>Add Location</value>
+  </data>
   <data name="LocationsPage_Title.Text" xml:space="preserve">
     <value>Locations</value>
   </data>

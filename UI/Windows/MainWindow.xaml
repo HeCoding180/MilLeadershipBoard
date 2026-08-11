@@ -22,6 +22,7 @@
 
         <TitleBar
             Grid.Row="0"
+            x:Name="MainWindowTitleBar"
             Title="MilLeadershipBoard"/>
 
         <Grid
@@ -39,7 +40,7 @@
             <Border
                 Grid.Column="0"
                 Style="{StaticResource DefaultDashboardTileStyle}">
-
+                
                 <pages:LocationsPage/>
             </Border>
             

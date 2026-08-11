@@ -5,4 +5,6 @@
     xmlns:local="using:MilLeadershipBoard">
 
     <x:Double x:Key="DashboardTileMargin">16</x:Double>
+
+    <CornerRadius x:Key="DefaultCardCornerRadius">8</CornerRadius>
 </ResourceDictionary>

@@ -13,7 +13,7 @@ namespace MilLeadershipBoard.TroopData
     /// <summary>
     /// Class used to store data about an individual solder.
     /// </summary>
-    internal class SoldierData : IEquatable<SoldierData>, INotifyPropertyChanged
+    public class SoldierData : IEquatable<SoldierData>, INotifyPropertyChanged
     {
         //   ---   Private Fields   ---
 

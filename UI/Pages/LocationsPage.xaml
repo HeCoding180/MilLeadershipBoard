@@ -4,10 +4,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MilLeadershipBoard.UI.Pages"
+    xmlns:config="using:MilLeadershipBoard.Config"
     xmlns:vm="using:MilLeadershipBoard.UI.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    Loaded="Page_Loaded"
     Unloaded="Page_Unloaded">
 
     <Page.DataContext>
@@ -23,7 +25,8 @@
         </Grid.RowDefinitions>
 
         <Grid
-            Grid.Row="0">
+            Grid.Row="0"
+            Margin="0,0,0,8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -36,22 +39,28 @@
 
             <Button
                 Grid.Column="1"
-                Command="{Binding AddLocationCommand}">
+                Command="{Binding AddLocationCommand}"
+                IsEnabled="True">
 
                 <SymbolIcon Symbol="Add"/>
             </Button>
         </Grid>
 
         <ListView
+            Grid.Row="1"
             CanReorderItems="True"
             AllowDrop="True"
             CanDragItems="True"
             SelectionMode="None"
-            ItemsSource="{StaticResource SoldierLocationDataTemplate}">
+            ItemTemplate="{StaticResource SoldierLocationDataTemplate}"
+            ItemsSource="{x:Bind config:ConfigManager.UserData.Locations, Mode=OneWay}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
             
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <ItemsWrapGrid Orientation="Vertical"/>
+                    <ItemsWrapGrid
+                        Orientation="Vertical"/>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
         </ListView>

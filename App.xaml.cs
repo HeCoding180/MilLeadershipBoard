@@ -45,8 +45,6 @@ namespace MilLeadershipBoard
 
             // Unhandled exception debugging callback
             UnhandledException += (s, e) => Debugger.Break();
-
-            ConfigManager.LoadData();
         }
 
         //   ---   Private Methods   ---
@@ -67,6 +65,8 @@ namespace MilLeadershipBoard
         {
             _window = new MainWindow();
             _window.Closed += _window_Closed;
+
+            ConfigManager.LoadData();
 
             _window.Activate();
         }
