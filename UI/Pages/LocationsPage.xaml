@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MilLeadershipBoard.UI.Pages"
     xmlns:config="using:MilLeadershipBoard.Config"
+    xmlns:ui="using:MilLeadershipBoard.UI"
     xmlns:vm="using:MilLeadershipBoard.UI.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -55,12 +56,16 @@
             ItemTemplate="{StaticResource SoldierLocationDataTemplate}"
             ItemsSource="{x:Bind config:ConfigManager.UserData.Locations, Mode=OneWay}"
             HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch">
+            VerticalAlignment="Stretch"
+            ScrollViewer.HorizontalScrollMode="Disabled"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            ScrollViewer.VerticalScrollMode="Disabled"
+            ScrollViewer.VerticalScrollBarVisibility="Disabled"
+            Margin="-4,0">
             
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <ItemsWrapGrid
-                        Orientation="Vertical"/>
+                    <ui:SequentialColumnPanel/>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
         </ListView>

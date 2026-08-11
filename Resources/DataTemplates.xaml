@@ -25,6 +25,8 @@
         x:Key="SoldierLocationDataTemplate"
         x:DataType="locationData:SoldierLocation">
         
-        <uc:SoldierLocationView Location="{Binding}"/>
+        <uc:SoldierLocationView
+            Location="{Binding}"
+            Margin="-12,4,-8,4"/>
     </DataTemplate>
 </ResourceDictionary>

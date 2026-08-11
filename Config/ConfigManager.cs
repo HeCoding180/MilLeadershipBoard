@@ -51,7 +51,7 @@ namespace MilLeadershipBoard.Config
         {
             get
             {
-                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MilLeadershipBoard");
+                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MilLeadershipBoard");
             }
         }
 

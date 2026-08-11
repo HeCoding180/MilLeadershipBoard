@@ -62,7 +62,8 @@
             <ListView
                 Grid.Row="1"
                 ItemTemplate="{StaticResource SimpleSoldierDataTemplate}"
-                ItemsSource="{x:Bind Location.Soldiers, Mode=OneWay}">
+                ItemsSource="{x:Bind Location.Soldiers, Mode=OneWay}"
+                MinHeight="40">
 
             </ListView>
         </Grid>
