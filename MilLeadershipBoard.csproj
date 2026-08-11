@@ -21,8 +21,10 @@
     <None Remove="Resources\Styles.xaml" />
     <None Remove="UI\Pages\BreaksPage.xaml" />
     <None Remove="UI\Pages\DailySchedulePage.xaml" />
+    <None Remove="UI\Pages\DashboardPage.xaml" />
     <None Remove="UI\Pages\LessionsPage.xaml" />
     <None Remove="UI\Pages\LocationsPage.xaml" />
+    <None Remove="UI\Pages\SoldiersPage.xaml" />
     <None Remove="UI\Pages\WeeklySchedulePage.xaml" />
   </ItemGroup>
 
@@ -55,6 +57,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\Windows\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="UI\Pages\SoldiersPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="UI\Pages\DashboardPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="UI\UserControl\TroopLocationUser.xaml">
