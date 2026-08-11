@@ -33,7 +33,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock
@@ -45,16 +44,38 @@
 
                 <Button
                     Grid.Column="1"
-                    Command="{Binding RenameLocationCommand}">
+                    Style="{StaticResource FlatButtonStyle}">
 
-                    <SymbolIcon Symbol="Edit"/>
-                </Button>
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem
+                                x:Name="MakeDefaultFlyoutItem"
+                                x:Uid="SoldierLocationView/MakeDefaultFlyoutButton"
+                                Command="{Binding MakeDefaultCommand}"/>
 
-                <Button
-                    Grid.Column="2"
-                    Command="{Binding DeleteLocationCommand}">
+                            <MenuFlyoutItem
+                                x:Name="RenameFlyoutItem"
+                                x:Uid="SoldierLocationView/RenameFlyoutButton"
+                                Command="{Binding RenameLocationCommand}">
 
-                    <SymbolIcon Symbol="Delete"/>
+                                <MenuFlyoutItem.Icon>
+                                    <SymbolIcon Symbol="Edit"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+
+                            <MenuFlyoutItem
+                                x:Name="DeleteFlyoutItem"
+                                x:Uid="SoldierLocationView/DeleteFlyoutButton"
+                                Command="{Binding DeleteLocationCommand}">
+
+                                <MenuFlyoutItem.Icon>
+                                    <SymbolIcon Symbol="Delete"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </Button.Flyout>
+
+                    <FontIcon Glyph="&#xE70D;"/>
                 </Button>
             </Grid>
 

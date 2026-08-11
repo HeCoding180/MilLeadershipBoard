@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using MilLeadershipBoard.Config;
+using MilLeadershipBoard.Resources;
 using MilLeadershipBoard.TroopData.Location;
 using System;
 using System.Collections.Generic;
@@ -26,6 +28,11 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// Field containing the value of the <see cref="Location"/> property.
         /// </summary>
         private SoldierLocation? _location = null;
+
+        /// <summary>
+        /// Field containing the value of the <see cref="MakeDefaultCommand"/> property.
+        /// </summary>
+        private RelayCommand _makeDefaultCommand;
 
         /// <summary>
         /// Field containing the value of the <see cref="RenameLocationCommand"/> property.
@@ -74,7 +81,24 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// <summary>
         /// Gets the name of this instance's <see cref="SoldierLocation"/> instance.
         /// </summary>
-        public string LocationName => Location?.Name ?? string.Empty;
+        public string LocationName
+        {
+            set
+            {
+                if (Location is null)
+                {
+                    return;
+                }
+
+                Location.Name = value;
+            }
+            get => Location?.Name ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="ICommand"/> instance that is used to make the current location the default location.
+        /// </summary>
+        public ICommand MakeDefaultCommand => _makeDefaultCommand;
 
         /// <summary>
         /// Gets the <see cref="ICommand"/> instance that is used for renaming a Location.
@@ -99,6 +123,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         public SoldierLocationViewModel()
         {
             _deleteLocationCommand = new RelayCommand(DeleteLocation);
+            _makeDefaultCommand = new RelayCommand(MakeDefault);
             _renameLocationCommand = new RelayCommand(RenameLocation);
         }
 
@@ -137,6 +162,35 @@ namespace MilLeadershipBoard.UI.ViewModels
         }
 
         /// <summary>
+        /// Method used to make this <see cref="SoldierLocation"/> the default location.
+        /// </summary>
+        private async void MakeDefault()
+        {
+            if (Location is null)
+            {
+                return;
+            }
+
+            if (ConfigManager.UserData.DefaultLocationId == Location.Id)
+            {
+                return;
+            }
+
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = ResourceManager.GetString("SoldierLocationView/MakeDefaultDialog/Title"),
+                Content = ResourceManager.GetString("SoldierLocationView/MakeDefaultDialog/Content"),
+                DefaultButton = ContentDialogButton.Primary,
+                PrimaryButtonText = ResourceManager.GetString("SoldierLocationView/MakeDefaultDialog/AcceptButtonText"),
+                PrimaryButtonCommand = new RelayCommand(() => ConfigManager.UserData.DefaultLocationId = Location.Id),
+                SecondaryButtonText = ResourceManager.GetString("SoldierLocationView/MakeDefaultDialog/RejectButtonText"),
+                XamlRoot = XamlRoot
+            };
+
+            await dialog.ShowAsync();
+        }
+
+        /// <summary>
         /// Method used to trigger the renaming of the <see cref="SoldierLocation"/> instance.
         /// </summary>
         private async void RenameLocation()
@@ -146,10 +200,26 @@ namespace MilLeadershipBoard.UI.ViewModels
                 return;
             }
 
+            TextBox nameTextBox = new TextBox()
+            {
+                Header = ResourceManager.GetString("LocationsPage/LocationNameTextBox/HeaderText"),
+                PlaceholderText = ResourceManager.GetString("LocationsPage/LocationNameTextBox/PlaceholderText"),
+                Text = LocationName
+            };
+
             ContentDialog dialog = new ContentDialog()
             {
-
+                Title = ResourceManager.GetString("SoldierLocationView/RenameDialog/Title"),
+                Content = nameTextBox,
+                DefaultButton = ContentDialogButton.Primary,
+                IsPrimaryButtonEnabled = !string.IsNullOrWhiteSpace(LocationName),
+                PrimaryButtonText = ResourceManager.GetString("SoldierLocationView/RenameDialog/AcceptButtonText"),
+                PrimaryButtonCommand = new RelayCommand(() => LocationName = nameTextBox.Text),
+                SecondaryButtonText = ResourceManager.GetString("SoldierLocationView/RenameDialog/RejectButtonText"),
+                XamlRoot = XamlRoot
             };
+
+            nameTextBox.TextChanged += (s, e) => dialog.IsPrimaryButtonEnabled = !string.IsNullOrWhiteSpace(nameTextBox.Text);
 
             await dialog.ShowAsync();
         }

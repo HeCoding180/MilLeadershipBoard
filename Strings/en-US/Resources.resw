@@ -126,10 +126,10 @@
   <data name="LessionsPage_Title.Text" xml:space="preserve">
     <value>Lessions</value>
   </data>
-  <data name="LocationsPage.AddLocationDialog.NameTextBox.HeaderText" xml:space="preserve">
+  <data name="LocationsPage.LocationNameTextBox.HeaderText" xml:space="preserve">
     <value>Location Name</value>
   </data>
-  <data name="LocationsPage.AddLocationDialog.NameTextBox.PlaceholderText" xml:space="preserve">
+  <data name="LocationsPage.LocationNameTextBox.PlaceholderText" xml:space="preserve">
     <value>Enter a name for the Location</value>
   </data>
   <data name="LocationsPage.AddLocationDialog.PrimaryButtonText" xml:space="preserve">
@@ -144,10 +144,40 @@
   <data name="LocationsPage_Title.Text" xml:space="preserve">
     <value>Locations</value>
   </data>
+  <data name="SoldierLocationView.DeleteFlyoutButton.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="SoldierLocationView.MakeDefaultDialog.AcceptButtonText" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="SoldierLocationView.MakeDefaultDialog.Content" xml:space="preserve">
+    <value>Do you really want to make this location the default location?</value>
+  </data>
+  <data name="SoldierLocationView.MakeDefaultDialog.Title" xml:space="preserve">
+    <value>Make Default?</value>
+  </data>
+  <data name="SoldierLocationView.MakeDefaultFlyoutButton.Text" xml:space="preserve">
+    <value>Make Default</value>
+  </data>
+  <data name="SoldierLocationView.RenameFlyoutButton.Text" xml:space="preserve">
+    <value>Rename</value>
+  </data>
   <data name="SpecialAssignmentsPage_Title.Text" xml:space="preserve">
     <value>Special Assignments</value>
   </data>
   <data name="WeeklySchedulePage_Title.Text" xml:space="preserve">
     <value>Weekly Schedule</value>
+  </data>
+  <data name="SoldierLocationView.MakeDefaultDialog.RejectButtonText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="SoldierLocationView.RenameDialog.Title" xml:space="preserve">
+    <value>Rename Location</value>
+  </data>
+  <data name="SoldierLocationView.RenameDialog.AcceptButtonText" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="SoldierLocationView.RenameDialog.RejectButtonText" xml:space="preserve">
+    <value>Cancel</value>
   </data>
 </root>

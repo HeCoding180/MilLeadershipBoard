@@ -11,4 +11,14 @@
         <Setter Property="Background" Value="{StaticResource CardBackgroundFillColorDefault}"/>
         <Setter Property="CornerRadius" Value="{StaticResource DefaultCardCornerRadius}"/>
     </Style>
+
+    <Style
+        x:Key="FlatButtonStyle"
+        TargetType="Button"
+        BasedOn="{StaticResource DefaultButtonStyle}">
+
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
 </ResourceDictionary>

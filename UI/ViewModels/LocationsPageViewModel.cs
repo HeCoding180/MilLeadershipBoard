@@ -58,24 +58,23 @@ namespace MilLeadershipBoard.UI.ViewModels
 
             TextBox nameTextBox = new TextBox()
             {
-                Header = ResourceManager.GetString("LocationsPage/AddLocationDialog/NameTextBox/HeaderText"),
-                PlaceholderText = ResourceManager.GetString("LocationsPage/AddLocationDialog/NameTextBox/PlaceholderText")
+                Header = ResourceManager.GetString("LocationsPage/LocationNameTextBox/HeaderText"),
+                PlaceholderText = ResourceManager.GetString("LocationsPage/LocationNameTextBox/PlaceholderText")
             };
-
-            RelayCommand createCommand = new RelayCommand(() => CreateLocation(nameTextBox.Text), () => !string.IsNullOrEmpty(nameTextBox.Text));
-
-            nameTextBox.TextChanged += (sender, args) => createCommand.NotifyCanExecuteChanged();
 
             ContentDialog dialog = new ContentDialog()
             {
                 Title = ResourceManager.GetString("LocationsPage/AddLocationDialog/Title"),
+                IsPrimaryButtonEnabled = false,
                 PrimaryButtonText = ResourceManager.GetString("LocationsPage/AddLocationDialog/PrimaryButtonText"),
+                PrimaryButtonCommand = new RelayCommand(() => CreateLocation(nameTextBox.Text)),
                 SecondaryButtonText = ResourceManager.GetString("LocationsPage/AddLocationDialog/SecondaryButtonText"),
                 Content = nameTextBox,
                 DefaultButton = ContentDialogButton.Primary,
-                PrimaryButtonCommand = createCommand,
                 XamlRoot = XamlRoot
             };
+
+            nameTextBox.TextChanged += (sender, args) => dialog.IsPrimaryButtonEnabled = !string.IsNullOrWhiteSpace(nameTextBox.Text);
 
             await dialog.ShowAsync();
         }
