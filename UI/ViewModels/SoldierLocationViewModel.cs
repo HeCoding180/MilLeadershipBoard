@@ -250,5 +250,15 @@ namespace MilLeadershipBoard.UI.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
+        //   ---   Public Methods   ---
+
+        /// <summary>
+        /// Method used to handle a <see cref="UIElement.Drop"/> event of the view's <see cref="ListView"/>.
+        /// </summary>
+        public void ItemDropped(object sender, DragEventArgs e)
+        {
+            
+        }
     }
 }

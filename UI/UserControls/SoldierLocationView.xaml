@@ -81,12 +81,15 @@
 
             <!-- Content ListView -->
             <ListView
+                x:Name="ContentListView"
                 Grid.Row="1"
                 ItemTemplate="{StaticResource SimpleSoldierDataTemplate}"
                 ItemsSource="{x:Bind Location.Soldiers, Mode=OneWay}"
-                MinHeight="40">
-
-            </ListView>
+                CanDrag="True"
+                CanReorderItems="False"
+                AllowDrop="True"
+                MinHeight="40"
+                Drop="ContentListView_Drop"/>
         </Grid>
     </Border>
 </UserControl>

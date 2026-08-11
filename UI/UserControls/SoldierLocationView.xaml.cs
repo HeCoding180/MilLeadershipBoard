@@ -75,5 +75,13 @@ namespace MilLeadershipBoard.UI.UserControls
                 vm.Location = this.Location;
             }
         }
+
+        private void ContentListView_Drop(object sender, DragEventArgs e)
+        {
+            if (RootBorder.DataContext is SoldierLocationViewModel vm)
+            {
+                vm.ItemDropped(sender, e);
+            }
+        }
     }
 }
