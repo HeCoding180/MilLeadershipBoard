@@ -4,12 +4,15 @@ using Microsoft.UI.Xaml.Controls;
 using MilLeadershipBoard.Config;
 using MilLeadershipBoard.Resources;
 using MilLeadershipBoard.TroopData.Location;
+using MilLeadershipBoard.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Foundation;
 
 namespace MilLeadershipBoard.UI.ViewModels
 {

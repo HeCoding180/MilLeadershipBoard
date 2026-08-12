@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MilLeadershipBoard.UI.Pages"
     xmlns:config="using:MilLeadershipBoard.Config"
-    xmlns:ui="using:MilLeadershipBoard.UI"
+    xmlns:controls="using:MilLeadershipBoard.UI.Controls"
     xmlns:vm="using:MilLeadershipBoard.UI.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -47,12 +47,12 @@
             </Button>
         </Grid>
 
-        <ListView
+        <controls:SequentialColumnListView
             Grid.Row="1"
-            CanReorderItems="True"
+            x:Name="LocationsListView"
+            CanReorderItems="False"
             AllowDrop="True"
             CanDragItems="True"
-            SelectionMode="None"
             ItemTemplate="{StaticResource SoldierLocationDataTemplate}"
             ItemsSource="{x:Bind config:ConfigManager.Config.Locations, Mode=TwoWay}"
             HorizontalAlignment="Stretch"
@@ -61,13 +61,6 @@
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             ScrollViewer.VerticalScrollMode="Disabled"
             ScrollViewer.VerticalScrollBarVisibility="Disabled"
-            Margin="-4,0">
-            
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ui:SequentialColumnPanel/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-        </ListView>
+            Margin="-4,0"/>
     </Grid>
 </Page>

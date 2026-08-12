@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 
-namespace MilLeadershipBoard.UI
+namespace MilLeadershipBoard.UI.Controls
 {
     /// <summary>
     /// A layout panel that arranges its children into sequential, top-to-bottom filled
@@ -33,7 +34,7 @@ namespace MilLeadershipBoard.UI
     /// large item counts may impact measure performance (see <see cref="MeasureOverride"/>).
     /// </para>
     /// </remarks>
-    public class SequentialColumnPanel : Panel
+    public class SequentialColumnPanel : Panel, IInsertionPanel
     {
         /// <summary>
         /// The number of columns used in the most recent successful layout pass.
@@ -59,6 +60,8 @@ namespace MilLeadershipBoard.UI
         /// <see langword="null"/> under the same conditions as <see cref="_assignment"/>.
         /// </summary>
         private List<double>? _heights;
+
+        //   ---   Protected Methods (overrides)   ---
 
         /// <inheritdoc/>
         /// <remarks>
@@ -209,6 +212,76 @@ namespace MilLeadershipBoard.UI
                 colY[col] += _heights[i];
             }
             return finalSize;
+        }
+
+        //   ---   Public Methods   ---
+
+        /// <summary>
+        /// Returns the indices of the items that the specified point falls between, for
+        /// use during a drag-and-drop reorder operation.
+        /// </summary>
+        /// <param name="position">
+        /// The pointer position, in this panel's coordinate space, of the item currently
+        /// being dragged.
+        /// </param>
+        /// <param name="first">
+        /// When this method returns, contains the index of the item immediately before
+        /// <paramref name="position"/>, or <c>-1</c> if <paramref name="position"/> is
+        /// before the first item in its column.
+        /// </param>
+        /// <param name="second">
+        /// When this method returns, contains the index of the item immediately after
+        /// <paramref name="position"/>, or <c>-1</c> if <paramref name="position"/> is
+        /// after the last item in its column.
+        /// </param>
+        /// <remarks>
+        /// Finds the column containing <paramref name="position"/>.X (clamping to the
+        /// nearest valid column if the pointer is outside the panel's horizontal bounds),
+        /// then walks that column's items top-to-bottom comparing against each item's
+        /// vertical midpoint to determine which pair of items <paramref name="position"/>
+        /// falls between.
+        /// </remarks>
+        public void GetInsertionIndexes(Point position, out int first, out int second)
+        {
+            first = -1;
+            second = -1;
+
+            if (_assignment is null || _heights is null || Children.Count == 0)
+                return;
+
+            // Determine which column the pointer is over.
+            int targetColumn = _columnWidth > 0
+                ? (int)(position.X / _columnWidth)
+                : 0;
+            targetColumn = Math.Clamp(targetColumn, 0, _columnCount - 1);
+
+            // Walk the children in that column top-to-bottom, tracking cumulative Y
+            // and the previous item's index within the column.
+            double y = 0;
+            int previousIndex = -1;
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                if (_assignment[i] != targetColumn)
+                    continue;
+
+                double height = _heights[i];
+                double midpoint = y + height / 2;
+
+                if (position.Y < midpoint)
+                {
+                    first = previousIndex;
+                    second = i;
+                    return;
+                }
+
+                previousIndex = i;
+                y += height;
+            }
+
+            // Pointer is below the last item in this column.
+            first = previousIndex;
+            second = -1;
         }
     }
 }

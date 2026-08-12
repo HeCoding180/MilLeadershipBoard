@@ -17,6 +17,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\DataTemplates.xaml" />
+    <None Remove="Resources\Generic.xaml" />
     <None Remove="Resources\Geometry.xaml" />
     <None Remove="Resources\Styles.xaml" />
     <None Remove="UI\Pages\BreaksPage.xaml" />
@@ -57,6 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\Windows\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Resources\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="UI\Pages\SoldiersPage.xaml">
