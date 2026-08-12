@@ -138,6 +138,7 @@ namespace MilLeadershipBoard.TroopData
         /// <summary>
         /// Gets an <see cref="ObservableCollection{T}"/> containing all <see cref="SoldierLocation"/> instances.
         /// </summary>
+        [JsonIgnore]
         public ObservableCollection<SoldierLocation> Locations => ConfigManager.Config.Locations;
 
         /// <summary>
