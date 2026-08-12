@@ -120,11 +120,6 @@ namespace MilLeadershipBoard.Config
 
             EnsureLocalFolder();
 
-            if (!File.Exists(configFilePath))
-            {
-                File.Create(configFilePath);
-            }
-
             File.WriteAllText(configFilePath, JsonSerializer.Serialize(Config, serializerOptions));
         }
     }
