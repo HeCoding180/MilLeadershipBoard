@@ -72,6 +72,9 @@ namespace MilLeadershipBoard.TroopData.Location
         {
             _name = name;
 
+            // Generate a new ID
+            Id = Guid.NewGuid();
+
             // Create the filtered list
             Soldiers = new ObservableFilteredList<SoldierData>(ConfigManager.Config.Soldiers, (s) => s.LocationId == Id, nameof(SoldierData.LocationId));
         }

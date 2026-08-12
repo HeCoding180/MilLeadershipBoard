@@ -54,7 +54,7 @@
             CanDragItems="True"
             SelectionMode="None"
             ItemTemplate="{StaticResource SoldierLocationDataTemplate}"
-            ItemsSource="{x:Bind config:ConfigManager.Config.Locations, Mode=OneWay}"
+            ItemsSource="{x:Bind config:ConfigManager.Config.Locations, Mode=TwoWay}"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             ScrollViewer.HorizontalScrollMode="Disabled"
