@@ -9,6 +9,44 @@
     mc:Ignorable="d">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <Grid
+            Grid.Row="0"
+            Padding="16,8"
+            ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MaxWidth="100" Width="*"/>
+                <ColumnDefinition MaxWidth="300" Width="2*"/>
+                <ColumnDefinition MaxWidth="300" Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox
+                x:Uid="SoldiersPage/RankTextBox"
+                Grid.Column="0"/>
+
+            <TextBox
+                x:Uid="SoldiersPage/LastNameTextBox"
+                Grid.Column="1"/>
+
+            <TextBox
+                x:Uid="SoldiersPage/FirstNameTextBox"
+                Grid.Column="2"/>
+
+            <Button
+                x:Uid="SoldiersPage/AddButton"
+                Grid.Column="4"/>
+        </Grid>
+
+        <ListView
+            Grid.Row="1">
+            
+            
+        </ListView>
     </Grid>
 </Page>

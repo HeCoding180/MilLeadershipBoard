@@ -192,4 +192,16 @@
   <data name="SoldierLocationView.RenameDialog.RejectButtonText" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="SoldiersPage.FirstNameTextBox.PlaceholderText" xml:space="preserve">
+    <value>Enter First Name</value>
+  </data>
+  <data name="SoldiersPage.LastNameTextBox.PlaceholderText" xml:space="preserve">
+    <value>Enter Last Name</value>
+  </data>
+  <data name="SoldiersPage.RankTextBox.PlaceholderText" xml:space="preserve">
+    <value>Rank</value>
+  </data>
+  <data name="SoldiersPage.AddButton.Content" xml:space="preserve">
+    <value>Add</value>
+  </data>
 </root>
