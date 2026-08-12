@@ -23,6 +23,8 @@ namespace MilLeadershipBoard.TroopData.Location
         /// </summary>
         private string _name;
 
+        private Lazy<ObservableFilteredList<SoldierData>> _soldiers;
+
         //   ---   Public Properties   ---
 
         /// <summary>
@@ -55,7 +57,7 @@ namespace MilLeadershipBoard.TroopData.Location
         /// Gets a <see cref="ObservableFilteredList{T}"/> containing all <see cref="SoldierData"/> instances whose location is at this location.
         /// </summary>
         [JsonIgnore]
-        public ObservableFilteredList<SoldierData> Soldiers { get; }
+        public ObservableFilteredList<SoldierData> Soldiers => _soldiers.Value;
 
         //   ---   Public Events   ---
 
@@ -75,8 +77,9 @@ namespace MilLeadershipBoard.TroopData.Location
             // Generate a new ID
             Id = Guid.NewGuid();
 
-            // Create the filtered list
-            Soldiers = new ObservableFilteredList<SoldierData>(ConfigManager.Config.Soldiers, (s) => s.LocationId == Id, nameof(SoldierData.LocationId));
+            // Create the lazy filtered list (needs to be lazy, because on creation through deserialization the ConfigManager.Config.Soldiers isn't loaded yet)
+            _soldiers = new Lazy<ObservableFilteredList<SoldierData>>(()
+                => new ObservableFilteredList<SoldierData>(ConfigManager.Config.Soldiers, (s) => s.LocationId == Id, nameof(SoldierData.LocationId)));
         }
 
         /// <summary>

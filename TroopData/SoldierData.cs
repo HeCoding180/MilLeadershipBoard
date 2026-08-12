@@ -1,6 +1,8 @@
-﻿using MilLeadershipBoard.TroopData.Location;
+﻿using MilLeadershipBoard.Config;
+using MilLeadershipBoard.TroopData.Location;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -91,6 +93,19 @@ namespace MilLeadershipBoard.TroopData
         }
 
         /// <summary>
+        /// Sets or gets the <see cref="SoldierLocation"/> of this soldier.
+        /// </summary>
+        [JsonIgnore]
+        public SoldierLocation? Location
+        {
+            set
+            {
+                LocationId = value?.Id ?? Guid.Empty;
+            }
+            get => ConfigManager.Config.Locations.FirstOrDefault(l => l.Id == LocationId);
+        }
+
+        /// <summary>
         /// Sets or gets the <see cref="Guid"/> of the location this soldier is currently at.
         /// </summary>
         [JsonPropertyName("LocationId")]
@@ -104,11 +119,26 @@ namespace MilLeadershipBoard.TroopData
                 }
 
                 _locationId = value;
+
+                Location?.Soldiers.ReevaluateItem(this);
                 
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(Location));
+                OnPropertyChanged(nameof(LocationName));
             }
             get => _locationId;
         }
+
+        /// <summary>
+        /// Gets the name of the <see cref="SoldierLocation"/> this instance is assigned to.
+        /// </summary>
+        [JsonIgnore]
+        public string LocationName => Location?.Name ?? "Unassigned";
+
+        /// <summary>
+        /// Gets an <see cref="ObservableCollection{T}"/> containing all <see cref="SoldierLocation"/> instances.
+        /// </summary>
+        public ObservableCollection<SoldierLocation> Locations => ConfigManager.Config.Locations;
 
         /// <summary>
         /// Sets or gets the <see cref="Guid"/> of the platoon this soldier is part of.
@@ -165,6 +195,8 @@ namespace MilLeadershipBoard.TroopData
         {
             _firstName = firstName;
             _lastName = lastName;
+
+            Id = Guid.NewGuid();
         }
 
         /// <summary>

@@ -53,6 +53,7 @@
             CanReorderItems="False"
             AllowDrop="True"
             CanDragItems="True"
+            SelectionMode="None"
             ItemTemplate="{StaticResource SoldierLocationDataTemplate}"
             ItemsSource="{x:Bind config:ConfigManager.Config.Locations, Mode=TwoWay}"
             HorizontalAlignment="Stretch"
@@ -61,6 +62,7 @@
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             ScrollViewer.VerticalScrollMode="Disabled"
             ScrollViewer.VerticalScrollBarVisibility="Disabled"
-            Margin="-4,0"/>
+            Margin="-4,0">
+        </controls:SequentialColumnListView>
     </Grid>
 </Page>

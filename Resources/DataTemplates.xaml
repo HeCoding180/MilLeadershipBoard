@@ -29,4 +29,10 @@
             Location="{Binding}"
             Margin="-12,4,-8,4"/>
     </DataTemplate>
+
+    <DataTemplate
+        x:Key="SoldierLocationItemDataTemplate"
+        x:DataType="locationData:SoldierLocation">
+        <TextBlock Text="{Binding Name, FallbackValue='Unassigned'}"/>
+    </DataTemplate>
 </ResourceDictionary>

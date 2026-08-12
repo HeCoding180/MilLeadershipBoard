@@ -204,4 +204,19 @@
   <data name="SoldiersPage.AddButton.Content" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="SoldiersPage.SoldiersTable.RankColumn.Header" xml:space="preserve">
+    <value>Rank</value>
+  </data>
+  <data name="SoldiersPage.SoldiersTable.FirstNameColumn.Header" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="SoldiersPage.SoldiersTable.LastNameColumn.Header" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="SoldiersPage.SoldiersTable.LocationColumn.Header" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="SoldiersPage.SoldiersTable.LocationCellComboBox.PlaceholderText" xml:space="preserve">
+    <value>Unassigned</value>
+  </data>
 </root>
