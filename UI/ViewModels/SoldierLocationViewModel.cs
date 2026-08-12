@@ -151,10 +151,10 @@ namespace MilLeadershipBoard.UI.ViewModels
                     while (Location.Soldiers.Any())
                     {
                         // Unassign all soldiers from this location.
-                        Location.Soldiers[0].LocationId = ConfigManager.UserData.DefaultLocationId;
+                        Location.Soldiers[0].LocationId = ConfigManager.Config.DefaultLocationId;
                     }
 
-                    ConfigManager.UserData.Locations.Remove(Location);
+                    ConfigManager.Config.Locations.Remove(Location);
                 }),
                 SecondaryButtonText = ResourceManager.GetString("SoldierLocationView/DeleteDialog/RejectButtonText"),
                 XamlRoot = XamlRoot
@@ -187,7 +187,7 @@ namespace MilLeadershipBoard.UI.ViewModels
                 return;
             }
 
-            if (ConfigManager.UserData.DefaultLocationId == Location.Id)
+            if (ConfigManager.Config.DefaultLocationId == Location.Id)
             {
                 return;
             }
@@ -198,7 +198,7 @@ namespace MilLeadershipBoard.UI.ViewModels
                 Content = ResourceManager.GetString("SoldierLocationView/MakeDefaultDialog/Content"),
                 DefaultButton = ContentDialogButton.Primary,
                 PrimaryButtonText = ResourceManager.GetString("SoldierLocationView/MakeDefaultDialog/AcceptButtonText"),
-                PrimaryButtonCommand = new RelayCommand(() => ConfigManager.UserData.DefaultLocationId = Location.Id),
+                PrimaryButtonCommand = new RelayCommand(() => ConfigManager.Config.DefaultLocationId = Location.Id),
                 SecondaryButtonText = ResourceManager.GetString("SoldierLocationView/MakeDefaultDialog/RejectButtonText"),
                 XamlRoot = XamlRoot
             };

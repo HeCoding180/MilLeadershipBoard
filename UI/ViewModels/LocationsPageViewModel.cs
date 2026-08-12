@@ -86,7 +86,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         private void CreateLocation(string name)
         {
             SoldierLocation location = new SoldierLocation(name);
-            ConfigManager.UserData.Locations.Add(location);
+            ConfigManager.Config.Locations.Add(location);
         }
 
         //   ---   Public Methods   ---

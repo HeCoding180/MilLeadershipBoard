@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MilLeadershipBoard.Config
 {
-    internal class UserData : INotifyPropertyChanged
+    internal class ConfigData : INotifyPropertyChanged
     {
         //   ---   Private Fields   ---
 

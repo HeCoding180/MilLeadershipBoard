@@ -17,12 +17,7 @@ namespace MilLeadershipBoard.Config
         /// <summary>
         /// Constant containing the file name of the user data file.
         /// </summary>
-        private const string USER_DATA_FILE_NAME = "UserData.json";
-
-        /// <summary>
-        /// Constant containing the file name of the settings file.
-        /// </summary>
-        private const string SETTINGS_FILE_NAME = "Settings.json";
+        private const string CONFIG_DATA_FILE_NAME = "Config.json";
 
         /// <summary>
         /// Gets a <see cref="JsonSerializerOptions"/> instance containing the serializer options used for generating the config file.
@@ -35,14 +30,9 @@ namespace MilLeadershipBoard.Config
         //   ---   Public Properties   ---
 
         /// <summary>
-        /// Sets or gets the <see cref="SettingsData"/> instance that contains user data.
+        /// Sets or gets the <see cref="ConfigData"/> instance that contains user data.
         /// </summary>
-        public static SettingsData Settings { set; get; } = new SettingsData();
-
-        /// <summary>
-        /// Sets or gets the <see cref="Config.UserData"/> instance that contains user data.
-        /// </summary>
-        public static UserData UserData { set; get; } = new UserData();
+        public static ConfigData Config { set; get; } = new ConfigData();
 
         /// <summary>
         /// Gets the <see cref="StorageFolder"/> instance of the local folder.
@@ -63,8 +53,7 @@ namespace MilLeadershipBoard.Config
         /// <returns>An awaitable task representing the operation.</returns>
         public static void LoadData()
         {
-            LoadSettingsFile();
-            LoadUserDataFile();
+            LoadConfigFile();
         }
 
         /// <summary>
@@ -73,31 +62,41 @@ namespace MilLeadershipBoard.Config
         /// <returns>An awaitable task representing the operation.</returns>
         public static void SaveData()
         {
-            SaveSettingsFile();
-            SaveUserDataFile();
+            SaveConfigFile();
         }
 
         //   ---   Private Methods   ---
 
         /// <summary>
-        /// Method used to load the contents of the settings file.
+        /// Method used to ensure that the local folder exists.
+        /// </summary>
+        private static void EnsureLocalFolder()
+        {
+            if (!Directory.Exists(LocalFolderPath))
+            {
+                Directory.CreateDirectory(LocalFolderPath);
+            }
+        }
+
+        /// <summary>
+        /// Method used to load the contents of the config file.
         /// </summary>
         /// <returns>An awaitable task representing the operation.</returns>
-        private static void LoadSettingsFile()
+        private static void LoadConfigFile()
         {
             try
             {
-                if (!File.Exists(Path.Combine(LocalFolderPath, SETTINGS_FILE_NAME)))
+                if (!File.Exists(Path.Combine(LocalFolderPath, CONFIG_DATA_FILE_NAME)))
                 {
                     // File does not exist, return
                     return;
                 }
 
-                SettingsData? settings = JsonSerializer.Deserialize<SettingsData>(File.ReadAllText(Path.Combine(LocalFolderPath, SETTINGS_FILE_NAME)));
+                ConfigData? config = JsonSerializer.Deserialize<ConfigData>(File.ReadAllText(Path.Combine(LocalFolderPath, CONFIG_DATA_FILE_NAME)));
 
-                if (settings is not null)
+                if (config is not null)
                 {
-                    Settings = settings;
+                    Config = config;
                 }
             }
             catch (FileNotFoundException)
@@ -113,66 +112,20 @@ namespace MilLeadershipBoard.Config
         }
 
         /// <summary>
-        /// Method used to load the contents of the user data file.
+        /// Method used to save the data of the <see cref="Config"/> property.
         /// </summary>
-        /// <returns>An awaitable task representing the operation.</returns>
-        private static void LoadUserDataFile()
+        private static void SaveConfigFile()
         {
-            try
-            {
-                if (!File.Exists(Path.Combine(LocalFolderPath, USER_DATA_FILE_NAME)))
-                {
-                    // File does not exist, return
-                    return;
-                }
+            string configFilePath = Path.Combine(LocalFolderPath, CONFIG_DATA_FILE_NAME);
 
-                UserData? userData = JsonSerializer.Deserialize<UserData>(File.ReadAllText(Path.Combine(LocalFolderPath, USER_DATA_FILE_NAME)));
+            EnsureLocalFolder();
 
-                if (userData is not null)
-                {
-                    UserData = userData;
-                }
-            }
-            catch (FileNotFoundException)
+            if (!File.Exists(configFilePath))
             {
-                // File does not exist
-                return;
-            }
-            catch (JsonException)
-            {
-                // JSON deserialization failed
-                return;
-            }
-        }
-
-        /// <summary>
-        /// Method used to save the data of the <see cref="Settings"/> property.
-        /// </summary>
-        private static void SaveSettingsFile()
-        {
-            string settingsFilePath = Path.Combine(LocalFolderPath, SETTINGS_FILE_NAME);
-
-            if (!File.Exists(settingsFilePath))
-            {
-                File.Create(settingsFilePath);
+                File.Create(configFilePath);
             }
 
-            File.WriteAllText(settingsFilePath, JsonSerializer.Serialize(Settings, serializerOptions));
-        }
-
-        /// <summary>
-        /// Method used to save the data of the <see cref="UserData"/> property.
-        /// </summary>
-        private static void SaveUserDataFile()
-        {
-            string userDataFilePath = Path.Combine(LocalFolderPath, USER_DATA_FILE_NAME);
-
-            if (!File.Exists(userDataFilePath))
-            {
-                File.Create(userDataFilePath);
-            }
-
-            File.WriteAllText(userDataFilePath, JsonSerializer.Serialize(UserData, serializerOptions));
+            File.WriteAllText(configFilePath, JsonSerializer.Serialize(Config, serializerOptions));
         }
     }
 }
