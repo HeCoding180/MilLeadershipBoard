@@ -74,13 +74,13 @@
                 x:Uid="BreaksPage/AddTenMinButton"
                 Grid.Column="1"
                 Command="{Binding Add10MinCommand}"
-                HorizontalAlignment="Right"/>
+                HorizontalAlignment="Stretch"/>
 
             <Button
                 x:Uid="BreaksPage/AddFifteenMinButton"
                 Grid.Column="2"
                 Command="{Binding Add15MinCommand}"
-                HorizontalAlignment="Right"/>
+                HorizontalAlignment="Stretch"/>
         </Grid>
     </Grid>
 </Page>
