@@ -16,12 +16,34 @@ namespace MilLeadershipBoard.Config
     {
         //   ---   Private Fields   ---
 
+        private int _breaksCounter = 0;
+
         /// <summary>
         /// Field containing the value of the <see cref="DefaultLocation"/> property.
         /// </summary>
         private Guid _defaultLocationId = Guid.Empty;
 
         //   ---   Public Properties   ---
+
+        /// <summary>
+        /// Sets or gets the active break duration.
+        /// </summary>
+        [JsonPropertyName("BreaksCounter")]
+        public int BreaksCounter
+        {
+            set
+            {
+                if (value == _breaksCounter)
+                {
+                    return;
+                }
+
+                _breaksCounter = value;
+
+                OnPropertyChanged();
+            }
+            get => _breaksCounter;
+        }
 
         /// <summary>
         /// Sets or gets the <see cref="Guid"/> of the default <see cref="SoldierLocation"/> for new <see cref="SoldierData"/> instances

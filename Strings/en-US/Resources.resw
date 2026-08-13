@@ -219,4 +219,19 @@
   <data name="SoldiersPage.SoldiersTable.LocationCellComboBox.PlaceholderText" xml:space="preserve">
     <value>Unassigned</value>
   </data>
+  <data name="BreaksPage.BreaksCounter.MinutesText" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="BreaksPage.AddBreakHeaderTextBlock.Text" xml:space="preserve">
+    <value>Add Break</value>
+  </data>
+  <data name="BreaksPage.AddFiveMinButton.Content" xml:space="preserve">
+    <value>5 min</value>
+  </data>
+  <data name="BreaksPage.AddTenMinButton.Content" xml:space="preserve">
+    <value>10 min</value>
+  </data>
+  <data name="BreaksPage.AddFifteenMinButton.Content" xml:space="preserve">
+    <value>15 min</value>
+  </data>
 </root>

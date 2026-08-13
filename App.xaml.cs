@@ -41,6 +41,9 @@ namespace MilLeadershipBoard
         /// </summary>
         public App()
         {
+            // Load config data
+            ConfigManager.LoadData();
+
             InitializeComponent();
 
             // Unhandled exception debugging callback
@@ -65,8 +68,6 @@ namespace MilLeadershipBoard
         {
             _window = new MainWindow();
             _window.Closed += _window_Closed;
-
-            ConfigManager.LoadData();
 
             _window.Activate();
         }
