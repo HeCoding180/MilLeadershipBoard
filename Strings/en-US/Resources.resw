@@ -234,4 +234,10 @@
   <data name="BreaksPage.AddFifteenMinButton.Content" xml:space="preserve">
     <value>15 min</value>
   </data>
+  <data name="WeeklySchedulePage.ScheduleSelectionTextBlock.Text" xml:space="preserve">
+    <value>Select Schedule...</value>
+  </data>
+  <data name="WeeklySchedulePage.SelectScheduleStoragePicker.CommitButtonText" xml:space="preserve">
+    <value>Open</value>
+  </data>
 </root>
