@@ -40,6 +40,16 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         private CancellationTokenSource _imageLoadingCancellationTokenSource = new CancellationTokenSource();
 
+        /// <summary>
+        /// Field containing the value of the <see cref="WeeklyScheduleAImageLoaded"/> property.
+        /// </summary>
+        private bool _weeklyScheduleAImageLoaded = false;
+
+        /// <summary>
+        /// Field containing the value of the <see cref="WeeklyScheduleBImageLoaded"/> property.
+        /// </summary>
+        private bool _weeklyScheduleBImageLoaded = false;
+
         //   ---   Private Properties   ---
 
         /// <summary>
@@ -57,19 +67,52 @@ namespace MilLeadershipBoard.UI.ViewModels
         //   ---   Public Properties   ---
 
         /// <summary>
-        /// Sets or gets the <see cref="DispatcherQueue"/> of the page this ViewModel is part of.
-        /// </summary>
-        public DispatcherQueue? PageDispatcherQueue { set; get; }
-
-        /// <summary>
         /// Gets the <see cref="BitmapImage"/> for the weekly schedule A.
         /// </summary>
-        public BitmapImage? WeeklyScheduleAImage { private set; get; }
+        public BitmapImage WeeklyScheduleAImage { get; } = new BitmapImage();
+
+        /// <summary>
+        /// Gets if the <see cref="WeeklyScheduleAImage"/> is loaded.
+        /// </summary>
+        public bool WeeklyScheduleAImageLoaded
+        {
+            private set
+            {
+                if (value == _weeklyScheduleAImageLoaded)
+                {
+                    return;
+                }
+
+                _weeklyScheduleAImageLoaded = value;
+
+                OnPropertyChanged();
+            }
+            get => _weeklyScheduleAImageLoaded;
+        }
 
         /// <summary>
         /// Gets the <see cref="BitmapImage"/> for the weekly schedule B.
         /// </summary>
-        public BitmapImage? WeeklyScheduleBImage { private set; get; }
+        public BitmapImage WeeklyScheduleBImage { get; } = new BitmapImage();
+
+        /// <summary>
+        /// Gets if the <see cref="WeeklyScheduleAImage"/> is loaded.
+        /// </summary>
+        public bool WeeklyScheduleBImageLoaded
+        {
+            private set
+            {
+                if (value == _weeklyScheduleBImageLoaded)
+                {
+                    return;
+                }
+
+                _weeklyScheduleBImageLoaded = value;
+
+                OnPropertyChanged();
+            }
+            get => _weeklyScheduleBImageLoaded;
+        }
 
         //   ---   Public Events   ---
 
@@ -85,6 +128,11 @@ namespace MilLeadershipBoard.UI.ViewModels
         {
             ConfigManager.Config.PropertyChanged += Config_PropertyChanged;
             ResourceManager.DatedResourceChanged += ResourceManager_DatedResourceChanged;
+
+            WeeklyScheduleAImage.ImageOpened += WeeklyScheduleAImage_ImageOpened;
+            WeeklyScheduleAImage.ImageFailed += WeeklyScheduleAImage_ImageFailed;
+            WeeklyScheduleBImage.ImageOpened += WeeklyScheduleBImage_ImageOpened;
+            WeeklyScheduleBImage.ImageFailed += WeeklyScheduleBImage_ImageFailed;
         }
 
         //   ---   Private Methods (static)   ---
@@ -101,7 +149,14 @@ namespace MilLeadershipBoard.UI.ViewModels
                 CommitButtonText = ResourceManager.GetString("WeeklySchedulePage/SelectScheduleStoragePicker/CommitButtonText")
             };
 
-            return (await picker.PickSingleFileAsync()).Path;
+            PickFileResult? result = await picker.PickSingleFileAsync();
+
+            if (result is null)
+            {
+                return string.Empty;
+            }
+
+            return result.Path;
         }
 
         //   ---   Private Methods   ---
@@ -118,46 +173,22 @@ namespace MilLeadershipBoard.UI.ViewModels
             }
         }
 
-        private void OnWeeklyScheduleALoadingTaskCompleted(Task<BitmapImage?> loadingTask)
+        private void OnWeeklyScheduleALoadingTaskCompleted(Task loadingTask)
         {
             if (!loadingTask.IsCompletedSuccessfully)
             {
                 // TODO: Implement exception handling
                 return;
             }
-
-            BitmapImage? image = loadingTask.Result;
-
-            if (image is null)
-            {
-                return;
-            }
-
-            WeeklyScheduleAImage = image;
-
-            // Dispatch the PropertyChanged event invocation to the page's dispatcher queue
-            PageDispatcherQueue?.TryEnqueue(() => OnPropertyChanged(nameof(WeeklyScheduleAImage)));
         }
 
-        private void OnWeeklyScheduleBLoadingTaskCompleted(Task<BitmapImage?> loadingTask)
+        private void OnWeeklyScheduleBLoadingTaskCompleted(Task loadingTask)
         {
             if (!loadingTask.IsCompletedSuccessfully)
             {
                 // TODO: Implement exception handling
                 return;
             }
-
-            BitmapImage? image = loadingTask.Result;
-
-            if (image is null)
-            {
-                return;
-            }
-
-            WeeklyScheduleBImage = image;
-
-            // Dispatch the PropertyChanged event invocation to the page's dispatcher queue
-            PageDispatcherQueue?.TryEnqueue(() => OnPropertyChanged(nameof(WeeklyScheduleBImage)));
         }
 
         /// <summary>
@@ -165,13 +196,6 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         private void ResourceManager_DatedResourceChanged(DatedResourceChangedEventArgs args)
         {
-            if (PageDispatcherQueue is null)
-            {
-                // No page dispatcher queue set
-                // Return as the result cannot be processed.
-                return;
-            }
-
             switch (args.ResourceName)
             {
                 case WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME:
@@ -185,20 +209,60 @@ namespace MilLeadershipBoard.UI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Method used to try and load the image for the <see cref="WeeklyScheduleAImage"/>
+        /// </summary>
         private void TryLoadWeeklyScheduleAImage()
         {
-            Task<BitmapImage?> loadingTask = Task.Run(() => ResourceManager.TryLoadDatedImageResource(WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME, CurrentWeeklyScheduleDate),
-                                                      imageLoadingCancellationToken);
+            Task loadingTask = ResourceManager.TryLoadDatedImageResource(WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME,
+                                                                         CurrentWeeklyScheduleDate,
+                                                                         WeeklyScheduleAImage);
 
             loadingTask.ContinueWith(OnWeeklyScheduleALoadingTaskCompleted);
         }
 
+        /// <summary>
+        /// Method used to try and load the image for the <see cref="WeeklyScheduleBImage"/>
+        /// </summary>
         private void TryLoadWeeklyScheduleBImage()
         {
-            Task<BitmapImage?> loadingTask = Task.Run(() => ResourceManager.TryLoadDatedImageResource(WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME, CurrentWeeklyScheduleDate),
-                                                      imageLoadingCancellationToken);
+            Task loadingTask = ResourceManager.TryLoadDatedImageResource(WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME,
+                                                                         CurrentWeeklyScheduleDate,
+                                                                         WeeklyScheduleBImage);
 
-            loadingTask.ContinueWith(OnWeeklyScheduleALoadingTaskCompleted);
+            loadingTask.ContinueWith(OnWeeklyScheduleBLoadingTaskCompleted);
+        }
+
+        /// <summary>
+        /// Callback method for the <see cref="BitmapImage.ImageFailed"/> event of the <see cref="WeeklyScheduleAImage"/> instance.
+        /// </summary>
+        private void WeeklyScheduleAImage_ImageFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            WeeklyScheduleAImageLoaded = false;
+        }
+
+        /// <summary>
+        /// Callback method for the <see cref="BitmapImage.ImageOpened"/> event of the <see cref="WeeklyScheduleAImage"/> instance.
+        /// </summary>
+        private void WeeklyScheduleAImage_ImageOpened(object sender, RoutedEventArgs e)
+        {
+            WeeklyScheduleAImageLoaded = true;
+        }
+
+        /// <summary>
+        /// Callback method for the <see cref="BitmapImage.ImageFailed"/> event of the <see cref="WeeklyScheduleBImage"/> instance.
+        /// </summary>
+        private void WeeklyScheduleBImage_ImageFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            WeeklyScheduleBImageLoaded = false;
+        }
+
+        /// <summary>
+        /// Callback method for the <see cref="BitmapImage.ImageOpened"/> event of the <see cref="WeeklyScheduleBImage"/> instance.
+        /// </summary>
+        private void WeeklyScheduleBImage_ImageOpened(object sender, RoutedEventArgs e)
+        {
+            WeeklyScheduleBImageLoaded = true;
         }
 
         //   ---   Protected Methods   ---
@@ -219,10 +283,13 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         void IDisposable.Dispose()
         {
-            PageDispatcherQueue = null;
-
             ConfigManager.Config.PropertyChanged -= Config_PropertyChanged;
             ResourceManager.DatedResourceChanged -= ResourceManager_DatedResourceChanged;
+
+            WeeklyScheduleAImage.ImageOpened -= WeeklyScheduleAImage_ImageOpened;
+            WeeklyScheduleAImage.ImageFailed -= WeeklyScheduleAImage_ImageFailed;
+            WeeklyScheduleBImage.ImageOpened -= WeeklyScheduleBImage_ImageOpened;
+            WeeklyScheduleBImage.ImageFailed -= WeeklyScheduleBImage_ImageFailed;
         }
 
         /// <summary>
@@ -231,6 +298,12 @@ namespace MilLeadershipBoard.UI.ViewModels
         public async Task InvokeWeeklyScheduleAChange(XamlRoot xamlRoot)
         {
             string imagePath = await GetNewWeeklyScheduleImageResourcePath(xamlRoot);
+
+            if (imagePath == string.Empty)
+            {
+                // File picking failed
+                return;
+            }
 
             ResourceManager.CreateDatedResourceFile(imagePath, WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME, CurrentWeeklyScheduleDate);
         }
@@ -241,6 +314,12 @@ namespace MilLeadershipBoard.UI.ViewModels
         public async Task InvokeWeeklyScheduleBChange(XamlRoot xamlRoot)
         {
             string imagePath = await GetNewWeeklyScheduleImageResourcePath(xamlRoot);
+
+            if (imagePath == string.Empty)
+            {
+                // File picking failed
+                return;
+            }
 
             ResourceManager.CreateDatedResourceFile(imagePath, WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME, CurrentWeeklyScheduleDate);
         }

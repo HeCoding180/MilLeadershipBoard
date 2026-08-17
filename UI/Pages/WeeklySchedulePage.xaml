@@ -21,69 +21,78 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <TextBlock
             x:Uid="WeeklySchedulePage_Title"
             Grid.Row="0"
             Style="{StaticResource TitleTextBlockStyle}"/>
-        
-        <Grid
+
+        <Border
             Grid.Row="1"
-            ColumnSpacing="8"
+            Style="{StaticResource DefaultDashboardTileStyle}"
             MinHeight="100">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
 
-            <Border
-                Grid.Column="0"
-                Style="{StaticResource DefaultDashboardTileStyle}">
+            <Grid>
+                <Image
+                    x:Uid="WeeklySchedulePage/ScheduleImageA"
+                    Source="{Binding WeeklyScheduleAImage}"
+                    Stretch="Uniform"
+                    DoubleTapped="WeeklyScheduleA_DoubleTapped">
 
-                <Grid>
-                    <Image
-                        DoubleTapped="WeeklyScheduleA_DoubleTapped"
-                        Stretch="Uniform"/>
+                    <ToolTipService.ToolTip>
+                        <ToolTip x:Uid="WeeklySchedulePage/ScheduleImageToolTip"/>
+                    </ToolTipService.ToolTip>
+                </Image>
 
-                    <Grid
-                        Background="Transparent"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        DoubleTapped="WeeklyScheduleA_DoubleTapped">
+                <Grid
+                    Background="Transparent"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    DoubleTapped="WeeklyScheduleA_DoubleTapped"
+                    Visibility="{Binding WeeklyScheduleAImageLoaded, Mode=OneWay, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
                         
-                        <TextBlock
-                            x:Uid="WeeklySchedulePage/ScheduleSelectionTextBlock"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            DoubleTapped="WeeklyScheduleA_DoubleTapped"/>
-                    </Grid>
+                    <TextBlock
+                        x:Uid="WeeklySchedulePage/ScheduleSelectionTextBlock"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        DoubleTapped="WeeklyScheduleA_DoubleTapped"/>
                 </Grid>
-            </Border>
+            </Grid>
+        </Border>
 
-            <Border
-                Grid.Column="1"
-                Style="{StaticResource DefaultDashboardTileStyle}">
+        <Border
+            Grid.Row="2"
+            Style="{StaticResource DefaultDashboardTileStyle}"
+            MinHeight="100">
 
-                <Grid>
-                    <Image
-                        DoubleTapped="WeeklyScheduleB_DoubleTapped"
-                        Stretch="Uniform"/>
+            <Grid>
+                <Image
+                    x:Uid="WeeklySchedulePage/ScheduleImageB"
+                    Source="{Binding WeeklyScheduleBImage}"
+                    Stretch="Uniform"
+                    DoubleTapped="WeeklyScheduleB_DoubleTapped">
 
-                    <Grid
-                        Background="Transparent"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        DoubleTapped="WeeklyScheduleB_DoubleTapped">
-                        
-                        <TextBlock
-                            x:Uid="WeeklySchedulePage/ScheduleSelectionTextBlock"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            DoubleTapped="WeeklyScheduleB_DoubleTapped"/>
-                    </Grid>
+                    <ToolTipService.ToolTip>
+                        <ToolTip x:Uid="WeeklySchedulePage/ScheduleImageToolTip"/>
+                    </ToolTipService.ToolTip>
+                </Image>
+
+                <Grid
+                    Background="Transparent"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    DoubleTapped="WeeklyScheduleB_DoubleTapped"
+                    Visibility="{Binding WeeklyScheduleBImageLoaded, Mode=OneWay, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
+
+                    <TextBlock
+                        x:Uid="WeeklySchedulePage/ScheduleSelectionTextBlock"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        DoubleTapped="WeeklyScheduleB_DoubleTapped"/>
                 </Grid>
-            </Border>
-        </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

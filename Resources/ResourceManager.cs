@@ -2,6 +2,7 @@
 using Microsoft.Windows.ApplicationModel.Resources;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -118,6 +119,30 @@ namespace MilLeadershipBoard.Resources
         }
 
         /// <summary>
+        /// Method used to generate the file path for a dated resource.
+        /// </summary>
+        /// <param name="resourceName">The name of the resource.</param>
+        /// <param name="date">The date of theat resource instance.</param>
+        /// <param name="fileExtension">The file extension.</param>
+        /// <returns>A full path for the resource.</returns>
+        private static string GenerateDatedResourcePath(string resourceName, DateOnly date, string fileExtension)
+        {
+            return Path.Combine(DatedResourcePath, GenerateDatedResourceFileName(resourceName, date, fileExtension));
+        }
+
+        /// <summary>
+        /// Method used to get the date of a dated resource file's file name.
+        /// </summary>
+        /// <param name="fileName">File name of which the date should be extracted.</param>
+        /// <returns>A <see cref="DateOnly"/> struct containing the date of the file.</returns>
+        private static DateOnly GetDatedResourceFileDate(string fileName)
+        {
+            string dateStr = fileName.Split('_').Last();
+
+            return DateOnly.ParseExact(dateStr, DATE_FORMAT_STRING, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
         /// Method used to check if a path is valid for a dated image resource.
         /// </summary>
         /// <param name="path">The path that is to be checked.</param>
@@ -132,6 +157,31 @@ namespace MilLeadershipBoard.Resources
         private static void OnDatedResourceChanged(string resourceName, DateOnly date)
         {
             DatedResourceChanged?.Invoke(new DatedResourceChangedEventArgs(resourceName, date));
+        }
+
+        /// <summary>
+        /// Method used to get all dated resource file paths for the specified resource.
+        /// </summary>
+        /// <param name="resourceName">The name of the dated resource.</param>
+        /// <param name="paths"><see langword="out"/> array of strings containing available dated resources.</param>
+        public static bool TryGetDatedResourceFiles(string resourceName, out string[] paths)
+        {
+            if (!Directory.Exists(DatedResourcePath))
+            {
+                paths = [];
+                return false;
+            }
+
+            // Check for invalid characters in the resource 
+            if (INVALID_RESOURCE_NAME_CHARS.Any(resourceName.Contains))
+            {
+                throw new ArgumentException($"Invalid resourceName \"{resourceName}\". resourceName cannot contain any of the following characters: '{string.Join("', '", INVALID_RESOURCE_NAME_CHARS)}'");
+            }
+
+            paths = [.. Directory.EnumerateFiles(DatedResourcePath, "*", SearchOption.TopDirectoryOnly)
+                .Where(path => Path.GetFileName(path).StartsWith(resourceName, StringComparison.OrdinalIgnoreCase))];
+
+            return paths.Length != 0;
         }
 
         /// <summary>
@@ -155,10 +205,12 @@ namespace MilLeadershipBoard.Resources
                 throw new ArgumentException($"Invalid resourceName \"{resourceName}\". resourceName cannot contain any of the following characters: '{string.Join("', '", INVALID_RESOURCE_NAME_CHARS)}'");
             }
 
-            paths = [.. Directory.EnumerateFiles(DatedResourcePath, "*", SearchOption.TopDirectoryOnly)
-                .Where(path => Path.GetFileName(path).StartsWith(resourceName + "_" + date.ToString(DATE_FORMAT_STRING), StringComparison.OrdinalIgnoreCase))];
+            string fileName = resourceName + "_" + date.ToString(DATE_FORMAT_STRING);
 
-            return paths.Any();
+            paths = [.. Directory.EnumerateFiles(DatedResourcePath, "*", SearchOption.TopDirectoryOnly)
+                .Where(path => Path.GetFileName(path).StartsWith(fileName, StringComparison.OrdinalIgnoreCase))];
+
+            return paths.Length != 0;
         }
 
         //   ---   Public Methods   ---
@@ -173,7 +225,9 @@ namespace MilLeadershipBoard.Resources
         public static void CreateDatedResourceFile(string filePath, string resourceName, DateOnly date, bool overwrite = true)
         {
             string fileExtension = Path.GetExtension(filePath);
-            string resourcePath = GenerateDatedResourceFileName(resourceName, date, fileExtension);
+            string resourcePath = GenerateDatedResourcePath(resourceName, date, fileExtension);
+
+            EnsureDatedResourceDirectory();
 
             File.Copy(filePath, resourcePath, overwrite);
 
@@ -203,64 +257,32 @@ namespace MilLeadershipBoard.Resources
         public static string GetString(string resourceId) => ResourceLoader.GetString(resourceId);
 
         /// <summary>
-        /// Method used to get the date of a dated resource file's file name.
-        /// </summary>
-        /// <param name="fileName">File name of which the date should be extracted.</param>
-        /// <returns>A <see cref="DateOnly"/> struct containing the date of the file.</returns>
-        public static DateOnly GetDatedResourceFileDate(string fileName)
-        {
-            string dateStr = fileName.Split('_').Last();
-
-            return DateOnly.ParseExact(dateStr, DATE_FORMAT_STRING, CultureInfo.InvariantCulture);
-        }
-
-        /// <summary>
-        /// Method used to get all dated resource file paths for the specified resource.
-        /// </summary>
-        /// <param name="resourceName">The name of the dated resource.</param>
-        public static List<string> GetDatedResourceFiles(string resourceName)
-        {
-            if (!Directory.Exists(DatedResourcePath))
-            {
-                return new List<string>();
-            }
-
-            return Directory.EnumerateFiles(DatedResourcePath, "*", SearchOption.TopDirectoryOnly)
-                .Where(path => Path.GetFileName(path).StartsWith(resourceName, StringComparison.OrdinalIgnoreCase))
-                .ToList();
-        }
-
-        /// <summary>
         /// Method used to try loading a dated image resource based on the resource's name and its date.
         /// </summary>
         /// <param name="resourceName">Name of the dated resource that should be loaded.</param>
         /// <param name="date">Date of the dated resource that should be loaded.</param>
         /// <returns><see langword="true"/> if the image could be loaded, otherwise <see langword="false"/>.</returns>
-        public static async Task<BitmapImage?> TryLoadDatedImageResource(string resourceName, DateOnly date)
+        public static async Task TryLoadDatedImageResource(string resourceName, DateOnly date, BitmapImage image)
         {
             bool resourceExists = TryGetDatedResourceFiles(resourceName, date, out string[] paths);
 
             if (!resourceExists)
             {
-                return null;
+                return;
             }
 
             string? imageResourcePath = paths.FirstOrDefault(IsValidImageResourcePath);
 
             if (imageResourcePath is null)
             {
-                return null;
+                return;
             }
-
-            BitmapImage image = new BitmapImage();
 
             // Set the image source
             using (IRandomAccessStream stream = await FileRandomAccessStream.OpenAsync(imageResourcePath, FileAccessMode.Read))
             {
-                await image.SetSourceAsync(stream);
+                await image?.SetSourceAsync(stream);
             }
-
-            return image;
         }
     }
 }
