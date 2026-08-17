@@ -57,6 +57,7 @@ namespace MilLeadershipBoard.UI.Pages
             if (DataContext is WeeklySchedulePageViewModel vm)
             {
                 vm.PageDispatcherQueue = DispatcherQueue;
+                vm.OnParentPageLoaded();
             }
         }
 
