@@ -8,7 +8,7 @@
         x:Key="DefaultDashboardTileStyle"
         TargetType="Border">
 
-        <Setter Property="Background" Value="{StaticResource CardBackgroundFillColorDefault}"/>
+        <Setter Property="Background" Value="{StaticResource TileBackgroundFillColor}"/>
         <Setter Property="CornerRadius" Value="{StaticResource DefaultCardCornerRadius}"/>
     </Style>
 

@@ -16,6 +16,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\Colors.xaml" />
     <None Remove="Resources\Converters.xaml" />
     <None Remove="Resources\DataTemplates.xaml" />
     <None Remove="Resources\Generic.xaml" />
@@ -60,6 +61,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\Windows\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Resources\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Resources\Converters.xaml">
