@@ -243,4 +243,10 @@
   <data name="WeeklySchedulePage.ScheduleImageToolTip.Content" xml:space="preserve">
     <value>Doubleclick to change</value>
   </data>
+  <data name="LessionsPage.AddLessionContentDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="LessionsPage.AddLessionContentDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
 </root>
