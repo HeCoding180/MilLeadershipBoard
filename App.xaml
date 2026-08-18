@@ -9,8 +9,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"/>
                 <!-- Other merged dictionaries here -->
-                <ResourceDictionary Source="/Resources/Generic.xaml"/>
+                <ResourceDictionary Source="/Resources/Colors.xaml"/>
+                <ResourceDictionary Source="/Resources/Converters.xaml"/>
                 <ResourceDictionary Source="/Resources/DataTemplates.xaml"/>
+                <ResourceDictionary Source="/Resources/Generic.xaml"/>
                 <ResourceDictionary Source="/Resources/Geometry.xaml"/>
                 <ResourceDictionary Source="/Resources/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>

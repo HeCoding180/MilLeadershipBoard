@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MilLeadershipBoard.Resources;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -72,9 +73,9 @@ namespace MilLeadershipBoard.Config
         /// </summary>
         private static void EnsureLocalFolder()
         {
-            if (!Directory.Exists(LocalFolderPath))
+            if (!Directory.Exists(ResourceManager.LocalAppDataPath))
             {
-                Directory.CreateDirectory(LocalFolderPath);
+                Directory.CreateDirectory(ResourceManager.LocalAppDataPath);
             }
         }
 
@@ -86,13 +87,13 @@ namespace MilLeadershipBoard.Config
         {
             try
             {
-                if (!File.Exists(Path.Combine(LocalFolderPath, CONFIG_DATA_FILE_NAME)))
+                if (!File.Exists(Path.Combine(ResourceManager.LocalAppDataPath, CONFIG_DATA_FILE_NAME)))
                 {
                     // File does not exist, return
                     return;
                 }
 
-                ConfigData? config = JsonSerializer.Deserialize<ConfigData>(File.ReadAllText(Path.Combine(LocalFolderPath, CONFIG_DATA_FILE_NAME)));
+                ConfigData? config = JsonSerializer.Deserialize<ConfigData>(File.ReadAllText(Path.Combine(ResourceManager.LocalAppDataPath, CONFIG_DATA_FILE_NAME)));
 
                 if (config is not null)
                 {
@@ -116,7 +117,7 @@ namespace MilLeadershipBoard.Config
         /// </summary>
         private static void SaveConfigFile()
         {
-            string configFilePath = Path.Combine(LocalFolderPath, CONFIG_DATA_FILE_NAME);
+            string configFilePath = Path.Combine(ResourceManager.LocalAppDataPath, CONFIG_DATA_FILE_NAME);
 
             EnsureLocalFolder();
 
