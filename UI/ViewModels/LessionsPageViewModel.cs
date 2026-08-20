@@ -66,17 +66,23 @@ namespace MilLeadershipBoard.UI.ViewModels
                 throw new InvalidProgramException($"{nameof(LessionsPageViewModel)} did not load properly. No value set for {nameof(XamlRoot)}.");
             }
 
-            AddLessionPage contentPage = new AddLessionPage();
-
             ContentDialog dialog = new ContentDialog()
             {
-                Content = contentPage,
                 DefaultButton = ContentDialogButton.Primary,
-                PrimaryButtonCommand = contentPage.AddLessionCommand,
                 PrimaryButtonText = ResourceManager.GetString("LessionsPage/AddLessionContentDialog/PrimaryButtonText"),
+                IsPrimaryButtonEnabled = false,
                 SecondaryButtonText = ResourceManager.GetString("LessionsPage/AddLessionContentDialog/SecondaryButtonText"),
                 XamlRoot = XamlRoot
             };
+
+            AddLessionPage contentPage = new AddLessionPage()
+            {
+                CanAddLessionChangedAction = v => dialog.IsPrimaryButtonEnabled = v
+            };
+
+            dialog.Content = contentPage;
+            dialog.PrimaryButtonCommand = contentPage.AddLessionCommand;
+            dialog.PrimaryButtonCommand = new RelayCommand(contentPage.AddLession);
 
             await dialog.ShowAsync();
         }

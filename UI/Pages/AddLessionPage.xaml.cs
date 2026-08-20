@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using MilLeadershipBoard.UI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -39,6 +40,11 @@ namespace MilLeadershipBoard.UI.Pages
         /// </summary>
         public ICommand AddLessionCommand => _addLessionCommand;
 
+        /// <summary>
+        /// Gets the action that is to be executed when the state of the <see cref="AddLessionsPageViewModel.CanAddLession"/> property changes.
+        /// </summary>
+        public Action<bool>? CanAddLessionChangedAction { set; get; }
+
         //   ---   Constructors   ---
 
         /// <summary>
@@ -46,7 +52,7 @@ namespace MilLeadershipBoard.UI.Pages
         /// </summary>
         public AddLessionPage()
         {
-            _addLessionCommand = new RelayCommand(AddLession, CanAddLession);
+            _addLessionCommand = new RelayCommand(AddLession);
 
             InitializeComponent();
         }
@@ -54,19 +60,43 @@ namespace MilLeadershipBoard.UI.Pages
         //   ---   Private Methods   ---
 
         /// <summary>
-        /// Method used to add a lession.
+        /// Callback method for the <see cref="FrameworkElement.Loaded"/> event of this page.
         /// </summary>
-        private void AddLession()
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
+            if (DataContext is AddLessionsPageViewModel vm)
+            {
+                vm.PropertyChanged += Vm_PropertyChanged;
+            }
         }
 
         /// <summary>
-        /// Method used to check if a lession can be added.
+        /// Callback method for the <see cref="INotifyPropertyChanged.PropertyChanged"/> event of the DataContext ViewModel.
         /// </summary>
-        private bool CanAddLession()
+        private void Vm_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
+            if (CanAddLessionChangedAction is null)
+            {
+                return;
+            }
 
+            if (e.PropertyName == nameof(AddLessionsPageViewModel.CanAddLession))
+            {
+                CanAddLessionChangedAction(((AddLessionsPageViewModel)sender!).CanAddLession);
+            }
+        }
+
+        //   ---   Public Methods   ---
+
+        /// <summary>
+        /// Method used to add a lession.
+        /// </summary>
+        public void AddLession()
+        {
+            if (DataContext is LessionsPageViewModel vm)
+            {
+
+            }
         }
     }
 }
