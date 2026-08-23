@@ -1,5 +1,5 @@
 ﻿using MilLeadershipBoard.Config;
-using MilLeadershipBoard.TroopData.Location;
+using MilLeadershipBoard.Models.TroopData.Location;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace MilLeadershipBoard.TroopData
+namespace MilLeadershipBoard.Models.TroopData
 {
     /// <summary>
     /// Class used to store data about an individual solder.

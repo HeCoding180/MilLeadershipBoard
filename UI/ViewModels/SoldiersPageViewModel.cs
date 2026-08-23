@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MilLeadershipBoard.Config;
-using MilLeadershipBoard.TroopData;
+using MilLeadershipBoard.Models.TroopData;
 using MilLeadershipBoard.TroopData.Location;
 using System;
 using System.Collections.Generic;

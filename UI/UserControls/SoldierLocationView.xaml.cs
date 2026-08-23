@@ -5,7 +5,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using MilLeadershipBoard.TroopData.Location;
+using MilLeadershipBoard.Models.TroopData.Location;
 using MilLeadershipBoard.UI.ViewModels;
 using System;
 using System.Collections.Generic;

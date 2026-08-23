@@ -1,5 +1,4 @@
-﻿using MilLeadershipBoard.Config;
-using MilLeadershipBoard.Util;
+﻿using MilLeadershipBoard.TroopData.Location;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,12 +8,9 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace MilLeadershipBoard.TroopData.Location
+namespace MilLeadershipBoard.Models.TroopData
 {
-    /// <summary>
-    /// Class used to specify a troop location that will be shown under the 
-    /// </summary>
-    public class SoldierLocation : IEquatable<SoldierLocation>, INotifyPropertyChanged
+    public class PlatoonData : IEquatable<PlatoonData>, INotifyPropertyChanged
     {
         //   ---   Private Fields   ---
 
@@ -23,18 +19,10 @@ namespace MilLeadershipBoard.TroopData.Location
         /// </summary>
         private string _name;
 
-        private Lazy<ObservableFilteredList<SoldierData>> _soldiers;
-
         //   ---   Public Properties   ---
 
         /// <summary>
-        /// Gets the <see cref="Guid"/> identifier of this <see cref="SoldierLocation"/> instance.
-        /// </summary>
-        [JsonPropertyName("Id")]
-        public Guid Id { get; }
-
-        /// <summary>
-        /// Sets or gets the name of the troop location.
+        /// Sets or gets the name of the platoon.
         /// </summary>
         [JsonPropertyName("Name")]
         public string Name
@@ -54,10 +42,10 @@ namespace MilLeadershipBoard.TroopData.Location
         }
 
         /// <summary>
-        /// Gets a <see cref="ObservableFilteredList{T}"/> containing all <see cref="SoldierData"/> instances whose location is at this location.
+        /// Gets the <see cref="Guid"/> identifier of this platoon.
         /// </summary>
-        [JsonIgnore]
-        public ObservableFilteredList<SoldierData> Soldiers => _soldiers.Value;
+        [JsonPropertyName("Id")]
+        public Guid Id { get; }
 
         //   ---   Public Events   ---
 
@@ -67,29 +55,22 @@ namespace MilLeadershipBoard.TroopData.Location
         //   ---   Constructors   ---
 
         /// <summary>
-        /// Creates a new instance of the <see cref="SoldierLocation"/> class.
+        /// Creates a new instance of the <see cref="PlatoonData"/> class.
         /// </summary>
-        /// <param name="name">Name of the troop location.</param>
-        public SoldierLocation(string name)
+        /// <param name="name">Name of the platoon.</param>
+        public PlatoonData(string name)
         {
             _name = name;
-
-            // Generate a new ID
-            Id = Guid.NewGuid();
-
-            // Create the lazy filtered list (needs to be lazy, because on creation through deserialization the ConfigManager.Config.Soldiers isn't loaded yet)
-            _soldiers = new Lazy<ObservableFilteredList<SoldierData>>(()
-                => new ObservableFilteredList<SoldierData>(ConfigManager.Config.Soldiers, (s) => s.LocationId == Id, nameof(SoldierData.LocationId)));
         }
 
         /// <summary>
         /// Constructor used for deserialization.
         /// </summary>
-        /// <param name="id">Identifier of the <see cref="SoldierLocation"/>.</param>
-        /// <param name="name">Name of the troop location.</param>
+        /// <param name="name">Name of the platoon.</param>
         [JsonConstructor]
-        public SoldierLocation(Guid id, string name) : this(name)
+        public PlatoonData(Guid id, string name)
         {
+            _name = name;
             Id = id;
         }
 
@@ -107,7 +88,7 @@ namespace MilLeadershipBoard.TroopData.Location
         //   ---   Public Methods   ---
 
         /// <inheritdoc cref="IEquatable{T}.Equals"/>
-        bool IEquatable<SoldierLocation>.Equals(SoldierLocation? other)
+        bool IEquatable<PlatoonData>.Equals(PlatoonData? other)
         {
             if (other is null)
             {

@@ -1,5 +1,5 @@
-﻿using MilLeadershipBoard.TroopData;
-using MilLeadershipBoard.TroopData.Location;
+﻿using MilLeadershipBoard.Models.TroopData;
+using MilLeadershipBoard.Models.TroopData.Location;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
