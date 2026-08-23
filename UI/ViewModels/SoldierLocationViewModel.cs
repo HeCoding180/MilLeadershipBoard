@@ -2,9 +2,9 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using MilLeadershipBoard.Config;
+using MilLeadershipBoard.Models.TroopData;
 using MilLeadershipBoard.Models.TroopData.Location;
 using MilLeadershipBoard.Resources;
-using MilLeadershipBoard.TroopData;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

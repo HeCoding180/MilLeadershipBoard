@@ -4,8 +4,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MilLeadershipBoard"
-    xmlns:locationData="using:MilLeadershipBoard.TroopData.Location"
-    xmlns:soldierData="using:MilLeadershipBoard.TroopData"
+    xmlns:locationData="using:MilLeadershipBoard.Models.TroopData.Location"
+    xmlns:soldierData="using:MilLeadershipBoard.Models.TroopData"
     xmlns:uc="using:MilLeadershipBoard.UI.UserControls">
 
     <DataTemplate

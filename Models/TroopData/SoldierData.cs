@@ -243,5 +243,23 @@ namespace MilLeadershipBoard.Models.TroopData
             // If equality cannot be determined by reference, use the ID to compare equality
             return Id.Equals(other.Id);
         }
+
+        /// <summary>
+        /// Method used to get the full name of the soldier.
+        /// </summary>
+        /// <returns>The full name of the soldier instance in the following format: "[Rank] [Last Name] [First Name]"</returns>
+        public string GetFullName()
+        {
+            return $"{Rank} {LastName} {FirstName}";
+        }
+
+        /// <summary>
+        /// Method used to get the short name of the soldier.
+        /// </summary>
+        /// <returns>The short name of the soldier instance in the following format: "[Rank] [Last Name]"</returns>
+        public string GetShortName()
+        {
+            return $"{Rank} {LastName}";
+        }
     }
 }

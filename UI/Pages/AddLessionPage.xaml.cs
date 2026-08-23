@@ -93,9 +93,9 @@ namespace MilLeadershipBoard.UI.Pages
         /// </summary>
         public void AddLession()
         {
-            if (DataContext is LessionsPageViewModel vm)
+            if (DataContext is AddLessionsPageViewModel vm)
             {
-
+                vm.AddLession();
             }
         }
     }

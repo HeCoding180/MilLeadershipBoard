@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MilLeadershipBoard.Config;
+using MilLeadershipBoard.Models;
 using MilLeadershipBoard.Resources;
 using System;
 using System.Collections.Generic;
@@ -140,6 +141,27 @@ namespace MilLeadershipBoard.UI.ViewModels
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        //   ---   Public Methods   ---
+
+        /// <summary>
+        /// Method used to add a lession.
+        /// </summary>
+        public void AddLession()
+        {
+            if (!CanAddLession)
+            {
+                return;
+            }
+
+            LessionData lession = new LessionData()
+            {
+                LessionChiefFullName = LessionChief ?? string.Empty,
+                LessionName = LessionName
+            };
+
+            ConfigManager.Config.Lessions.Add(lession);
         }
     }
 }
