@@ -2,10 +2,12 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using MilLeadershipBoard.Config;
+using MilLeadershipBoard.Models;
 using MilLeadershipBoard.Resources;
 using MilLeadershipBoard.UI.Pages;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -30,6 +32,11 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// Gets the <see cref="ICommand"/> used to add new lessions.
         /// </summary>
         public ICommand AddCommand => _addCommand;
+
+        /// <summary>
+        /// Gets an <see cref="ObservableCollection{T}"/> containing all <see cref="LessionData"/> instances.
+        /// </summary>
+        public ObservableCollection<LessionData> Lessions => ConfigManager.Config.Lessions;
 
         /// <summary>
         /// Sets or gets the <see cref="Microsoft.UI.Xaml.XamlRoot"/> instance of the partent page.
@@ -115,7 +122,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// <summary>
         /// Method used to dispose of this <see cref="BreaksPageViewModel"/> instance.
         /// </summary>
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             ConfigManager.Config.PropertyChanged -= Config_PropertyChanged;
         }

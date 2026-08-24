@@ -30,6 +30,7 @@
     <None Remove="UI\Pages\LocationsPage.xaml" />
     <None Remove="UI\Pages\SoldiersPage.xaml" />
     <None Remove="UI\Pages\WeeklySchedulePage.xaml" />
+    <None Remove="UI\UserControls\LessionDataView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -62,6 +63,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\Windows\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="UI\UserControls\LessionDataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="UI\Pages\AddLessionPage.xaml">

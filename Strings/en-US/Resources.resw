@@ -267,4 +267,7 @@
   <data name="AddLessionsPage.LessionChiefComboBox.PlaceholderText" xml:space="preserve">
     <value>Enter Lession Chief</value>
   </data>
+  <data name="LessionDataView.CompleteFlyoutButton.Text" xml:space="preserve">
+    <value>Complete</value>
+  </data>
 </root>

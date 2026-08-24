@@ -14,7 +14,7 @@ namespace MilLeadershipBoard.Models
     /// <summary>
     /// Model class containing lession information.
     /// </summary>
-    internal class LessionData : INotifyPropertyChanged
+    public class LessionData : INotifyPropertyChanged
     {
         //   ---   Private Fields   ---
 

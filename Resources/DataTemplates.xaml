@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MilLeadershipBoard"
     xmlns:locationData="using:MilLeadershipBoard.Models.TroopData.Location"
+    xmlns:models="using:MilLeadershipBoard.Models"
     xmlns:soldierData="using:MilLeadershipBoard.Models.TroopData"
     xmlns:uc="using:MilLeadershipBoard.UI.UserControls">
 
@@ -27,6 +28,15 @@
         
         <uc:SoldierLocationView
             Location="{Binding}"
+            Margin="-12,4,-8,4"/>
+    </DataTemplate>
+
+    <DataTemplate
+        x:Key="LessionDataTemplate"
+        x:DataType="models:LessionData">
+
+        <uc:LessionDataView
+            Lession="{Binding}"
             Margin="-12,4,-8,4"/>
     </DataTemplate>
 

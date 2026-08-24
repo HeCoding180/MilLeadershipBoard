@@ -16,14 +16,16 @@
     </Page.DataContext>
 
     <Grid
-        Padding="16,8,16,16">
+        Padding="16,8,2,2"
+        RowSpacing="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid
-            Grid.Row="0">
+            Grid.Row="0"
+            Padding="0,0,14,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -41,5 +43,18 @@
                 <SymbolIcon Symbol="Add"/>
             </Button>
         </Grid>
+
+        <ScrollViewer
+            Grid.Row="1">
+
+            <ListView
+                Margin="0,0,16,12"
+                SelectionMode="None"
+                AllowDrop="True"
+                CanDrag="True"
+                CanReorderItems="True"
+                ItemTemplate="{StaticResource LessionDataTemplate}"
+                ItemsSource="{Binding Lessions, Mode=OneWay}"/>
+        </ScrollViewer>
     </Grid>
 </Page>

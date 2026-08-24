@@ -28,7 +28,7 @@
         <!-- Temporary placeholder for the ComboBox -->
         <TextBox
             x:Uid="AddLessionsPage/LessionChiefComboBox"
-            Text="{Binding LessionChiefName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            Text="{Binding LessionChief, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <!--<ComboBox
             x:Uid="AddLessionsPage/LessionChiefComboBox"

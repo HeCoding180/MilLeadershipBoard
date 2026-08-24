@@ -8,11 +8,17 @@
             <SolidColorBrush
                 x:Key="TileBackgroundFillColor"
                 Color="#0DFFFFFF"/>
+            <SolidColorBrush
+                x:Key="DimForegroundColor"
+                Color="#A0FFFFFF"/>
         </ResourceDictionary>
         <ResourceDictionary x:Key="Light">
             <SolidColorBrush
                 x:Key="TileBackgroundFillColor"
                 Color="#0D000000"/>
+            <SolidColorBrush
+                x:Key="DimForegroundColor"
+                Color="#a0000000"/>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>
