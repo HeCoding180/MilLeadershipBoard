@@ -15,6 +15,18 @@ namespace MilLeadershipBoard.UI.ViewModels
 
         //   ---   Public Properties   ---
 
+        /// <summary>
+        /// Sets or gets the raw special assignments text.
+        /// </summary>
+        public string RawSpecialAssignmentsText
+        {
+            set
+            {
+                ConfigManager.Config.RawSpecialAssignmentsText = value;
+            }
+            get => ConfigManager.Config.RawSpecialAssignmentsText;
+        }
+
         //   ---   Public Events   ---
 
         /// <inheritdoc cref="INotifyPropertyChanged.PropertyChanged"/>

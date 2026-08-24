@@ -5,9 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MilLeadershipBoard.UI.Pages"
     xmlns:config="using:MilLeadershipBoard.Config"
+    xmlns:vm="using:MilLeadershipBoard.UI.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:SpecialAssignmentsPageViewModel/>
+    </Page.DataContext>
 
     <Grid
         Padding="16,8,16,16"
@@ -26,7 +31,7 @@
             Grid.Row="1"
             AcceptsReturn="True"
             TextWrapping="Wrap"
-            Text="{x:Bind config:ConfigManager.Config.RawSpecialAssignmentsText, Mode=TwoWay}"
+            Text="{Binding RawSpecialAssignmentsText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"/>
     </Grid>
