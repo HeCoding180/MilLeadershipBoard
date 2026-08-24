@@ -1,5 +1,6 @@
-﻿using MilLeadershipBoard.TroopData;
-using MilLeadershipBoard.TroopData.Location;
+﻿using MilLeadershipBoard.Models;
+using MilLeadershipBoard.Models.TroopData;
+using MilLeadershipBoard.Models.TroopData.Location;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -86,7 +87,14 @@ namespace MilLeadershipBoard.Config
         /// <summary>
         /// Sets or gets an <see cref="ObservableCollection{T}"/> containing all <see cref="SoldierData"/> instances.
         /// </summary>
+        [JsonPropertyName("Soldiers")]
         public ObservableCollection<SoldierData> Soldiers { set; get; } = new ObservableCollection<SoldierData>();
+
+        /// <summary>
+        /// Sets or gets an <see cref="ObservableCollection{T}"/> containing all <see cref="LessionData"/> instances.
+        /// </summary>
+        [JsonPropertyName("Lessions")]
+        public ObservableCollection<LessionData> Lessions { set; get; } = new ObservableCollection<LessionData>();
 
         /// <summary>
         /// Sets or gets an <see cref="ObservableCollection{T}"/> containing all <see cref="SoldierLocation"/> instances.

@@ -14,9 +14,9 @@
         ColumnSpacing="{StaticResource DashboardTileMargin}"
         Padding="16,8,16,16">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"/>
             <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Locations -->

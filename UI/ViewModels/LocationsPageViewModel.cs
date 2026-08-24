@@ -2,8 +2,8 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using MilLeadershipBoard.Config;
+using MilLeadershipBoard.Models.TroopData.Location;
 using MilLeadershipBoard.Resources;
-using MilLeadershipBoard.TroopData.Location;
 using MilLeadershipBoard.UI.Controls;
 using System;
 using System.Collections.Generic;

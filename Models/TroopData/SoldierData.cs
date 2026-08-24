@@ -1,5 +1,5 @@
 ﻿using MilLeadershipBoard.Config;
-using MilLeadershipBoard.TroopData.Location;
+using MilLeadershipBoard.Models.TroopData.Location;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace MilLeadershipBoard.TroopData
+namespace MilLeadershipBoard.Models.TroopData
 {
     /// <summary>
     /// Class used to store data about an individual solder.
@@ -242,6 +242,24 @@ namespace MilLeadershipBoard.TroopData
 
             // If equality cannot be determined by reference, use the ID to compare equality
             return Id.Equals(other.Id);
+        }
+
+        /// <summary>
+        /// Method used to get the full name of the soldier.
+        /// </summary>
+        /// <returns>The full name of the soldier instance in the following format: "[Rank] [Last Name] [First Name]"</returns>
+        public string GetFullName()
+        {
+            return $"{Rank} {LastName} {FirstName}";
+        }
+
+        /// <summary>
+        /// Method used to get the short name of the soldier.
+        /// </summary>
+        /// <returns>The short name of the soldier instance in the following format: "[Rank] [Last Name]"</returns>
+        public string GetShortName()
+        {
+            return $"{Rank} {LastName}";
         }
     }
 }
