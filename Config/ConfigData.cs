@@ -99,7 +99,14 @@ namespace MilLeadershipBoard.Config
         /// <summary>
         /// Sets or gets an <see cref="ObservableCollection{T}"/> containing all <see cref="SoldierLocation"/> instances.
         /// </summary>
+        [JsonPropertyName("Locations")]
         public ObservableCollection<SoldierLocation> Locations { set; get; } = new ObservableCollection<SoldierLocation>();
+
+        /// <summary>
+        /// Sets or gets the raw text for special assignments.
+        /// </summary>
+        [JsonPropertyName("RawSpecialAssignmentsText")]
+        public string RawSpecialAssignmentsText { set; get; } = string.Empty;
 
         //   ---   Public Events   ---
 
