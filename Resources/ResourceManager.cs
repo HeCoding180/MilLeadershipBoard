@@ -14,11 +14,35 @@ using Windows.Storage.Streams;
 namespace MilLeadershipBoard.Resources
 {
     /// <summary>
+    /// Enum used to specify the action that has been done to a dated resource.
+    /// </summary>
+    internal enum DatedResourceChangedAction
+    {
+        /// <summary>
+        /// The dated resource was newly added.
+        /// </summary>
+        Add,
+        /// <summary>
+        /// An existing dated resource was removed.
+        /// </summary>
+        Remove,
+        /// <summary>
+        /// An existing dated resource was modified.
+        /// </summary>
+        Modify
+    }
+
+    /// <summary>
     /// <see cref="EventArgs"/> class used for the <see cref="ResourceManager.DatedResourceChanged"/> event.
     /// </summary>
     internal class DatedResourceChangedEventArgs : EventArgs
     {
         //   ---   Public Properties   ---
+
+        /// <summary>
+        /// Gets the <see cref="DatedResourceChangedAction"/> that was done to the dated resource.
+        /// </summary>
+        public DatedResourceChangedAction Action { get; }
 
         /// <summary>
         /// Gets the date of the dated resource that changed.
@@ -37,10 +61,12 @@ namespace MilLeadershipBoard.Resources
         /// </summary>
         /// <param name="resourceName">Name of the dated resource that changed.</param>
         /// <param name="date">The date of the dated resource that changed.</param>
-        public DatedResourceChangedEventArgs(string resourceName, DateOnly date)
+        /// <param name="action">The <see cref="DatedResourceChangedAction"/> that was done to the dated resource.</param>
+        public DatedResourceChangedEventArgs(string resourceName, DateOnly date, DatedResourceChangedAction action)
         {
             ResourceName = resourceName;
             Date = date;
+            Action = action;
         }
     }
 
@@ -154,9 +180,10 @@ namespace MilLeadershipBoard.Resources
         /// </summary>
         /// <param name="resourceName">Name of the dated resource that changed.</param>
         /// <param name="date">Date of the dated resource that changed.</param>
-        private static void OnDatedResourceChanged(string resourceName, DateOnly date)
+        /// <param name="action">The <see cref="DatedResourceChangedAction"/> that was done to the dated resource.</param>
+        private static void OnDatedResourceChanged(string resourceName, DateOnly date, DatedResourceChangedAction action)
         {
-            DatedResourceChanged?.Invoke(new DatedResourceChangedEventArgs(resourceName, date));
+            DatedResourceChanged?.Invoke(new DatedResourceChangedEventArgs(resourceName, date, action));
         }
 
         /// <summary>
@@ -229,9 +256,11 @@ namespace MilLeadershipBoard.Resources
 
             EnsureDatedResourceDirectory();
 
+            bool resourceExists = File.Exists(resourcePath);
+
             File.Copy(filePath, resourcePath, overwrite);
 
-            OnDatedResourceChanged(resourceName, date);
+            OnDatedResourceChanged(resourceName, date, resourceExists ? DatedResourceChangedAction.Modify : DatedResourceChangedAction.Add);
         }
 
         /// <summary>
