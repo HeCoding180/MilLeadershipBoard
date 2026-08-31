@@ -13,7 +13,10 @@
         x:Key="DailyScheduleItemTemplate"
         x:DataType="models:DailySchedule">
 
-        <Image Source="{Binding Source}"/>
+        <Image
+            Source="{Binding Source}"
+            Stretch="Uniform"
+            Margin="-12,4,-8,4"/>
     </DataTemplate>
 
     <DataTemplate

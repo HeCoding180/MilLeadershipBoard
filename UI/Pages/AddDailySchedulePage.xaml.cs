@@ -22,23 +22,23 @@ namespace MilLeadershipBoard.UI.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class DailySchedulePage : Page
+    public sealed partial class AddDailySchedulePage : Page
     {
         //   ---   Public Properties   ---
 
         /// <summary>
-        /// Gets the ViewModel instance of this instance.
+        /// Gets the <see cref="AddDailySchedulePageViewModel"/> ViewModel class.
         /// </summary>
-        public DailySchedulePageViewModel ViewModel { get; }
+        public AddDailySchedulePageViewModel ViewModel { get; }
 
         //   ---   Constructors   ---
 
         /// <summary>
-        /// Creates a new instance of the <see cref="DailySchedulePage"/> class.
+        /// Creates a new instance of the <see cref="AddDailySchedulePage"/> class.
         /// </summary>
-        public DailySchedulePage()
+        public AddDailySchedulePage()
         {
-            ViewModel = new DailySchedulePageViewModel(DispatcherQueue);
+            ViewModel = new AddDailySchedulePageViewModel();
 
             InitializeComponent();
         }

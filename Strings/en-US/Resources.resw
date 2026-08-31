@@ -270,4 +270,28 @@
   <data name="LessionDataView.CompleteFlyoutButton.Text" xml:space="preserve">
     <value>Complete</value>
   </data>
+  <data name="AddDailySchedulePage.DatePicker.Header" xml:space="preserve">
+    <value>Schedule Date</value>
+  </data>
+  <data name="AddDailySchedulePage.PathTextBox.Header" xml:space="preserve">
+    <value>Schedule Image Path</value>
+  </data>
+  <data name="AddDailySchedulePage.PathTextBox.PlaceholderText" xml:space="preserve">
+    <value>Enter a schedule path...</value>
+  </data>
+  <data name="AddDailySchedulePage.BrowseButton.Content" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="DailySchedulePage.AddDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="DailySchedulePage.AddDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="AddDailySchedulePage.SelectScheduleFileOpenPicker.CommitButtonText" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="AddDailySchedulePage.SelectScheduleFileOpenPicker.Title" xml:space="preserve">
+    <value>Select a daily schedule image...</value>
+  </data>
 </root>

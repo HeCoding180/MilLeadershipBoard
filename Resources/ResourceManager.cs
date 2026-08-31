@@ -163,17 +163,10 @@ namespace MilLeadershipBoard.Resources
         /// <returns>A <see cref="DateOnly"/> struct containing the date of the file.</returns>
         private static DateOnly GetDatedResourceFileDate(string fileName)
         {
-            string dateStr = fileName.Split('_').Last();
+            string dateStr = Path.GetFileNameWithoutExtension(fileName).Split('_').Last();
 
             return DateOnly.ParseExact(dateStr, DATE_FORMAT_STRING, CultureInfo.InvariantCulture);
         }
-
-        /// <summary>
-        /// Method used to check if a path is valid for a dated image resource.
-        /// </summary>
-        /// <param name="path">The path that is to be checked.</param>
-        /// <returns><see langword="true"/> if the path is a valid image resource path.</returns>
-        private static bool IsValidImageResourcePath(string path) => VALID_IMAGE_RESOURCE_FILE_EXTENSIONS.Contains(Path.GetExtension(path));
 
         /// <summary>
         /// Raises the <see cref="DatedResourceChanged"/> event
@@ -282,8 +275,33 @@ namespace MilLeadershipBoard.Resources
             return TryGetDatedResourceFiles(resourceName, date, out _);
         }
 
+        /// <summary>
+        /// Method used to get all available dates for a specific dated resource based on the resource name.
+        /// </summary>
+        /// <param name="resourceName">Name of the resource.</param>
+        /// <returns>A <see cref="DateOnly"/> array containing all available dated resource dates.</returns>
+        public static DateOnly[] GetAvailableResourceDates(string resourceName)
+        {
+            bool anyResourceFiles = TryGetDatedResourceFiles(resourceName, out string[] paths);
+
+            if (!anyResourceFiles)
+            {
+                // No dated resources.
+                return [];
+            }
+
+            return [.. paths.Select(GetDatedResourceFileDate).Distinct()];
+        }
+
         /// <inheritdoc cref="ResourceLoader.GetString"/>
         public static string GetString(string resourceId) => ResourceLoader.GetString(resourceId);
+
+        /// <summary>
+        /// Method used to check if a path is valid for a dated image resource.
+        /// </summary>
+        /// <param name="path">The path that is to be checked.</param>
+        /// <returns><see langword="true"/> if the path is a valid image resource path.</returns>
+        public static bool IsValidImageResourcePath(string path) => VALID_IMAGE_RESOURCE_FILE_EXTENSIONS.Contains(Path.GetExtension(path));
 
         /// <summary>
         /// Method used to try loading a dated image resource based on the resource's name and its date.
