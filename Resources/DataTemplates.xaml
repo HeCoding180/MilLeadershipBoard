@@ -10,6 +10,13 @@
     xmlns:uc="using:MilLeadershipBoard.UI.UserControls">
 
     <DataTemplate
+        x:Key="DailyScheduleItemTemplate"
+        x:DataType="models:DailySchedule">
+
+        <Image Source="{Binding Source}"/>
+    </DataTemplate>
+
+    <DataTemplate
         x:Key="SimpleSoldierDataTemplate"
         x:DataType="soldierData:SoldierData">
         
@@ -43,6 +50,7 @@
     <DataTemplate
         x:Key="SoldierLocationItemDataTemplate"
         x:DataType="locationData:SoldierLocation">
+        
         <TextBlock Text="{Binding Name, FallbackValue='Unassigned'}"/>
     </DataTemplate>
 </ResourceDictionary>
