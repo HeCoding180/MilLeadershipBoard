@@ -16,10 +16,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\Colors.xaml" />
+    <None Remove="Resources\Converters.xaml" />
     <None Remove="Resources\DataTemplates.xaml" />
     <None Remove="Resources\Generic.xaml" />
     <None Remove="Resources\Geometry.xaml" />
     <None Remove="Resources\Styles.xaml" />
+    <None Remove="UI\Pages\AddLessionPage.xaml" />
     <None Remove="UI\Pages\BreaksPage.xaml" />
     <None Remove="UI\Pages\DailySchedulePage.xaml" />
     <None Remove="UI\Pages\DashboardPage.xaml" />
@@ -27,6 +30,7 @@
     <None Remove="UI\Pages\LocationsPage.xaml" />
     <None Remove="UI\Pages\SoldiersPage.xaml" />
     <None Remove="UI\Pages\WeeklySchedulePage.xaml" />
+    <None Remove="UI\UserControls\LessionDataView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,6 +63,26 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\Windows\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="UI\UserControls\LessionDataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="UI\Pages\AddLessionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Resources\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Resources\Converters.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Resources\Generic.xaml">

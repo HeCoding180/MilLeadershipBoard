@@ -234,4 +234,40 @@
   <data name="BreaksPage.AddFifteenMinButton.Content" xml:space="preserve">
     <value>15 min</value>
   </data>
+  <data name="WeeklySchedulePage.ScheduleSelectionTextBlock.Text" xml:space="preserve">
+    <value>Select Schedule...</value>
+  </data>
+  <data name="WeeklySchedulePage.SelectScheduleStoragePicker.CommitButtonText" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="WeeklySchedulePage.ScheduleImageToolTip.Content" xml:space="preserve">
+    <value>Doubleclick to change</value>
+  </data>
+  <data name="LessionsPage.AddLessionContentDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="LessionsPage.AddLessionContentDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="AddLessionsPage.NameTextBox.Header" xml:space="preserve">
+    <value>Lession Name</value>
+  </data>
+  <data name="AddLessionsPage.NameTextBox.PlaceholderText" xml:space="preserve">
+    <value>Enter Lession Name</value>
+  </data>
+  <data name="AddLessionsPage.TitleTextBlock.Text" xml:space="preserve">
+    <value>Add Lession</value>
+  </data>
+  <data name="AddLessionsPage.LessionChiefTargetNullValue" xml:space="preserve">
+    <value>No Lession Chief Selected</value>
+  </data>
+  <data name="AddLessionsPage.LessionChiefComboBox.Header" xml:space="preserve">
+    <value>Lession Chief</value>
+  </data>
+  <data name="AddLessionsPage.LessionChiefComboBox.PlaceholderText" xml:space="preserve">
+    <value>Enter Lession Chief</value>
+  </data>
+  <data name="LessionDataView.CompleteFlyoutButton.Text" xml:space="preserve">
+    <value>Complete</value>
+  </data>
 </root>
