@@ -37,6 +37,16 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         private RelayCommand _addCommand;
 
+        /// <summary>
+        /// Field containing the <see cref="CancellationTokenSource"/> used to cancel running tasks still running at the end of the ViewModel's lifetime.
+        /// </summary>
+        private readonly CancellationTokenSource _vmLifetimeCts = new CancellationTokenSource();
+
+        /// <summary>
+        /// Field containing the <see cref="CancellationTokenSource"/> used to cancel list updates.
+        /// </summary>
+        private volatile CancellationTokenSource? _listUpdateCancellationTokenSource;
+
         //   ---   Public Properties   ---
 
         /// <summary>
@@ -53,6 +63,11 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// Gets the <see cref="Microsoft.UI.Dispatching.DispatcherQueue"/> instance of the view.
         /// </summary>
         public DispatcherQueue DispatcherQueue { get; }
+
+        /// <summary>
+        /// Gets the <see cref="CancellationToken"/> used to cancel task at the end of the ViewModel's lifetime.
+        /// </summary>
+        public CancellationToken VMLifetimeCancellationToken => _vmLifetimeCts.Token;
 
         /// <summary>
         /// Sets or gets the <see cref="Microsoft.UI.Xaml.XamlRoot"/> instance used for any dialogs.
@@ -87,7 +102,19 @@ namespace MilLeadershipBoard.UI.ViewModels
             DateOnly[] availableResourceDates = ResourceManager.GetAvailableResourceDates(DAILY_SCHEDULE_IMAGE_RESOURCE_NAME);
             foreach (DateOnly date in availableResourceDates)
             {
+                if (date < DateOnly.FromDateTime(DateTime.Today))
+                {
+                    ResourceManager.DeleteDatedResource(DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, date);
+
+                    continue;
+                }
+
                 LoadDailyScheduleImage(date);
+            }
+
+            if(DailySchedules.Count > 0)
+            {
+                RefreshSchedulesList();
             }
         }
 
@@ -123,7 +150,13 @@ namespace MilLeadershipBoard.UI.ViewModels
                         }
 
                         Task loadingTask = ResourceManager.TryLoadDatedImageResource(DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, date, image);
-                        loadingTask.ContinueWith(OnImageLoadingTaskComplete);
+                        loadingTask.ContinueWith(OnImageLoadingTaskComplete, VMLifetimeCancellationToken);
+
+                        if (i == 0)
+                        {
+                            // Renew the list updating task, as the first item changed
+                            RefreshSchedulesList();
+                        }
 
                         // No new DailySchedule instance needs to be added, return
                         if (iSchedule.Date == date)
@@ -147,11 +180,91 @@ namespace MilLeadershipBoard.UI.ViewModels
                     BitmapImage image = new BitmapImage();
 
                     Task loadingTask = ResourceManager.TryLoadDatedImageResource(DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, date, image);
-                    loadingTask.ContinueWith(OnImageLoadingTaskComplete);
+                    loadingTask.ContinueWith(OnImageLoadingTaskComplete, VMLifetimeCancellationToken);
 
                     DailySchedules.Add(new DailySchedule(date, image));
                 });
             }
+        }
+
+        /// <summary>
+        /// Method used to refresh the <see cref="DailySchedules"/> list and remove and delete outdated items.
+        /// </summary>
+        private void RefreshSchedulesList() => RefreshSchedulesList(Task.CompletedTask);
+
+        /// <summary>
+        /// Method used to refresh the <see cref="DailySchedules"/> list and remove and delete outdated items.
+        /// Matches the method outline of the <see cref="Task.ContinueWith(Action{Task})"/> method.
+        /// </summary>
+        /// <param name="completedTask">A completed task. Used to match the pattern of the <see cref="Task.ContinueWith(Action{Task})"/> method.</param>
+        private void RefreshSchedulesList(Task completedTask)
+        {
+            // Ensure no task is running and clean up the cancellation token source
+            _listUpdateCancellationTokenSource?.Cancel();
+            _listUpdateCancellationTokenSource?.Dispose();
+            _listUpdateCancellationTokenSource = null;
+
+            // Abort if no daily schedules are registered
+            if (DailySchedules.Count == 0)
+            {
+                return;
+            }
+
+            // Ignore if the task was cancelled
+            if (completedTask.IsCanceled)
+            {
+                return;
+            }
+
+            // Ignore if the task resulted in an exception
+            if (completedTask.IsFaulted)
+            {
+                // TODO: (optional) Add logging of this exception
+                return;
+            }
+
+            // Get the date of the most recent / next daily schedule
+            DateOnly mostRecentScheduleDate = DailySchedules[0].Date;
+
+            // Calculate the time to the next list update
+            DateTime listUpdateTime = new DateTime(mostRecentScheduleDate, TimeOnly.MinValue) + TimeSpan.FromDays(1);
+            TimeSpan timeToListUpdate = listUpdateTime - DateTime.Now;
+
+            // If less than 1 minute is left, do the refreshing
+            if (timeToListUpdate.Minutes < 1)
+            {
+                // Immediately refresh the list and re-call the method
+                // Note: This recursive call is needed to cover the case that the daily schedule this delay task was created for got deleted in the meanwhile.
+                // If the task got deleted in the meanwhile this code would not be called and the task would just be delayed instead.
+                // It also covers the case that there are multiple daily schedules that are outdated.
+
+                // Ensure that the schedule is removed before deleting the file as deleting the file will cause the schedule to be removed with a delay
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    lock (DailySchedules)
+                    {
+                        DailySchedules.RemoveAt(0);
+                    }
+
+                    RefreshSchedulesList();
+                });
+
+                // Delete the dated resource
+                ResourceManager.DeleteDatedResource(DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, mostRecentScheduleDate);
+
+                return;
+            }
+
+            // Abort if the ViewModel lifetime cancellation token is cancelled
+            if (VMLifetimeCancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
+            // Create a linked cancellation token source that is linked to the ViewModel lifetime cancellation token
+            _listUpdateCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(VMLifetimeCancellationToken);
+
+            Task.Delay(timeToListUpdate.Milliseconds, _listUpdateCancellationTokenSource.Token).ContinueWith(RefreshSchedulesList);
         }
 
         /// <summary>
@@ -192,11 +305,12 @@ namespace MilLeadershipBoard.UI.ViewModels
                 return;
             }
 
-            // Ignore outdated resources
+            // Check if resource is outdated
             if (args.Date < DateOnly.FromDateTime(DateTime.Today))
             {
+                // Delete outdated resource
+                ResourceManager.DeleteDatedResource(DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, args.Date);
                 return;
-                // TODO: Delete outdated resources
             }
 
             switch (args.Action)
@@ -273,6 +387,8 @@ namespace MilLeadershipBoard.UI.ViewModels
         public void Dispose()
         {
             ResourceManager.DatedResourceChanged -= ResourceManager_DatedResourceChanged;
+
+            _vmLifetimeCts.Cancel();
         }
     }
 }
