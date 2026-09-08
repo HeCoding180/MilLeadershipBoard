@@ -13,7 +13,7 @@
         x:Key="DailyScheduleItemTemplate"
         x:DataType="models:DailySchedule">
 
-        <Image
+        <uc:MaximizeableImageView
             Source="{Binding Source}"
             Stretch="Uniform"
             Margin="-12,4,-8,4"/>

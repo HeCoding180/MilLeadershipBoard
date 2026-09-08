@@ -29,9 +29,12 @@ namespace MilLeadershipBoard
     /// </summary>
     public partial class App : Application
     {
-        //   ---   Private Fields   ---
+        //   ---   Public Properties   ---
 
-        private Window? _window;
+        /// <summary>
+        /// Gets the <see cref="MainWindow"/> instance of this application.
+        /// </summary>
+        public MainWindow? MainWindowInstance { private set; get; }
 
         //   ---   Constructors   ---
 
@@ -66,10 +69,10 @@ namespace MilLeadershipBoard
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            _window = new MainWindow();
-            _window.Closed += _window_Closed;
+            MainWindowInstance = new MainWindow();
+            MainWindowInstance.Closed += _window_Closed;
 
-            _window.Activate();
+            MainWindowInstance.Activate();
         }
     }
 }

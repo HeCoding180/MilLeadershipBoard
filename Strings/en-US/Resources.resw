@@ -294,4 +294,7 @@
   <data name="AddDailySchedulePage.SelectScheduleFileOpenPicker.Title" xml:space="preserve">
     <value>Select a daily schedule image...</value>
   </data>
+  <data name="MaximizeableImageView.Image.Tooltip.Content" xml:space="preserve">
+    <value>Click to enlarge</value>
+  </data>
 </root>

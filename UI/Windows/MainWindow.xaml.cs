@@ -26,6 +26,13 @@ namespace MilLeadershipBoard.UI.Windows
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+        //   ---   Public Properties   ---
+
+        /// <summary>
+        /// Gets the <see cref="UIElement"/> that contains the main content.
+        /// </summary>
+        public UIElement MainContentElement => ContentFrame;
+
         //   ---   Constructors   ---
 
         public MainWindow()

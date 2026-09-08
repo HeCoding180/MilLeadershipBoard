@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="MilLeadershipBoard.UI.UserControls.MaximizeableImageView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MilLeadershipBoard.UI.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid>
+        <Image
+            x:Name="BaseImageControl"
+            Stretch="{x:Bind Stretch, Mode=OneWay}"
+            Source="{x:Bind Source, Mode=OneWay}"
+            Tapped="BaseImageControl_Tapped">
+
+            <ToolTipService.ToolTip>
+                <ToolTip x:Uid="MaximizeableImageView/Image/Tooltip"/>
+            </ToolTipService.ToolTip>
+        </Image>
+
+        <Popup
+            x:Name="MaximizedViewPopup"
+            IsLightDismissEnabled="True"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+            <Border
+                x:Name="PopupBorder"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+                <Image
+                    x:Name="PopupImageControl"
+                    Stretch="Uniform"
+                    Source="{x:Bind Source, Mode=OneWay}"
+                    Margin="32"/>
+            </Border>
+        </Popup>
+    </Grid>
+</UserControl>
