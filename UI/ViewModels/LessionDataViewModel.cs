@@ -125,22 +125,6 @@ namespace MilLeadershipBoard.UI.ViewModels
             get => _model;
         }
 
-        /// <summary>
-        /// Callback method for the <see cref="INotifyPropertyChanged.PropertyChanged"/> event of the <see cref="Model"/>.
-        /// </summary>
-        private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(LessionData.LessionName):
-                    OnPropertyChanged(nameof(LessionName));
-                    break;
-                case nameof(LessionData.LessionChiefFullName):
-                    OnPropertyChanged(nameof(LessionChiefName));
-                    break;
-            }
-        }
-
         //   ---   Public Events   ---
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -165,6 +149,22 @@ namespace MilLeadershipBoard.UI.ViewModels
             if (Model is null) return;
 
             ConfigManager.Config.Lessions.Remove(Model);
+        }
+
+        /// <summary>
+        /// Callback method for the <see cref="INotifyPropertyChanged.PropertyChanged"/> event of the <see cref="Model"/>.
+        /// </summary>
+        private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(LessionData.LessionName):
+                    OnPropertyChanged(nameof(LessionName));
+                    break;
+                case nameof(LessionData.LessionChiefFullName):
+                    OnPropertyChanged(nameof(LessionChiefName));
+                    break;
+            }
         }
 
         //   ---   Protected Methods   ---

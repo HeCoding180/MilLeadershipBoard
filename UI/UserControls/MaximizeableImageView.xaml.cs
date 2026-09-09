@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using MilLeadershipBoard.UI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -52,12 +53,12 @@ namespace MilLeadershipBoard.UI.UserControls
                                                                                                 typeof(MaximizeableImageView),
                                                                                                 new PropertyMetadata(Stretch.Uniform));
 
-        //   ---   Private Properties (static)   ---
+        //   ---   Private Properties   ---
 
         /// <summary>
-        /// Gets the <see cref="UIElement"/> that is used as the reference for dimensions.
+        /// Gets the ViewModel of this View.
         /// </summary>
-        private static UIElement RootUiElement => ((App)App.Current).MainWindowInstance!.MainContentElement;
+        private MaximizeableImageViewModel ViewModel { get; }
 
         //   ---   Public Properties   ---
 
@@ -91,6 +92,11 @@ namespace MilLeadershipBoard.UI.UserControls
         /// </summary>
         public MaximizeableImageView()
         {
+            // Create the date context
+            ViewModel = new MaximizeableImageViewModel(this);
+
+            ViewModel.MaximizedViewOpened += OnMaximizedViewOpened;
+
             InitializeComponent();
 
             // Listen for changes to the attached ToolTipService.ToolTip property on THIS control
@@ -104,7 +110,7 @@ namespace MilLeadershipBoard.UI.UserControls
         /// </summary>
         private void BaseImageControl_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            OpenMaximizedView();
+            ViewModel.OpenMaximizedView();
         }
 
         /// <summary>
@@ -112,6 +118,7 @@ namespace MilLeadershipBoard.UI.UserControls
         /// </summary>
         private void Border_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
+            ViewModel.OnMaximizedImageViewPointerEntered();
             CloseButtonBorder.Visibility = CloseButtonVisibility;
         }
 
@@ -120,7 +127,17 @@ namespace MilLeadershipBoard.UI.UserControls
         /// </summary>
         private void Border_PointerExited(object sender, PointerRoutedEventArgs e)
         {
+            ViewModel.OnMaximizedImageViewPointerExited();
             CloseButtonBorder.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Callback method for the <see cref="MaximizeableImageViewModel.MaximizedViewOpened"/> event of the ViewModel.
+        /// </summary>
+        private void OnMaximizedViewOpened()
+        {
+            // Focus the popup image to allow keyboard input capture
+            PopupImageControl.Focus(FocusState.Programmatic);
         }
 
         private void OnToolTipChanged(DependencyObject sender, DependencyProperty dp)
@@ -132,48 +149,42 @@ namespace MilLeadershipBoard.UI.UserControls
             ToolTipService.SetToolTip(BaseImageControl, tooltip);
         }
 
+        private void PopupBorder_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            // Close the popup (border was tapped -> light dismiss behavior)
+            ViewModel.CloseMaximizedView();
+        }
+
         private void PopupImageControl_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Escape)
             {
-                // Close the popup
-                CloseMaximizedView();
+                ViewModel.CloseMaximizedView();
             }
         }
 
-        private void PopupBorder_Tapped(object sender, TappedRoutedEventArgs e)
+        /// <summary>
+        /// Callback method for the <see cref="FrameworkElement.Loaded"/> event.
+        /// </summary>
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            // Close the popup (border was tapped -> light dismiss behavior)
-            CloseMaximizedView();
+            ViewModel.RefreshVisualProperties();
         }
 
-        //   ---   Public Methods   ---
-
         /// <summary>
-        /// Method used to close the maximized view of the image.
+        /// Callback method for the <see cref="FrameworkElement.Unloaded"/> event.
         /// </summary>
-        public void CloseMaximizedView() => MaximizedViewPopup.IsOpen = false;
-
-        /// <summary>
-        /// Method used to open the maximized view of the image.
-        /// </summary>
-        public void OpenMaximizedView()
+        private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            // Calculate the positioning of the popup
-            var transform = this.TransformToVisual(RootUiElement);
-            var origin = transform.TransformPoint(new Point(0, 0));
+            ViewModel.Dispose();
+        }
 
-            MaximizedViewPopup.HorizontalOffset = -origin.X;
-            MaximizedViewPopup.VerticalOffset = -origin.Y;
-
-            PopupGrid.Width = RootUiElement.ActualSize.X;
-            PopupGrid.Height = RootUiElement.ActualSize.Y;
-
-            // Open the popup
-            MaximizedViewPopup.IsOpen = true;
-
-            // Focus the popup image to allow keyboard input capture
-            PopupImageControl.Focus(FocusState.Programmatic);
+        /// <summary>
+        /// Callback method for the <see cref="FrameworkElement.SizeChanged"/> event.
+        /// </summary>
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ViewModel.RefreshVisualProperties();
         }
     }
 }

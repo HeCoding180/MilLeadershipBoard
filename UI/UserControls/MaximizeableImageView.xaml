@@ -6,7 +6,10 @@
     xmlns:local="using:MilLeadershipBoard.UI.UserControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="OnLoaded"
+    Unloaded="OnUnloaded"
+    SizeChanged="OnSizeChanged">
     <Grid>
         <Image
             x:Name="BaseImageControl"
@@ -21,13 +24,18 @@
 
         <Popup
             x:Name="MaximizedViewPopup"
-            IsLightDismissEnabled="False"
+            IsLightDismissEnabled="True"
+            IsOpen="{x:Bind ViewModel.IsMaximizedViewOpen, Mode=OneWay}"
             HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch">
+            VerticalAlignment="Stretch"
+            HorizontalOffset="{x:Bind ViewModel.HorizontalPopupOffset, Mode=OneWay}"
+            VerticalOffset="{x:Bind ViewModel.VerticalPopupOffset, Mode=OneWay}">
             <Grid
                 x:Name="PopupGrid"
                 HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch">
+                VerticalAlignment="Stretch"
+                Height="{x:Bind ViewModel.PopupHeight, Mode=OneWay}"
+                Width="{x:Bind ViewModel.PopupWidth, Mode=OneWay}">
 
                 <Border
                     x:Name="PopupBorder"
@@ -65,11 +73,12 @@
                             x:Name="CloseButtonBorder"
                             Background="{ThemeResource PopupBackgroundBrush}"
                             CornerRadius="{StaticResource ControlCornerRadius}"
-                            Visibility="{x:Bind CloseButtonVisibility, Mode=OneTime}"
+                            Visibility="{x:Bind ViewModel.CloseButtonVisibility, Mode=OneWay}"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Margin="12">
-                            <Button>
+                            <Button
+                                Command="{x:Bind ViewModel.CloseCommand, Mode=OneTime}">
                                 <SymbolIcon Symbol="Cancel"/>
                             </Button>
                         </Border>
