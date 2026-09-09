@@ -24,16 +24,41 @@
             IsLightDismissEnabled="True"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch">
-            <Border
-                x:Name="PopupBorder"
+            <Grid
+                x:Name="PopupGrid"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch">
-                <Image
-                    x:Name="PopupImageControl"
-                    Stretch="Uniform"
-                    Source="{x:Bind Source, Mode=OneWay}"
-                    Margin="32"/>
-            </Border>
+
+                <Border
+                    x:Name="PopupBorder"
+                    Background="{StaticResource TileBackgroundFillColor}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Tapped="PopupBorder_Tapped"/>
+
+                <Border
+                    Background="{ThemeResource PopupBackgroundBrush}"
+                    BorderBrush="{ThemeResource PopupBorderBrush}"
+                    BorderThickness="{StaticResource ContentDialogBorderWidth}"
+                    CornerRadius="{StaticResource OverlayCornerRadius}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="32">
+
+                    <Border
+                        CornerRadius="{StaticResource ControlCornerRadius}"
+                        Margin="8">
+
+                        <Image
+                            x:Name="PopupImageControl"
+                            Stretch="Uniform"
+                            Source="{x:Bind Source, Mode=OneWay}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            KeyDown="PopupImageControl_KeyDown"/>
+                    </Border>
+                </Border>
+            </Grid>
         </Popup>
     </Grid>
 </UserControl>

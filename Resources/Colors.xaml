@@ -11,6 +11,12 @@
             <SolidColorBrush
                 x:Key="DimForegroundColor"
                 Color="#A0FFFFFF"/>
+            <SolidColorBrush
+                x:Key="PopupBackgroundBrush"
+                Color="#1F1F1F"/>
+            <SolidColorBrush
+                x:Key="PopupBorderBrush"
+                Color="#3F3F3F"/>
         </ResourceDictionary>
         <ResourceDictionary x:Key="Light">
             <SolidColorBrush
@@ -19,6 +25,12 @@
             <SolidColorBrush
                 x:Key="DimForegroundColor"
                 Color="#a0000000"/>
+            <SolidColorBrush
+                x:Key="PopupBackgroundBrush"
+                Color="#EFEFEF"/>
+            <SolidColorBrush
+                x:Key="PopupBorderBrush"
+                Color="LightGray"/>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

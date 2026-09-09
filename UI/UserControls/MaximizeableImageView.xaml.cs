@@ -12,6 +12,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -40,6 +41,13 @@ namespace MilLeadershipBoard.UI.UserControls
                                                                                                typeof(ImageSource),
                                                                                                typeof(MaximizeableImageView),
                                                                                                new PropertyMetadata(null));
+
+        //   ---   Private Properties (static)   ---
+
+        /// <summary>
+        /// Gets the <see cref="UIElement"/> that is used as the reference for dimensions
+        /// </summary>
+        private static UIElement RootUiElement => ((App)App.Current).MainWindowInstance!.MainContentElement;
 
         //   ---   Public Properties   ---
 
@@ -86,17 +94,51 @@ namespace MilLeadershipBoard.UI.UserControls
         /// </summary>
         private void BaseImageControl_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            // Where does this page sit relative to the window's root?
-            var transform = this.TransformToVisual(((App)App.Current).MainWindowInstance!.MainContentElement);
+            OpenMaximizedView();
+        }
+
+        private void PopupImageControl_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Escape)
+            {
+                // Close the popup
+                CloseMaximizedView();
+            }
+        }
+
+        private void PopupBorder_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            // Close the popup (border was tapped -> light dismiss behavior)
+            CloseMaximizedView();
+        }
+
+        //   ---   Public Methods   ---
+
+        /// <summary>
+        /// Method used to close the maximized view of the image.
+        /// </summary>
+        public void CloseMaximizedView() => MaximizedViewPopup.IsOpen = false;
+
+        /// <summary>
+        /// Method used to open the maximized view of the image.
+        /// </summary>
+        public void OpenMaximizedView()
+        {
+            // Calculate the positioning of the popup
+            var transform = this.TransformToVisual(RootUiElement);
             var origin = transform.TransformPoint(new Point(0, 0));
 
             MaximizedViewPopup.HorizontalOffset = -origin.X;
             MaximizedViewPopup.VerticalOffset = -origin.Y;
 
-            PopupBorder.Width = XamlRoot.Size.Width;
-            PopupBorder.Height = XamlRoot.Size.Height;
+            PopupGrid.Width = RootUiElement.ActualSize.X;
+            PopupGrid.Height = RootUiElement.ActualSize.Y;
 
+            // Open the popup
             MaximizedViewPopup.IsOpen = true;
+
+            // Focus the popup image to allow keyboard input capture
+            PopupImageControl.Focus(FocusState.Programmatic);
         }
     }
 }
