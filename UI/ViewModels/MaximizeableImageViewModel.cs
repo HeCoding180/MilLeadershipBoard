@@ -144,17 +144,38 @@ namespace MilLeadershipBoard.UI.ViewModels
         {
             View = view;
 
-            Origin = View.TransformToVisual(RootUiElement).TransformPoint(ZeroPoint);
+            // Assign a dummy origin
+            Origin = ZeroPoint;
 
+            // Create the close command
+            _closeCommand = new RelayCommand(CloseMaximizedView);
+
+            if (View.IsLoaded)
+            {
+                OnViewLoaded();
+            }
+            else
+            {
+                View.Loaded += (s, e) => OnViewLoaded();
+            }
+        }
+
+        //   ---   Private Methods   ---
+
+        /// <summary>
+        /// Method that is called when the view is loaded.
+        /// </summary>
+        private void OnViewLoaded()
+        {
+            // Refresh the visual properties
+            RefreshVisualProperties();
+
+            // Subscribe to the PropertyChanged event of the root UI element
             if (RootUiElement is INotifyPropertyChanged pc)
             {
                 pc.PropertyChanged += RootUiElement_PropertyChanged;
             }
-
-            _closeCommand = new RelayCommand(CloseMaximizedView);
         }
-
-        //   ---   Private Methods   ---
 
         /// <summary>
         /// Callback method for the <see cref="INotifyPropertyChanged.PropertyChanged"/> event of the <see cref="RootUiElement"/>.

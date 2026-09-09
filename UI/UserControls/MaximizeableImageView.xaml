@@ -14,8 +14,7 @@
         <Image
             x:Name="BaseImageControl"
             Stretch="{x:Bind Stretch, Mode=OneWay}"
-            Source="{x:Bind Source, Mode=OneWay}"
-            Tapped="BaseImageControl_Tapped">
+            Source="{x:Bind Source, Mode=OneWay}">
 
             <ToolTipService.ToolTip>
                 <ToolTip x:Uid="MaximizeableImageView/Image/Tooltip"/>

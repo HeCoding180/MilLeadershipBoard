@@ -8,6 +8,22 @@ namespace MilLeadershipBoard.Util
 {
     internal static class Util
     {
+        //   ---   Public Properties   ---
+
+        /// <summary>
+        /// Gets the system double click time in milliseconds set for this user.
+        /// </summary>
+        public static uint DoubleClickTime => GetDoubleClickTime();
+
+        //   ---   Private Methods (extern)   ---
+
+        /// <summary>
+        /// Gets the set time for a doubleclick in milliseconds.
+        /// </summary>
+        /// <returns></returns>
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern uint GetDoubleClickTime();
+
         //   ---   Public Methods   ---
 
         /// <summary>

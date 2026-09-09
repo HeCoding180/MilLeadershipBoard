@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using MilLeadershipBoard.UI.ViewModels;
+using MilLeadershipBoard.Util;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -56,9 +57,14 @@ namespace MilLeadershipBoard.UI.UserControls
         //   ---   Private Properties   ---
 
         /// <summary>
-        /// Gets the ViewModel of this View.
+        /// Field containing the ViewModel of this View.
         /// </summary>
-        private MaximizeableImageViewModel ViewModel { get; }
+        private readonly MaximizeableImageViewModel ViewModel;
+
+        /// <summary>
+        /// Field containing the <see cref="ClickEventWrapper"/> instance used to detect single clicks.
+        /// </summary>
+        private readonly ClickEventWrapper BaseImageControlClickEventWrapper;
 
         //   ---   Public Properties   ---
 
@@ -99,6 +105,10 @@ namespace MilLeadershipBoard.UI.UserControls
 
             InitializeComponent();
 
+            // Initialize the ClickEventWrapper
+            BaseImageControlClickEventWrapper = new ClickEventWrapper(BaseImageControl);
+            BaseImageControlClickEventWrapper.SingleTapped += BaseImageControlClickEventWrapper_SingleTapped;
+
             // Listen for changes to the attached ToolTipService.ToolTip property on THIS control
             RegisterPropertyChangedCallback(ToolTipService.ToolTipProperty, OnToolTipChanged);
         }
@@ -106,9 +116,9 @@ namespace MilLeadershipBoard.UI.UserControls
         //   ---   Private Methods   ---
 
         /// <summary>
-        /// Callback method for the <see cref="UIElement.Tapped"/> event of the <see cref="BaseImageControl"/>.
+        /// Callback method for the <see cref="ClickEventWrapper.SingleTapped"/> event of the <see cref="BaseImageControl"/>.
         /// </summary>
-        private void BaseImageControl_Tapped(object sender, TappedRoutedEventArgs e)
+        private void BaseImageControlClickEventWrapper_SingleTapped(object sender, TappedRoutedEventArgs e)
         {
             ViewModel.OpenMaximizedView();
         }
