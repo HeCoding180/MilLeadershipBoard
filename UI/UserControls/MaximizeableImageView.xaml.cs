@@ -7,9 +7,11 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
@@ -27,12 +29,12 @@ namespace MilLeadershipBoard.UI.UserControls
         //   ---   Public Fields (static)   ---
 
         /// <summary>
-        /// Field containing the <see cref="DependencyProperty"/> for the <see cref="Stretch"/> property.
+        /// Field containing the <see cref="DependencyProperty"/> for the <see cref="CloseButtonVisibility"/> property.
         /// </summary>
-        public static readonly DependencyProperty StretchProperty = DependencyProperty.Register(nameof(Stretch),
-                                                                                                typeof(Stretch),
-                                                                                                typeof(MaximizeableImageView),
-                                                                                                new PropertyMetadata(Stretch.Uniform));
+        public static readonly DependencyProperty CloseButtonVisibilityProperty = DependencyProperty.Register(nameof(CloseButtonVisibility),
+                                                                                               typeof(Visibility),
+                                                                                               typeof(MaximizeableImageView),
+                                                                                               new PropertyMetadata(Visibility.Visible));
 
         /// <summary>
         /// Field containing the <see cref="DependencyProperty"/> for the <see cref="Source"/> property.
@@ -42,20 +44,30 @@ namespace MilLeadershipBoard.UI.UserControls
                                                                                                typeof(MaximizeableImageView),
                                                                                                new PropertyMetadata(null));
 
+        /// <summary>
+        /// Field containing the <see cref="DependencyProperty"/> for the <see cref="Stretch"/> property.
+        /// </summary>
+        public static readonly DependencyProperty StretchProperty = DependencyProperty.Register(nameof(Stretch),
+                                                                                                typeof(Stretch),
+                                                                                                typeof(MaximizeableImageView),
+                                                                                                new PropertyMetadata(Stretch.Uniform));
+
         //   ---   Private Properties (static)   ---
 
         /// <summary>
-        /// Gets the <see cref="UIElement"/> that is used as the reference for dimensions
+        /// Gets the <see cref="UIElement"/> that is used as the reference for dimensions.
         /// </summary>
         private static UIElement RootUiElement => ((App)App.Current).MainWindowInstance!.MainContentElement;
 
         //   ---   Public Properties   ---
 
-        /// <inheritdoc cref="Image.Stretch"/>
-        public Stretch Stretch
+        /// <summary>
+        /// Sets or gets the <see cref="Visibility"/> of the close button in the maximized view of the image.
+        /// </summary>
+        public Visibility CloseButtonVisibility
         {
-            set => SetValue(StretchProperty, value);
-            get => (Stretch)GetValue(StretchProperty);
+            set => SetValue(CloseButtonVisibilityProperty, value);
+            get => (Visibility)GetValue(CloseButtonVisibilityProperty);
         }
 
         /// <inheritdoc cref="Image.Source"/>
@@ -63,6 +75,13 @@ namespace MilLeadershipBoard.UI.UserControls
         {
             set => SetValue(SourceProperty, value);
             get => (ImageSource)GetValue(SourceProperty);
+        }
+
+        /// <inheritdoc cref="Image.Stretch"/>
+        public Stretch Stretch
+        {
+            set => SetValue(StretchProperty, value);
+            get => (Stretch)GetValue(StretchProperty);
         }
 
         //   ---   Constructors   ---
@@ -80,6 +99,30 @@ namespace MilLeadershipBoard.UI.UserControls
 
         //   ---   Private Methods   ---
 
+        /// <summary>
+        /// Callback method for the <see cref="UIElement.Tapped"/> event of the <see cref="BaseImageControl"/>.
+        /// </summary>
+        private void BaseImageControl_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            OpenMaximizedView();
+        }
+
+        /// <summary>
+        /// Callback method for the <see cref="UIElement.PointerEntered"/> event.
+        /// </summary>
+        private void Border_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            CloseButtonBorder.Visibility = CloseButtonVisibility;
+        }
+
+        /// <summary>
+        /// Callback method for the <see cref="UIElement.PointerExited"/> event.
+        /// </summary>
+        private void Border_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            CloseButtonBorder.Visibility = Visibility.Collapsed;
+        }
+
         private void OnToolTipChanged(DependencyObject sender, DependencyProperty dp)
         {
             var tooltip = ToolTipService.GetToolTip(this);
@@ -87,14 +130,6 @@ namespace MilLeadershipBoard.UI.UserControls
             // Move it off the UserControl and onto the inner Image
             ToolTipService.SetToolTip(this, null);
             ToolTipService.SetToolTip(BaseImageControl, tooltip);
-        }
-
-        /// <summary>
-        /// Callback method for the <see cref="UIElement.Tapped"/> event of the <see cref="BaseImageControl"/>.
-        /// </summary>
-        private void BaseImageControl_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            OpenMaximizedView();
         }
 
         private void PopupImageControl_KeyDown(object sender, KeyRoutedEventArgs e)

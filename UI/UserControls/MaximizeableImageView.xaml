@@ -21,7 +21,7 @@
 
         <Popup
             x:Name="MaximizedViewPopup"
-            IsLightDismissEnabled="True"
+            IsLightDismissEnabled="False"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch">
             <Grid
@@ -43,20 +43,37 @@
                     CornerRadius="{StaticResource OverlayCornerRadius}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Margin="32">
+                    Margin="32"
+                    PointerEntered="Border_PointerEntered"
+                    PointerExited="Border_PointerExited">
 
-                    <Border
-                        CornerRadius="{StaticResource ControlCornerRadius}"
-                        Margin="8">
+                    <Grid>
+                        <Border
+                            CornerRadius="{StaticResource ControlCornerRadius}"
+                            Margin="8">
 
-                        <Image
-                            x:Name="PopupImageControl"
-                            Stretch="Uniform"
-                            Source="{x:Bind Source, Mode=OneWay}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            KeyDown="PopupImageControl_KeyDown"/>
-                    </Border>
+                            <Image
+                                x:Name="PopupImageControl"
+                                Stretch="Uniform"
+                                Source="{x:Bind Source, Mode=OneWay}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                KeyDown="PopupImageControl_KeyDown"/>
+                        </Border>
+
+                        <Border
+                            x:Name="CloseButtonBorder"
+                            Background="{ThemeResource PopupBackgroundBrush}"
+                            CornerRadius="{StaticResource ControlCornerRadius}"
+                            Visibility="{x:Bind CloseButtonVisibility, Mode=OneTime}"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Margin="12">
+                            <Button>
+                                <SymbolIcon Symbol="Cancel"/>
+                            </Button>
+                        </Border>
+                    </Grid>
                 </Border>
             </Grid>
         </Popup>
