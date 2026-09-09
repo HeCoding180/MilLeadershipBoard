@@ -21,7 +21,7 @@
         <ResourceDictionary x:Key="Light">
             <SolidColorBrush
                 x:Key="TileBackgroundFillColor"
-                Color="#0D000000"/>
+                Color="#0E000000"/>
             <SolidColorBrush
                 x:Key="DimForegroundColor"
                 Color="#a0000000"/>
