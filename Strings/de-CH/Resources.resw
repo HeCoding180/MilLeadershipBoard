@@ -255,7 +255,7 @@
   <data name="AddLessionsPage.NameTextBox.PlaceholderText" xml:space="preserve">
     <value>Lektionsname eingeben</value>
   </data>
-  <data name="AddLessionsPage.TitleTextBlock.Text" xml:space="preserve">
+  <data name="LessionsPage.AddLessionContentDialog.Title" xml:space="preserve">
     <value>Lektion Hinzufügen</value>
   </data>
   <data name="AddLessionsPage.LessionChiefTargetNullValue" xml:space="preserve">
@@ -296,5 +296,8 @@
   </data>
   <data name="MaximizeableImageView.Image.Tooltip.Content" xml:space="preserve">
     <value>Anclicken zum vergrössern</value>
+  </data>
+  <data name="DailySchedulePage.AddDialog.Title" xml:space="preserve">
+    <value>Tagesplan Hinzufügen</value>
   </data>
 </root>

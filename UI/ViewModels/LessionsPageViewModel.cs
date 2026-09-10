@@ -75,6 +75,7 @@ namespace MilLeadershipBoard.UI.ViewModels
 
             ContentDialog dialog = new ContentDialog()
             {
+                Title = ResourceManager.GetString("LessionsPage/AddLessionContentDialog/Title"),
                 DefaultButton = ContentDialogButton.Primary,
                 PrimaryButtonText = ResourceManager.GetString("LessionsPage/AddLessionContentDialog/PrimaryButtonText"),
                 IsPrimaryButtonEnabled = false,

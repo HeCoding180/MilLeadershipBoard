@@ -356,6 +356,7 @@ namespace MilLeadershipBoard.UI.ViewModels
 
             ContentDialog dialog = new ContentDialog()
             {
+                Title = ResourceManager.GetString("DailySchedulePage/AddDialog/Title"),
                 PrimaryButtonText = ResourceManager.GetString("DailySchedulePage/AddDialog/PrimaryButtonText"),
                 PrimaryButtonCommand = addCommand,
                 IsPrimaryButtonEnabled = false,
