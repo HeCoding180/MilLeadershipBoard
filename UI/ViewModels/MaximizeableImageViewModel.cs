@@ -14,7 +14,7 @@ using Windows.Foundation;
 namespace MilLeadershipBoard.UI.ViewModels
 {
     /// <summary>
-    /// ViewModel class for the <see cref="UserControls.MaximizeableImageView"/> view class.
+    /// ViewModel class for the <see cref="MaximizeableImageView"/> view class.
     /// </summary>
     class MaximizeableImageViewModel : INotifyPropertyChanged, IDisposable
     {
@@ -96,7 +96,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         public bool IsMaximizedViewOpen
         {
-            private set
+            set
             {
                 if (value == _isMaximizedViewOpen)
                 {
