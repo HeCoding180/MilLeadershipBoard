@@ -118,112 +118,112 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BreaksPage_Title.Text" xml:space="preserve">
-    <value>Breaks</value>
+    <value>Pausen</value>
   </data>
   <data name="DailySchedulePage_Title.Text" xml:space="preserve">
-    <value>Daily Schedules</value>
+    <value>Tagespläne</value>
   </data>
   <data name="LessionsPage_Title.Text" xml:space="preserve">
-    <value>Lessions</value>
+    <value>Lektionen</value>
   </data>
   <data name="LocationsPage.LocationNameTextBox.HeaderText" xml:space="preserve">
-    <value>Location Name</value>
+    <value>Standort Name</value>
   </data>
   <data name="LocationsPage.LocationNameTextBox.PlaceholderText" xml:space="preserve">
-    <value>Enter a name for the Location</value>
+    <value>Name für den Standort eingeben</value>
   </data>
   <data name="LocationsPage.AddLocationDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Create</value>
+    <value>Erstellen</value>
   </data>
   <data name="LocationsPage.AddLocationDialog.SecondaryButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="LocationsPage.AddLocationDialog.Title" xml:space="preserve">
-    <value>Add Location</value>
+    <value>Standort Hinzufügen</value>
   </data>
   <data name="LocationsPage_Title.Text" xml:space="preserve">
-    <value>Locations</value>
+    <value>Standorte</value>
   </data>
   <data name="SoldierLocationView.DeleteFlyoutButton.Text" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="SoldierLocationView.MakeDefaultDialog.AcceptButtonText" xml:space="preserve">
-    <value>Yes</value>
+    <value>Ja</value>
   </data>
   <data name="SoldierLocationView.DeleteDialog.AcceptButtonText" xml:space="preserve">
-    <value>Yes</value>
+    <value>Ja</value>
   </data>
   <data name="SoldierLocationView.MakeDefaultDialog.Content" xml:space="preserve">
-    <value>Do you really want to make this location the default location?</value>
+    <value>Möchten Sie diesen Standort als Standard-Standort festlegen?</value>
   </data>
   <data name="SoldierLocationView.DeleteDialog.Content" xml:space="preserve">
-    <value>Do you really want to delete this location?</value>
+    <value>Möchten Sie diesen Standort wirklich löschen?</value>
   </data>
   <data name="SoldierLocationView.MakeDefaultDialog.Title" xml:space="preserve">
-    <value>Make Default?</value>
+    <value>Als Standard festlegen?</value>
   </data>
   <data name="SoldierLocationView.DeleteDialog.Title" xml:space="preserve">
-    <value>Delete Location?</value>
+    <value>Standort Löschen?</value>
   </data>
   <data name="SoldierLocationView.MakeDefaultFlyoutButton.Text" xml:space="preserve">
-    <value>Make Default</value>
+    <value>Als Standard festlegen</value>
   </data>
   <data name="SoldierLocationView.RenameFlyoutButton.Text" xml:space="preserve">
-    <value>Rename</value>
+    <value>Umbenennen</value>
   </data>
   <data name="SpecialAssignmentsPage_Title.Text" xml:space="preserve">
-    <value>Special Orders</value>
+    <value>Besondere Befehle</value>
   </data>
   <data name="WeeklySchedulePage_Title.Text" xml:space="preserve">
-    <value>Weekly Schedule</value>
+    <value>Wochenplan</value>
   </data>
   <data name="SoldierLocationView.MakeDefaultDialog.RejectButtonText" xml:space="preserve">
-    <value>No</value>
+    <value>Nein</value>
   </data>
   <data name="SoldierLocationView.DeleteDialog.RejectButtonText" xml:space="preserve">
-    <value>No</value>
+    <value>Nein</value>
   </data>
   <data name="SoldierLocationView.RenameDialog.Title" xml:space="preserve">
-    <value>Rename Location</value>
+    <value>Standort Umbebennen</value>
   </data>
   <data name="SoldierLocationView.RenameDialog.AcceptButtonText" xml:space="preserve">
-    <value>Accept</value>
+    <value>Bestätigen</value>
   </data>
   <data name="SoldierLocationView.RenameDialog.RejectButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="SoldiersPage.FirstNameTextBox.PlaceholderText" xml:space="preserve">
-    <value>Enter First Name</value>
+    <value>Vorname eingeben</value>
   </data>
   <data name="SoldiersPage.LastNameTextBox.PlaceholderText" xml:space="preserve">
-    <value>Enter Last Name</value>
+    <value>Nachname eingeben</value>
   </data>
   <data name="SoldiersPage.RankTextBox.PlaceholderText" xml:space="preserve">
-    <value>Rank</value>
+    <value>Rang</value>
   </data>
   <data name="SoldiersPage.AddButton.Content" xml:space="preserve">
-    <value>Add</value>
+    <value>Hinzufügen</value>
   </data>
   <data name="SoldiersPage.SoldiersTable.RankColumn.Header" xml:space="preserve">
-    <value>Rank</value>
+    <value>Rang</value>
   </data>
   <data name="SoldiersPage.SoldiersTable.FirstNameColumn.Header" xml:space="preserve">
-    <value>First Name</value>
+    <value>Vorname</value>
   </data>
   <data name="SoldiersPage.SoldiersTable.LastNameColumn.Header" xml:space="preserve">
-    <value>Last Name</value>
+    <value>Nachname</value>
   </data>
   <data name="SoldiersPage.SoldiersTable.LocationColumn.Header" xml:space="preserve">
-    <value>Location</value>
+    <value>Standort</value>
   </data>
   <data name="SoldiersPage.SoldiersTable.LocationCellComboBox.PlaceholderText" xml:space="preserve">
-    <value>Unassigned</value>
+    <value>Kein Standort festgelegt</value>
   </data>
   <data name="BreaksPage.BreaksCounter.MinutesText" xml:space="preserve">
     <value>min</value>
   </data>
   <data name="BreaksPage.AddBreakHeaderTextBlock.Text" xml:space="preserve">
-    <value>Add Break</value>
+    <value>Pause Hinzufügen</value>
   </data>
   <data name="BreaksPage.AddFiveMinButton.Content" xml:space="preserve">
     <value>5 min</value>
@@ -235,66 +235,66 @@
     <value>15 min</value>
   </data>
   <data name="WeeklySchedulePage.ScheduleSelectionTextBlock.Text" xml:space="preserve">
-    <value>Select Schedule...</value>
+    <value>Zeitplan Auswählen...</value>
   </data>
   <data name="WeeklySchedulePage.SelectScheduleStoragePicker.CommitButtonText" xml:space="preserve">
-    <value>Open</value>
+    <value>Öffnen</value>
   </data>
   <data name="WeeklySchedulePage.ScheduleImageToolTip.Content" xml:space="preserve">
-    <value>Doubleclick to change</value>
+    <value>Doppelt anclicken um abzuändern</value>
   </data>
   <data name="LessionsPage.AddLessionContentDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Add</value>
+    <value>Hinzufügen</value>
   </data>
   <data name="LessionsPage.AddLessionContentDialog.SecondaryButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="AddLessionsPage.NameTextBox.Header" xml:space="preserve">
-    <value>Lession Name</value>
+    <value>Lektionsname</value>
   </data>
   <data name="AddLessionsPage.NameTextBox.PlaceholderText" xml:space="preserve">
-    <value>Enter Lession Name</value>
+    <value>Lektionsname eingeben</value>
   </data>
   <data name="AddLessionsPage.TitleTextBlock.Text" xml:space="preserve">
-    <value>Add Lession</value>
+    <value>Lektion Hinzufügen</value>
   </data>
   <data name="AddLessionsPage.LessionChiefTargetNullValue" xml:space="preserve">
-    <value>No Lession Chief Selected</value>
+    <value>Kein Lektionschef ausgewählt</value>
   </data>
   <data name="AddLessionsPage.LessionChiefComboBox.Header" xml:space="preserve">
-    <value>Lession Chief</value>
+    <value>Lektionschef</value>
   </data>
   <data name="AddLessionsPage.LessionChiefComboBox.PlaceholderText" xml:space="preserve">
-    <value>Enter lession chief</value>
+    <value>Lektionschef eingeben</value>
   </data>
   <data name="LessionDataView.CompleteFlyoutButton.Text" xml:space="preserve">
-    <value>Complete</value>
+    <value>Abschliessen</value>
   </data>
   <data name="AddDailySchedulePage.DatePicker.Header" xml:space="preserve">
-    <value>Schedule Date</value>
+    <value>Datum Tagesplan</value>
   </data>
   <data name="AddDailySchedulePage.PathTextBox.Header" xml:space="preserve">
-    <value>Schedule Image Path</value>
+    <value>Dateipfad Tagesplan</value>
   </data>
   <data name="AddDailySchedulePage.PathTextBox.PlaceholderText" xml:space="preserve">
-    <value>Enter a schedule path...</value>
+    <value>Dateipfad füt Tagesplan eingeben...</value>
   </data>
   <data name="AddDailySchedulePage.BrowseButton.Content" xml:space="preserve">
     <value>Browse</value>
   </data>
   <data name="DailySchedulePage.AddDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Add</value>
+    <value>Hinzufügen</value>
   </data>
   <data name="DailySchedulePage.AddDialog.SecondaryButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="AddDailySchedulePage.SelectScheduleFileOpenPicker.CommitButtonText" xml:space="preserve">
-    <value>Select</value>
+    <value>Auswählen</value>
   </data>
   <data name="AddDailySchedulePage.SelectScheduleFileOpenPicker.Title" xml:space="preserve">
-    <value>Select a daily schedule image...</value>
+    <value>Bilddatei für den Tagesplan auswählen...</value>
   </data>
   <data name="MaximizeableImageView.Image.Tooltip.Content" xml:space="preserve">
-    <value>Click to enlarge</value>
+    <value>Anclicken zum vergrössern</value>
   </data>
 </root>
