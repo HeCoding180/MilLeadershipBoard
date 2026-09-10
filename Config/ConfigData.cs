@@ -17,7 +17,15 @@ namespace MilLeadershipBoard.Config
     {
         //   ---   Private Fields   ---
 
+        /// <summary>
+        /// Field containing the value of the <see cref="BreaksCounter"/> property.
+        /// </summary>
         private int _breaksCounter = 0;
+
+        /// <summary>
+        /// Field containing the value of the <see cref="DailyScheduleDateFormat"/> property.
+        /// </summary>
+        private string _dailyScheduleDateFormat = "dddd, d. MMM yyyy";
 
         /// <summary>
         /// Field containing the value of the <see cref="DefaultLocation"/> property.
@@ -44,6 +52,26 @@ namespace MilLeadershipBoard.Config
                 OnPropertyChanged();
             }
             get => _breaksCounter;
+        }
+
+        /// <summary>
+        /// Sets or gets the format string used for the date of the daily schedules.
+        /// </summary>
+        [JsonPropertyName("DailyScheduleDateFormat")]
+        public string DailyScheduleDateFormat
+        {
+            set
+            {
+                if (value == _dailyScheduleDateFormat)
+                {
+                    return;
+                }
+
+                _dailyScheduleDateFormat = value;
+
+                OnPropertyChanged();
+            }
+            get => _dailyScheduleDateFormat;
         }
 
         /// <summary>

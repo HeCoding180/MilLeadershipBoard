@@ -11,16 +11,32 @@
     Unloaded="OnUnloaded"
     SizeChanged="OnSizeChanged">
     <Grid>
-        <Image
-            x:Name="BaseImageControl"
-            Stretch="{x:Bind Stretch, Mode=OneWay}"
-            Source="{x:Bind Source, Mode=OneWay}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-            <ToolTipService.ToolTip>
-                <ToolTip x:Uid="MaximizeableImageView/Image/Tooltip"/>
-            </ToolTipService.ToolTip>
-        </Image>
+            <TextBlock
+                Grid.Row="0"
+                x:Name="HeaderTextBlock"
+                Text="{x:Bind Header, Mode=OneWay}"
+                Style="{x:Bind HeaderStyle, Mode=OneWay}"
+                Visibility="{x:Bind ViewModel.HeaderVisibility, Mode=OneWay}"
+                Margin="0,0,0,12"/>
 
+            <Image
+                Grid.Row="1"
+                x:Name="BaseImageControl"
+                Stretch="{x:Bind Stretch, Mode=OneWay}"
+                Source="{x:Bind Source, Mode=OneWay}">
+
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Uid="MaximizeableImageView/Image/Tooltip"/>
+                </ToolTipService.ToolTip>
+            </Image>
+        </Grid>
+        
         <Popup
             x:Name="MaximizedViewPopup"
             IsLightDismissEnabled="True"

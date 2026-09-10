@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using MilLeadershipBoard.Models;
+using MilLeadershipBoard.UI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -42,6 +43,11 @@ namespace MilLeadershipBoard.UI.UserControls
             get => (DailySchedule?)GetValue(ModelProperty);
         }
 
+        /// <summary>
+        /// Gets the <see cref="DailyScheduleViewModel"/> ViewModel instance of this View.
+        /// </summary>
+        public DailyScheduleViewModel ViewModel { get; }
+
         //   ---   Constructors   ---
 
         /// <summary>
@@ -49,7 +55,13 @@ namespace MilLeadershipBoard.UI.UserControls
         /// </summary>
         public DailyScheduleView()
         {
+            // Generate the ViewModel
+            ViewModel = new DailyScheduleViewModel(this);
+
             InitializeComponent();
+
+            // Register DependencyProperty change callbacks
+            RegisterPropertyChangedCallback(ModelProperty, ViewModel.OnModelChanged);
         }
     }
 }

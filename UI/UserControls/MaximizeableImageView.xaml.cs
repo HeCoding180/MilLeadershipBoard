@@ -34,9 +34,25 @@ namespace MilLeadershipBoard.UI.UserControls
         /// Field containing the <see cref="DependencyProperty"/> for the <see cref="CloseButtonVisibility"/> property.
         /// </summary>
         public static readonly DependencyProperty CloseButtonVisibilityProperty = DependencyProperty.Register(nameof(CloseButtonVisibility),
-                                                                                               typeof(Visibility),
+                                                                                                              typeof(Visibility),
+                                                                                                              typeof(MaximizeableImageView),
+                                                                                                              new PropertyMetadata(Visibility.Visible));
+
+        /// <summary>
+        /// Field containing the <see cref="DependencyProperty"/> for the <see cref="Header"/> property.
+        /// </summary>
+        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(nameof(Header),
+                                                                                               typeof(string),
                                                                                                typeof(MaximizeableImageView),
-                                                                                               new PropertyMetadata(Visibility.Visible));
+                                                                                               new PropertyMetadata(string.Empty));
+
+        /// <summary>
+        /// Field containing the <see cref="DependencyProperty"/> for the <see cref="HeaderStyle"/> property.
+        /// </summary>
+        public static readonly DependencyProperty HeaderStyleProperty = DependencyProperty.Register(nameof(HeaderStyle),
+                                                                                                    typeof(Style),
+                                                                                                    typeof(MaximizeableImageView),
+                                                                                                    new PropertyMetadata(null));
 
         /// <summary>
         /// Field containing the <see cref="DependencyProperty"/> for the <see cref="Source"/> property.
@@ -77,6 +93,22 @@ namespace MilLeadershipBoard.UI.UserControls
             get => (Visibility)GetValue(CloseButtonVisibilityProperty);
         }
 
+        /// <inheritdoc cref="TextBox.Header"/>
+        public string Header
+        {
+            set => SetValue(HeaderProperty, value);
+            get => (string)GetValue(HeaderProperty);
+        }
+
+        /// <summary>
+        /// Sets or gets the <see cref="Style"/> of the <see cref="TextBlock"/> used for the <see cref="Header"/>.
+        /// </summary>
+        public Style HeaderStyle
+        {
+            set => SetValue(HeaderStyleProperty, value);
+            get => (Style)GetValue(HeaderStyleProperty);
+        }
+
         /// <inheritdoc cref="Image.Source"/>
         public ImageSource Source
         {
@@ -98,9 +130,15 @@ namespace MilLeadershipBoard.UI.UserControls
         /// </summary>
         public MaximizeableImageView()
         {
+            // Load the default style for the header
+            if (HeaderStyle == null &&
+                Application.Current.Resources.TryGetValue(typeof(TextBlock), out object defaultStyle))
+            {
+                HeaderStyle = (Style)defaultStyle;
+            }
+
             // Create the date context
             ViewModel = new MaximizeableImageViewModel(this);
-
             ViewModel.MaximizedViewOpened += OnMaximizedViewOpened;
 
             InitializeComponent();
@@ -112,6 +150,7 @@ namespace MilLeadershipBoard.UI.UserControls
 
             // Listen for changes to the attached ToolTipService.ToolTip property on THIS control
             RegisterPropertyChangedCallback(ToolTipService.ToolTipProperty, OnToolTipChanged);
+            RegisterPropertyChangedCallback(HeaderProperty, ViewModel.OnHeaderChanged);
         }
 
         //   ---   Private Methods   ---

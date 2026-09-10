@@ -26,6 +26,20 @@ namespace MilLeadershipBoard.UI.ViewModels
     {
         //   ---   Private Fields   ---
 
+        //   ---   Private Properties   ---
+
+        /// <summary>
+        /// Gets the view instance this ViewModel is assigned to.
+        /// </summary>
+        private DailyScheduleView View { get; }
+
+        //   ---   Public Properties   ---
+
+        /// <summary>
+        /// Gets the header text that is to be displayed.
+        /// </summary>
+        public string HeaderText => View.Model?.Date.ToString(ConfigManager.Config.DailyScheduleDateFormat) ?? string.Empty;
+
         //   ---   Public Events   ---
 
         /// <inheritdoc cref="INotifyPropertyChanged.PropertyChanged"/>
@@ -39,7 +53,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// <param name="view">The view this ViewModel instance is assigned to.</param>
         public DailyScheduleViewModel(DailyScheduleView view)
         {
-            
+            View = view;
         }
 
         //   ---   Protected Methods   ---
@@ -60,7 +74,15 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         public void Dispose()
         {
-            
+
+        }
+
+        /// <summary>
+        /// Callback method for when the model changes.
+        /// </summary>
+        public void OnModelChanged(DependencyObject sender, DependencyProperty modelProperty)
+        {
+            OnPropertyChanged(nameof(HeaderText));
         }
     }
 }

@@ -11,6 +11,8 @@
 
     <Grid>
         <uc:MaximizeableImageView
+            Header="{x:Bind ViewModel.HeaderText, Mode=OneWay}"
+            HeaderStyle="{StaticResource BodyLargeTextBlockStyle}"
             Source="{x:Bind Model.Source, Mode=OneWay}"
             Stretch="Uniform"/>
     </Grid>

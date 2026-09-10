@@ -39,6 +39,11 @@ namespace MilLeadershipBoard.UI.ViewModels
         private RelayCommand _closeCommand;
 
         /// <summary>
+        /// Field containing the value of the <see cref="HeaderVisibility"/> property.
+        /// </summary>
+        private Visibility _headerVisibility = Visibility.Collapsed;
+
+        /// <summary>
         /// Field containing the value of the <see cref="IsMaximizedViewOpen"/> property.
         /// </summary>
         private bool _isMaximizedViewOpen = false;
@@ -90,6 +95,25 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// Gets the horizontal offset of the popup used for the maximized image view.
         /// </summary>
         public double HorizontalPopupOffset => -Origin.X;
+
+        /// <summary>
+        /// Gets if the header <see cref="Microsoft.UI.Xaml.Controls.TextBlock"/> is visible.
+        /// </summary>
+        public Visibility HeaderVisibility
+        {
+            set
+            {
+                if (value == _headerVisibility)
+                {
+                    return;
+                }
+
+                _headerVisibility = value;
+
+                OnPropertyChanged();
+            }
+            get => _headerVisibility;
+        }
 
         /// <summary>
         /// Gets of the maximized view should be open.
@@ -224,6 +248,17 @@ namespace MilLeadershipBoard.UI.ViewModels
             {
                 pc.PropertyChanged -= RootUiElement_PropertyChanged;
             }
+        }
+
+        /// <summary>
+        /// Callback method for when the header text changes. Used to update the visibility of the header textbox.
+        /// </summary>
+        public void OnHeaderChanged(DependencyObject sender, DependencyProperty headerProperty)
+        {
+            string headerValue = (string)sender.GetValue(headerProperty);
+
+            // Update the visibility.
+            HeaderVisibility = string.IsNullOrWhiteSpace(headerValue) ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public void OnMaximizedImageViewPointerEntered()
