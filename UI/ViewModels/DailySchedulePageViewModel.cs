@@ -82,7 +82,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         //   ---   Constructors   ---
 
         /// <summary>
-        /// Creates a new instance of the <see cref="BreaksPageViewModel"/> class.
+        /// Creates a new instance of the <see cref="DailySchedulePageViewModel"/> class.
         /// </summary>
         /// <param name="dispatcherQueue"><see cref="Microsoft.UI.Dispatching.DispatcherQueue"/> instance of the view.</param>
         public DailySchedulePageViewModel(DispatcherQueue dispatcherQueue)
@@ -382,7 +382,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         //   ---   Public Methods   ---
 
         /// <summary>
-        /// Method used to dispose of this <see cref="BreaksPageViewModel"/> instance.
+        /// Method used to dispose of this <see cref="DailySchedulePageViewModel"/> instance.
         /// </summary>
         public void Dispose()
         {
