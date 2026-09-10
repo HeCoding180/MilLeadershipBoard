@@ -24,11 +24,12 @@
         <Popup
             x:Name="MaximizedViewPopup"
             IsLightDismissEnabled="True"
-            IsOpen="{x:Bind ViewModel.IsMaximizedViewOpen, Mode=OneWay}"
+            IsOpen="{x:Bind ViewModel.IsMaximizedViewOpen, Mode=TwoWay}"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             HorizontalOffset="{x:Bind ViewModel.HorizontalPopupOffset, Mode=OneWay}"
             VerticalOffset="{x:Bind ViewModel.VerticalPopupOffset, Mode=OneWay}">
+            
             <Grid
                 x:Name="PopupGrid"
                 HorizontalAlignment="Stretch"
