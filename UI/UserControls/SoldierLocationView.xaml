@@ -90,7 +90,8 @@
                 CanReorderItems="False"
                 AllowDrop="True"
                 MinHeight="40"
-                Drop="ContentListView_Drop">
+                Drop="ContentListView_Drop"
+                SizeChanged="ContentListView_SizeChanged">
 
                 <ListView.ItemContainerStyle>
                     <Style
@@ -100,6 +101,15 @@
                         <Setter Property="MinHeight" Value="28"/>
                     </Style>
                 </ListView.ItemContainerStyle>
+
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid
+                            x:Name="ContentItemsPanelWrapGrid"
+                            Orientation="Horizontal"
+                            MaximumRowsOrColumns="2"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
             </ListView>
         </Grid>
     </Border>

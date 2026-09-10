@@ -5,7 +5,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MilLeadershipBoard.UI.Pages"
     xmlns:config="using:MilLeadershipBoard.Config"
-    xmlns:controls="using:MilLeadershipBoard.UI.Controls"
     xmlns:vm="using:MilLeadershipBoard.UI.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -47,7 +46,7 @@
             </Button>
         </Grid>
 
-        <controls:SequentialColumnListView
+        <ListView
             Grid.Row="1"
             x:Name="LocationsListView"
             CanReorderItems="False"
@@ -60,9 +59,7 @@
             VerticalAlignment="Stretch"
             ScrollViewer.HorizontalScrollMode="Disabled"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-            ScrollViewer.VerticalScrollMode="Disabled"
-            ScrollViewer.VerticalScrollBarVisibility="Disabled"
             Margin="-4,0">
-        </controls:SequentialColumnListView>
+        </ListView>
     </Grid>
 </Page>

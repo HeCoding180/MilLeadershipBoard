@@ -83,5 +83,14 @@ namespace MilLeadershipBoard.UI.UserControls
                 vm.ItemDropped(sender, e);
             }
         }
+
+        private void ContentListView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (ContentListView.ItemsPanelRoot is ItemsWrapGrid wrapGrid)
+            {
+                double availableWidth = ContentListView.ActualWidth;
+                wrapGrid.ItemWidth = availableWidth / 2;
+            }
+        }
     }
 }
