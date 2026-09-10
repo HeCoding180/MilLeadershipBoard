@@ -107,6 +107,7 @@ namespace MilLeadershipBoard.UI.UserControls
 
             // Initialize the ClickEventWrapper
             BaseImageControlClickEventWrapper = new ClickEventWrapper(BaseImageControl);
+            BaseImageControlClickEventWrapper.Tapped += BaseImageControlClickEventWrapper_Tapped;
             BaseImageControlClickEventWrapper.SingleTapped += BaseImageControlClickEventWrapper_SingleTapped;
 
             // Listen for changes to the attached ToolTipService.ToolTip property on THIS control
@@ -114,6 +115,14 @@ namespace MilLeadershipBoard.UI.UserControls
         }
 
         //   ---   Private Methods   ---
+
+        /// <summary>
+        /// Callback method for the <see cref="ClickEventWrapper.Tapped"/> event of the <see cref="BaseImageControl"/>.
+        /// </summary>
+        private void BaseImageControlClickEventWrapper_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            ViewModel.CloseMaximizedView();
+        }
 
         /// <summary>
         /// Callback method for the <see cref="ClickEventWrapper.SingleTapped"/> event of the <see cref="BaseImageControl"/>.
