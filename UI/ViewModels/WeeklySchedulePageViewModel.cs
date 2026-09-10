@@ -1,11 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.Windows.Storage.Pickers;
 using MilLeadershipBoard.Config;
 using MilLeadershipBoard.Resources;
+using MilLeadershipBoard.UI.Pages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,7 +21,7 @@ using System.Windows.Input;
 
 namespace MilLeadershipBoard.UI.ViewModels
 {
-    internal class WeeklySchedulePageViewModel : IDisposable, INotifyPropertyChanged
+    public class WeeklySchedulePageViewModel : IDisposable, INotifyPropertyChanged
     {
         //   ---   Private Constants   ---
 
@@ -50,6 +52,13 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         private bool _weeklyScheduleBImageLoaded = false;
 
+        //   ---   Private Properties (static)   ---
+
+        /// <summary>
+        /// Gets the <see cref="DateOnly"/> of the dated resource of the current weekly schedule.
+        /// </summary>
+        private static DateOnly CurrentWeeklyScheduleDate => Util.Util.GetMondayOfWeek(DateOnly.FromDateTime(DateTime.Now));
+
         //   ---   Private Properties   ---
 
         /// <summary>
@@ -57,12 +66,10 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         private CancellationToken imageLoadingCancellationToken => _imageLoadingCancellationTokenSource.Token;
 
-        //   ---   Private Properties (static)   ---
-
         /// <summary>
-        /// Gets the <see cref="DateOnly"/> of the dated resource of the current weekly schedule.
+        /// Gets the View this ViewModel instance is assigned to.
         /// </summary>
-        private static DateOnly CurrentWeeklyScheduleDate => Util.Util.GetMondayOfWeek(DateOnly.FromDateTime(DateTime.Now));
+        private WeeklySchedulePage View { get; }
 
         //   ---   Public Properties   ---
 
@@ -122,11 +129,13 @@ namespace MilLeadershipBoard.UI.ViewModels
         //   ---   Constructors   ---
 
         /// <summary>
-        /// Creates a new instance of the <see cref="BreaksPageViewModel"/> class.
+        /// Creates a new instance of the <see cref="WeeklySchedulePageViewModel"/> class.
         /// </summary>
-        public WeeklySchedulePageViewModel()
+        /// <param name="view">The View instance this <see cref="WeeklySchedulePageViewModel"/> ViewModel instance is assgined to.</param>
+        public WeeklySchedulePageViewModel(WeeklySchedulePage view)
         {
-            ConfigManager.Config.PropertyChanged += Config_PropertyChanged;
+            View = view;
+
             ResourceManager.DatedResourceChanged += ResourceManager_DatedResourceChanged;
 
             WeeklyScheduleAImage.ImageOpened += WeeklyScheduleAImage_ImageOpened;
@@ -135,54 +144,37 @@ namespace MilLeadershipBoard.UI.ViewModels
             WeeklyScheduleBImage.ImageFailed += WeeklyScheduleBImage_ImageFailed;
         }
 
-        //   ---   Private Methods (static)   ---
+        //   ---   Private Methods   ---
 
         /// <summary>
         /// Method used to request the user to enter the weekly schedule image and get its path.
         /// </summary>
-        /// <param name="xamlRoot">The <see cref="XamlRoot"/> used for dialogs.</param>
         /// <returns>The file path of a weekly schedule image file.</returns>
-        private static async Task<string> GetNewWeeklyScheduleImageResourcePath(XamlRoot xamlRoot)
+        private async Task PickWeeklyScheduleImageResource(string resourceName)
         {
-            FileOpenPicker picker = new FileOpenPicker(xamlRoot.ContentIslandEnvironment.AppWindowId)
+            AddWeeklySchedulePage content = new AddWeeklySchedulePage();
+
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = ResourceManager.GetString("WeeklySchedulePage/AddDialog/Title"),
+                DefaultButton = ContentDialogButton.Primary,
+                PrimaryButtonText = ResourceManager.GetString("WeeklySchedulePage/AddDialog/PrimaryButtonText"),
+                SecondaryButtonText = ResourceManager.GetString("WeeklySchedulePage/AddDialog/SecondaryButtonText"),
+                Content = content,
+                XamlRoot = View.XamlRoot
+            };
+
+            await dialog.ShowAsync();
+
+            FileOpenPicker picker = new FileOpenPicker(View.XamlRoot.ContentIslandEnvironment.AppWindowId)
             {
                 CommitButtonText = ResourceManager.GetString("WeeklySchedulePage/SelectScheduleStoragePicker/CommitButtonText")
             };
 
             PickFileResult? result = await picker.PickSingleFileAsync();
-
-            if (result is null)
-            {
-                return string.Empty;
-            }
-
-            return result.Path;
         }
 
-        //   ---   Private Methods   ---
-
-        /// <summary>
-        /// Callback method for the <see cref="ConfigData.PropertyChanged"/> event of the <see cref="ConfigManager"/>'s <see cref="ConfigData"/> instance.
-        /// </summary>
-        private void Config_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(ConfigData):
-                    break;
-            }
-        }
-
-        private void OnWeeklyScheduleALoadingTaskCompleted(Task loadingTask)
-        {
-            if (!loadingTask.IsCompletedSuccessfully)
-            {
-                // TODO: Implement exception handling
-                return;
-            }
-        }
-
-        private void OnWeeklyScheduleBLoadingTaskCompleted(Task loadingTask)
+        private void OnWeeklyScheduleLoadingTaskCompleted(Task loadingTask)
         {
             if (!loadingTask.IsCompletedSuccessfully)
             {
@@ -218,7 +210,7 @@ namespace MilLeadershipBoard.UI.ViewModels
                                                                          CurrentWeeklyScheduleDate,
                                                                          WeeklyScheduleAImage);
 
-            loadingTask.ContinueWith(OnWeeklyScheduleALoadingTaskCompleted);
+            loadingTask.ContinueWith(OnWeeklyScheduleLoadingTaskCompleted);
         }
 
         /// <summary>
@@ -230,7 +222,7 @@ namespace MilLeadershipBoard.UI.ViewModels
                                                                          CurrentWeeklyScheduleDate,
                                                                          WeeklyScheduleBImage);
 
-            loadingTask.ContinueWith(OnWeeklyScheduleBLoadingTaskCompleted);
+            loadingTask.ContinueWith(OnWeeklyScheduleLoadingTaskCompleted);
         }
 
         /// <summary>
@@ -283,45 +275,34 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         void IDisposable.Dispose()
         {
-            ConfigManager.Config.PropertyChanged -= Config_PropertyChanged;
             ResourceManager.DatedResourceChanged -= ResourceManager_DatedResourceChanged;
 
             WeeklyScheduleAImage.ImageOpened -= WeeklyScheduleAImage_ImageOpened;
             WeeklyScheduleAImage.ImageFailed -= WeeklyScheduleAImage_ImageFailed;
             WeeklyScheduleBImage.ImageOpened -= WeeklyScheduleBImage_ImageOpened;
             WeeklyScheduleBImage.ImageFailed -= WeeklyScheduleBImage_ImageFailed;
+
+            _imageLoadingCancellationTokenSource.Cancel();
         }
 
         /// <summary>
         /// Method used to invoke the change of the weekly schedule A.
         /// </summary>
-        public async Task InvokeWeeklyScheduleAChange(XamlRoot xamlRoot)
+        public async Task InvokeWeeklyScheduleAChange()
         {
-            string imagePath = await GetNewWeeklyScheduleImageResourcePath(xamlRoot);
+            await PickWeeklyScheduleImageResource(WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME);
 
-            if (imagePath == string.Empty)
-            {
-                // File picking failed
-                return;
-            }
-
-            ResourceManager.CreateDatedResourceFile(imagePath, WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME, CurrentWeeklyScheduleDate);
+            ResourceManager.CreateDatedResourceFile("", WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME, CurrentWeeklyScheduleDate);
         }
 
         /// <summary>
         /// Method used to invoke the change of the weekly schedule B.
         /// </summary>
-        public async Task InvokeWeeklyScheduleBChange(XamlRoot xamlRoot)
+        public async Task InvokeWeeklyScheduleBChange()
         {
-            string imagePath = await GetNewWeeklyScheduleImageResourcePath(xamlRoot);
+            await PickWeeklyScheduleImageResource(WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME);
 
-            if (imagePath == string.Empty)
-            {
-                // File picking failed
-                return;
-            }
-
-            ResourceManager.CreateDatedResourceFile(imagePath, WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME, CurrentWeeklyScheduleDate);
+            ResourceManager.CreateDatedResourceFile("", WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME, CurrentWeeklyScheduleDate);
         }
 
         public void OnParentPageLoaded()

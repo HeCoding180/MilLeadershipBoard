@@ -12,10 +12,6 @@
     Loaded="Page_Loaded"
     Unloaded="Page_Unloaded">
 
-    <Page.DataContext>
-        <vm:WeeklySchedulePageViewModel/>
-    </Page.DataContext>
-
     <Grid
         RowSpacing="8"
         Padding="16,8,16,16">
@@ -38,7 +34,7 @@
             <Grid>
                 <uc:MaximizeableImageView
                     x:Uid="WeeklySchedulePage/ScheduleImageA"
-                    Source="{Binding WeeklyScheduleAImage}"
+                    Source="{x:Bind ViewModel.WeeklyScheduleAImage}"
                     Stretch="Uniform"
                     DoubleTapped="WeeklyScheduleA_DoubleTapped">
 
@@ -52,7 +48,7 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     DoubleTapped="WeeklyScheduleA_DoubleTapped"
-                    Visibility="{Binding WeeklyScheduleAImageLoaded, Mode=OneWay, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
+                    Visibility="{x:Bind ViewModel.WeeklyScheduleAImageLoaded, Mode=OneWay, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
                         
                     <TextBlock
                         x:Uid="WeeklySchedulePage/ScheduleSelectionTextBlock"
@@ -71,7 +67,7 @@
             <Grid>
                 <uc:MaximizeableImageView
                     x:Uid="WeeklySchedulePage/ScheduleImageB"
-                    Source="{Binding WeeklyScheduleBImage}"
+                    Source="{x:Bind ViewModel.WeeklyScheduleBImage}"
                     Stretch="Uniform"
                     DoubleTapped="WeeklyScheduleB_DoubleTapped">
 
@@ -85,7 +81,7 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     DoubleTapped="WeeklyScheduleB_DoubleTapped"
-                    Visibility="{Binding WeeklyScheduleBImageLoaded, Mode=OneWay, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
+                    Visibility="{x:Bind ViewModel.WeeklyScheduleBImageLoaded, Mode=OneWay, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
 
                     <TextBlock
                         x:Uid="WeeklySchedulePage/ScheduleSelectionTextBlock"

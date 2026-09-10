@@ -32,6 +32,11 @@ namespace MilLeadershipBoard.Config
         /// </summary>
         private Guid _defaultLocationId = Guid.Empty;
 
+        /// <summary>
+        /// Field containing the value of the <see cref="FilePathValidationDelay"/> property.
+        /// </summary>
+        private int _filePathValidationDelay = 500;
+
         //   ---   Public Properties   ---
 
         /// <summary>
@@ -110,6 +115,26 @@ namespace MilLeadershipBoard.Config
 
                 return Locations.FirstOrDefault(l => l.Id == id);
             }
+        }
+
+        /// <summary>
+        /// Sets or gets the delay from a change to a file path until it gets validated.
+        /// </summary>
+        [JsonPropertyName("FilePathValidationDelay")]
+        public int FilePathValidationDelay
+        {
+            set
+            {
+                if (value == _filePathValidationDelay)
+                {
+                    return;
+                }
+
+                _filePathValidationDelay = value;
+
+                OnPropertyChanged();
+            }
+            get => _filePathValidationDelay;
         }
 
         /// <summary>

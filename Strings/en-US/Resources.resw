@@ -300,4 +300,31 @@
   <data name="DailySchedulePage.AddDialog.Title" xml:space="preserve">
     <value>Add Daily Schedule</value>
   </data>
+  <data name="WeeklySchedulePage.AddDialog.Title" xml:space="preserve">
+    <value>Add Weekly Schedule</value>
+  </data>
+  <data name="WeeklySchedulePage.AddDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="WeeklySchedulePage.AddDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="AddWeeklySchedulePage.ScheduleWeekDatePicker.Header" xml:space="preserve">
+    <value>Schedule Date</value>
+  </data>
+  <data name="AddWeeklySchedulePage.SchedulePathTextBox.Header" xml:space="preserve">
+    <value>Schedule Path</value>
+  </data>
+  <data name="AddWeeklySchedulePage.SchedulePathTextBox.PlaceholderText" xml:space="preserve">
+    <value>Enter a schedule path</value>
+  </data>
+  <data name="AddWeeklySchedulePage.BrowseScheduleButton.Content" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="AddWeeklySchedulePage.PdfPageNumberBox.Header" xml:space="preserve">
+    <value>Page</value>
+  </data>
+  <data name="AddWeeklySchedulePage.PdfPreviewHeaderTextBlock.Text" xml:space="preserve">
+    <value>Preview</value>
+  </data>
 </root>

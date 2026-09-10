@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="MilLeadershipBoard.UI.Pages.AddWeeklySchedulePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MilLeadershipBoard.UI.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel
+        Spacing="8">
+        
+        <DatePicker
+            x:Uid="AddWeeklySchedulePage/ScheduleWeekDatePicker"
+            x:Name="ScheduleWeekDatePicker"
+            Date="{x:Bind ViewModel.ScheduleDateTimeOffset, Mode=TwoWay}"/>
+
+        <Grid
+            ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox
+                x:Uid="AddWeeklySchedulePage/SchedulePathTextBox"
+                Grid.Column="0"
+                x:Name="SchedulePathTextBox"
+                Text="{x:Bind ViewModel.SchedulePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                HorizontalAlignment="Stretch"
+                MinWidth="400"/>
+
+            <Button
+                x:Uid="AddWeeklySchedulePage/BrowseScheduleButton"
+                Grid.Column="1"
+                x:Name="BrowseScheduleButton"
+                Command="{x:Bind ViewModel.BrowseScheduleFileCommand, Mode=OneWay}"
+                VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <Grid
+            x:Name="FileStatusMessageGrid"
+            Visibility="{x:Bind ViewModel.IsFileStatusMessageActive, Mode=OneWay}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid
+                Grid.Column="0"
+                VerticalAlignment="Center">
+                
+                <FontIcon Glyph="&#xE814;"
+                          Foreground="{ThemeResource SystemFillColorCautionBackgroundBrush}"/>
+                <FontIcon Glyph="&#xE7BA;"
+                          Foreground="{ThemeResource SystemFillColorCautionBrush}"/>
+            </Grid>
+
+            <TextBlock
+                Grid.Column="1"
+                x:Name="StatusMessageTextBlock"
+                Foreground="{ThemeResource SystemFillColorCaution}"
+                Text="{x:Bind ViewModel.FileStatusMessageText, Mode=OneWay}"
+                VerticalAlignment="Center"/>
+        </Grid>
+
+        <StackPanel
+            x:Name="PdfOptionsPanel"
+            Visibility="{x:Bind ViewModel.PdfOptionsPanelVisibility, Mode=OneWay}"
+            Spacing="8">
+
+            <TextBlock
+                x:Uid="AddWeeklySchedulePage/PdfPreviewHeaderTextBlock"
+                x:Name="PdfPreviewHeaderTextBlock"/>
+
+            <Grid>
+                <Image
+                    x:Name="PdfPagePreviewImage"
+                    Source="{x:Bind ViewModel.PdfPagePreviewSource, Mode=OneWay}"
+                    MaxHeight="300"/>
+
+                <ProgressRing
+                    x:Name="PdfRenderingRing"
+                    HorizontalAlignment="Center"
+                    IsActive="{x:Bind ViewModel.IsPdfRendering, Mode=OneWay}"
+                    IsIndeterminate="True"/>
+            </Grid>
+
+            <NumberBox
+                x:Uid="AddWeeklySchedulePage/PdfPageNumberBox"
+                x:Name="PdfPageNumberBox"
+                Value="{x:Bind ViewModel.SelectedPdfPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                SmallChange="1"
+                Minimum="1"
+                Maximum="{x:Bind ViewModel.PdfPageCount, Mode=OneWay}"
+                SpinButtonPlacementMode="Inline"
+                MinWidth="200"
+                Width="{x:Bind PdfPagePreviewImage.ActualWidth, Mode=OneWay}"/>
+        </StackPanel>
+    </StackPanel>
+</Page>

@@ -26,6 +26,13 @@ namespace MilLeadershipBoard.UI.Pages
     /// </summary>
     public sealed partial class WeeklySchedulePage : Page
     {
+        //   ---   Public Properties   ---
+
+        /// <summary>
+        /// Gets the <see cref="WeeklySchedulePageViewModel"/> ViewModel instance of this View.
+        /// </summary>
+        public WeeklySchedulePageViewModel ViewModel { get; }
+
         //   ---   Constructors   ---
 
         /// <summary>
@@ -33,6 +40,8 @@ namespace MilLeadershipBoard.UI.Pages
         /// </summary>
         public WeeklySchedulePage()
         {
+            ViewModel = new WeeklySchedulePageViewModel(this);
+
             InitializeComponent();
         }
 
@@ -40,18 +49,12 @@ namespace MilLeadershipBoard.UI.Pages
 
         private async void WeeklyScheduleA_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            if (DataContext is WeeklySchedulePageViewModel vm)
-            {
-                await vm.InvokeWeeklyScheduleAChange(XamlRoot);
-            }
+            await ViewModel.InvokeWeeklyScheduleAChange();
         }
 
         private async void WeeklyScheduleB_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            if (DataContext is WeeklySchedulePageViewModel vm)
-            {
-                await vm.InvokeWeeklyScheduleAChange(XamlRoot);
-            }
+            await ViewModel.InvokeWeeklyScheduleBChange();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

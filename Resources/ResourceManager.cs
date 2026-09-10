@@ -115,7 +115,12 @@ namespace MilLeadershipBoard.Resources
         /// <summary>
         /// Gets the <see cref="ResourceLoader"/> instance that can be used to load resources such as UI strings.
         /// </summary>
-        public static ResourceLoader ResourceLoader { get; } = new ResourceLoader();
+        public static ResourceLoader DefaultResourceLoader { get; } = new ResourceLoader();
+
+        /// <summary>
+        /// Gets the <see cref="ResourceLoader"/> instance that can be used to load status message strings.
+        /// </summary>
+        public static ResourceLoader StatusMessageResourceLoader { get; } = new ResourceLoader(ResourceLoader.GetDefaultResourceFilePath(), "StatusMessages");
 
         //   ---   Public Events   ---
 
@@ -320,8 +325,18 @@ namespace MilLeadershipBoard.Resources
             return [.. paths.Select(GetDatedResourceFileDate).Distinct()];
         }
 
+        /// <summary>
+        /// Returns the generic status message specified by the <paramref name="messageId"/>.
+        /// </summary
+        public static string GetGenericStatusMessage(string messageId) => StatusMessageResourceLoader.GetString("Generic/" + messageId);
+
         /// <inheritdoc cref="ResourceLoader.GetString"/>
-        public static string GetString(string resourceId) => ResourceLoader.GetString(resourceId);
+        public static string GetString(string resourceId) => DefaultResourceLoader.GetString(resourceId);
+
+        /// <summary>
+        /// Returns the status message specified by the <paramref name="messageId"/>.
+        /// </summary>
+        public static string GetStatusMessage(string messageId) => StatusMessageResourceLoader.GetString(messageId);
 
         /// <summary>
         /// Method used to check if a path is valid for a dated image resource.
