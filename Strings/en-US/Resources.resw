@@ -124,7 +124,7 @@
     <value>Daily Schedules</value>
   </data>
   <data name="LessionsPage_Title.Text" xml:space="preserve">
-    <value>Lessions</value>
+    <value>Lessons</value>
   </data>
   <data name="LocationsPage.LocationNameTextBox.HeaderText" xml:space="preserve">
     <value>Location Name</value>
@@ -250,22 +250,22 @@
     <value>Cancel</value>
   </data>
   <data name="AddLessionsPage.NameTextBox.Header" xml:space="preserve">
-    <value>Lession Name</value>
+    <value>Lesson Name</value>
   </data>
   <data name="AddLessionsPage.NameTextBox.PlaceholderText" xml:space="preserve">
-    <value>Enter Lession Name</value>
+    <value>Enter Lesson Name</value>
   </data>
   <data name="AddLessionsPage.TitleTextBlock.Text" xml:space="preserve">
-    <value>Add Lession</value>
+    <value>Add Lesson</value>
   </data>
   <data name="AddLessionsPage.LessionChiefTargetNullValue" xml:space="preserve">
-    <value>No Lession Chief Selected</value>
+    <value>No Lesson Chief Selected</value>
   </data>
   <data name="AddLessionsPage.LessionChiefComboBox.Header" xml:space="preserve">
-    <value>Lession Chief</value>
+    <value>Lesson Chief</value>
   </data>
   <data name="AddLessionsPage.LessionChiefComboBox.PlaceholderText" xml:space="preserve">
-    <value>Enter lession chief</value>
+    <value>Enter lesson chief</value>
   </data>
   <data name="LessionDataView.CompleteFlyoutButton.Text" xml:space="preserve">
     <value>Complete</value>
