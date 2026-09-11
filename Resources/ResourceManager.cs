@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Data.Pdf;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
@@ -96,6 +97,11 @@ namespace MilLeadershipBoard.Resources
         //   ---   Public Constants   ---
 
         /// <summary>
+        /// Constant string containing the default file extension used for dated resource files.
+        /// </summary>
+        public const string DEFAULT_DATED_RESOURCE_FILE_EXTENSION = ".png";
+
+        /// <summary>
         /// Constant <see cref="string[]"/> containing all valid file extensions for dated image resource files.
         /// </summary>
         public static readonly string[] VALID_IMAGE_RESOURCE_FILE_EXTENSIONS = [".jpeg", ".png", ".bmp", ".gif", ".tiff", ".jxr", ".hdp", ".wdp", ".ico", ".svg"];
@@ -174,6 +180,15 @@ namespace MilLeadershipBoard.Resources
         }
 
         /// <summary>
+        /// Method used to get a <see cref="StorageFolder"/> instance of the dated resource folder.
+        /// </summary>
+        /// <returns>A <see cref="StorageFolder"/> instance of the dated resource folder.</returns>
+        private static StorageFolder GetDatedResourceStorageFolder()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Raises the <see cref="DatedResourceChanged"/> event
         /// </summary>
         /// <param name="resourceName">Name of the dated resource that changed.</param>
@@ -237,6 +252,38 @@ namespace MilLeadershipBoard.Resources
         }
 
         /// <summary>
+        /// Method used to create a dated resource from a data stream.
+        /// </summary>
+        /// <param name="pdfPage">The <see cref="PdfPage"/> instance from which the dated resource image is to be created.</param>
+        /// <param name="resourceName">Name of the resource.</param>
+        /// <param name="date">Date of the dated resource.</param>
+        /// <param name="overwrite">Defines if the dated resource should be overwritten if it already exists.</param>
+        public static async Task CreateDatedResourceFile(PdfPage pdfPage, string resourceName, DateOnly date, bool overwrite = true)
+        {
+            string resourceFileName = GenerateDatedResourceFileName(resourceName, date, DEFAULT_DATED_RESOURCE_FILE_EXTENSION);
+
+            EnsureDatedResourceDirectory();
+
+            bool resourceExisted = DatedResourceExists(resourceName, date);
+            if (resourceExisted)
+            {
+                // Delete existing resources
+                DeleteDatedResource(resourceName, date, false);
+            }
+
+            // Create the StorageFile instance
+            StorageFile datedResourceFile = await GetDatedResourceStorageFolder().CreateFileAsync(resourceFileName, CreationCollisionOption.ReplaceExisting);
+
+            // Save the resource image data
+            using (StorageStreamTransaction transaction = await datedResourceFile.OpenTransactedWriteAsync())
+            {
+                await pdfPage.RenderToStreamAsync(transaction.Stream);
+            }
+
+            OnDatedResourceChanged(resourceName, date, resourceExisted ? DatedResourceChangedAction.Modify : DatedResourceChangedAction.Add);
+        }
+
+        /// <summary>
         /// Method used to check if a dated resource file exists.
         /// </summary>
         /// <param name="resourceName">Name of the resource.</param>
@@ -252,7 +299,8 @@ namespace MilLeadershipBoard.Resources
         /// </summary>
         /// <param name="resourceName">The name of the dated resource.</param>
         /// <param name="date">The date of the dated resource.</param>
-        public static void DeleteDatedResource(string resourceName, DateOnly date)
+        /// <param name="raiseEvent">Defines if an event should be raised for the resource deletion. Default: <see langword="true"/></param>
+        public static void DeleteDatedResource(string resourceName, DateOnly date, bool raiseEvent = true)
         {
             TryGetDatedResourceFiles(resourceName, date, out string[] paths);
 
@@ -262,7 +310,10 @@ namespace MilLeadershipBoard.Resources
                 File.Delete(path);
             }
 
-            OnDatedResourceChanged(resourceName, date, DatedResourceChangedAction.Remove);
+            if (raiseEvent)
+            {
+                OnDatedResourceChanged(resourceName, date, DatedResourceChangedAction.Remove);
+            }
         }
 
         /// <summary>
