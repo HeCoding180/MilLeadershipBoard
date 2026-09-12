@@ -252,7 +252,7 @@ namespace MilLeadershipBoard.Resources
         }
 
         /// <summary>
-        /// Method used to create a dated resource from a data stream.
+        /// Method used to create a dated resource from a <see cref="PdfPage"/>.
         /// </summary>
         /// <param name="pdfPage">The <see cref="PdfPage"/> instance from which the dated resource image is to be created.</param>
         /// <param name="resourceName">Name of the resource.</param>
