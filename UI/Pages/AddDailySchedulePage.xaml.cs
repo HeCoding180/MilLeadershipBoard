@@ -22,33 +22,20 @@ namespace MilLeadershipBoard.UI.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AddDailySchedulePage : Page
+    public sealed partial class AddDailySchedulePage : AddSchedulePageBase
     {
-        //   ---   Public Properties   ---
-
-        /// <summary>
-        /// Gets the <see cref="AddDailySchedulePageViewModel"/> ViewModel class.
-        /// </summary>
-        public AddDailySchedulePageViewModel ViewModel { get; }
-
         //   ---   Constructors   ---
 
         /// <summary>
         /// Creates a new instance of the <see cref="AddDailySchedulePage"/> class.
         /// </summary>
-        public AddDailySchedulePage()
+        /// <param name="resourceName">The name of the resource used for the schedule.</param>
+        public AddDailySchedulePage(string resourceName) : base(resourceName)
         {
-            ViewModel = new AddDailySchedulePageViewModel();
-
             InitializeComponent();
         }
 
         //   ---   Private Methods   ---
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            ViewModel.XamlRoot = XamlRoot;
-        }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {

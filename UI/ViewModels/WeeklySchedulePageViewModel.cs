@@ -149,6 +149,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// <summary>
         /// Method used to request the user to enter the weekly schedule image and get its path.
         /// </summary>
+        /// <param name="resourceName">Name of the resource for the schedule image that is to be picked.</param>
         /// <returns>The file path of a weekly schedule image file.</returns>
         private async Task PickWeeklyScheduleImageResource(string resourceName)
         {

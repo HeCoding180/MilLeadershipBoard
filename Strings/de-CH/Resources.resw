@@ -270,18 +270,6 @@
   <data name="LessionDataView.CompleteFlyoutButton.Text" xml:space="preserve">
     <value>Abschliessen</value>
   </data>
-  <data name="AddDailySchedulePage.DatePicker.Header" xml:space="preserve">
-    <value>Datum Tagesplan</value>
-  </data>
-  <data name="AddDailySchedulePage.PathTextBox.Header" xml:space="preserve">
-    <value>Dateipfad Tagesplan</value>
-  </data>
-  <data name="AddDailySchedulePage.PathTextBox.PlaceholderText" xml:space="preserve">
-    <value>Dateipfad füt Tagesplan eingeben...</value>
-  </data>
-  <data name="AddDailySchedulePage.BrowseButton.Content" xml:space="preserve">
-    <value>Browse</value>
-  </data>
   <data name="DailySchedulePage.AddDialog.PrimaryButtonText" xml:space="preserve">
     <value>Hinzufügen</value>
   </data>
@@ -312,11 +300,20 @@
   <data name="AddWeeklySchedulePage.ScheduleWeekDatePicker.Header" xml:space="preserve">
     <value>Datum Wochenplan</value>
   </data>
+  <data name="AddDailySchedulePage.ScheduleDatePicker.Header" xml:space="preserve">
+    <value>Datum Tagesplan</value>
+  </data>
   <data name="AddWeeklySchedulePage.SchedulePathTextBox.Header" xml:space="preserve">
     <value>Dateipfad Wochenplan</value>
   </data>
+  <data name="AddDailySchedulePage.SchedulePathTextBox.Header" xml:space="preserve">
+    <value>Dateipfad Tagesplan</value>
+  </data>
   <data name="AddWeeklySchedulePage.SchedulePathTextBox.PlaceholderText" xml:space="preserve">
     <value>Dateipfad für den Wochenplan eingeben</value>
+  </data>
+  <data name="AddDailySchedulePage.SchedulePathTextBox.PlaceholderText" xml:space="preserve">
+    <value>Dateipfad für den Tagesplan eingeben</value>
   </data>
   <data name="AddWeeklySchedulePage.BrowseScheduleButton.Content" xml:space="preserve">
     <value>Browse</value>
@@ -324,7 +321,16 @@
   <data name="AddWeeklySchedulePage.PdfPageNumberBox.Header" xml:space="preserve">
     <value>Seite</value>
   </data>
+  <data name="AddDailySchedulePage.PdfPageNumberBox.Header" xml:space="preserve">
+    <value>Seite</value>
+  </data>
   <data name="AddWeeklySchedulePage.PdfPreviewHeaderTextBlock.Text" xml:space="preserve">
     <value>Vorschau</value>
+  </data>
+  <data name="AddDailySchedulePage.PdfPreviewHeaderTextBlock.Text" xml:space="preserve">
+    <value>Vorschau</value>
+  </data>
+  <data name="Generic.BrowseButton.Content" xml:space="preserve">
+    <value>Browse</value>
   </data>
 </root>

@@ -62,7 +62,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// <summary>
         /// Gets the <see cref="Microsoft.UI.Dispatching.DispatcherQueue"/> instance of the view.
         /// </summary>
-        public DispatcherQueue DispatcherQueue { get; }
+        public DispatcherQueue DispatcherQueue => View.DispatcherQueue;
 
         /// <summary>
         /// Gets the <see cref="CancellationToken"/> used to cancel task at the end of the ViewModel's lifetime.
@@ -70,9 +70,9 @@ namespace MilLeadershipBoard.UI.ViewModels
         public CancellationToken VMLifetimeCancellationToken => _vmLifetimeCts.Token;
 
         /// <summary>
-        /// Sets or gets the <see cref="Microsoft.UI.Xaml.XamlRoot"/> instance used for any dialogs.
+        /// Gets the <see cref="DailySchedulePage"/> View instance this ViewModel instance is assigned to.
         /// </summary>
-        public XamlRoot? XamlRoot { set; get; }
+        public DailySchedulePage View { get; }
 
         //   ---   Public Events   ---
 
@@ -84,10 +84,10 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// <summary>
         /// Creates a new instance of the <see cref="DailySchedulePageViewModel"/> class.
         /// </summary>
-        /// <param name="dispatcherQueue"><see cref="Microsoft.UI.Dispatching.DispatcherQueue"/> instance of the view.</param>
-        public DailySchedulePageViewModel(DispatcherQueue dispatcherQueue)
+        /// <param name="view">The View instance this <see cref="DailySchedulePageViewModel"/> ViewModel instance is assgined to.</param>
+        public DailySchedulePageViewModel(DailySchedulePage view)
         {
-            DispatcherQueue = dispatcherQueue;
+            View = view;
 
             // Initialize fields
             _addCommand = new RelayCommand(InvokeAddDailySchedule);
@@ -346,27 +346,22 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         protected async void InvokeAddDailySchedule()
         {
-            AddDailySchedulePage content = new AddDailySchedulePage();
-
-            // RelayCommand for adding the daily schedule
-            RelayCommand addCommand = new RelayCommand(()
-                => ResourceManager.CreateDatedResourceFile(content.ViewModel.ScheduleImagePath,
-                                                           DAILY_SCHEDULE_IMAGE_RESOURCE_NAME,
-                                                           content.ViewModel.ScheduleDate));
+            AddDailySchedulePage content = new AddDailySchedulePage(DAILY_SCHEDULE_IMAGE_RESOURCE_NAME);
 
             ContentDialog dialog = new ContentDialog()
             {
                 Title = ResourceManager.GetString("DailySchedulePage/AddDialog/Title"),
-                PrimaryButtonText = ResourceManager.GetString("DailySchedulePage/AddDialog/PrimaryButtonText"),
-                PrimaryButtonCommand = addCommand,
-                IsPrimaryButtonEnabled = false,
-                SecondaryButtonText = ResourceManager.GetString("DailySchedulePage/AddDialog/SecondaryButtonText"),
                 DefaultButton = ContentDialogButton.Primary,
+                PrimaryButtonText = ResourceManager.GetString("DailySchedulePage/AddDialog/PrimaryButtonText"),
+                PrimaryButtonCommand = content.AddScheduleCommand,
+                IsPrimaryButtonEnabled = content.CanAdd,
+                SecondaryButtonText = ResourceManager.GetString("DailySchedulePage/AddDialog/SecondaryButtonText"),
                 Content = content,
-                XamlRoot = XamlRoot
+                XamlRoot = View.XamlRoot
             };
 
-            content.ViewModel.PropertyChanged += (s, e) => dialog.IsPrimaryButtonEnabled = content.ViewModel.ValidInput;
+            // Ensure the enabled state of the primary button gets updated automatically
+            content.CanAddChanged += (s, canAdd) => dialog.IsPrimaryButtonEnabled = canAdd;
 
             await dialog.ShowAsync();
         }
