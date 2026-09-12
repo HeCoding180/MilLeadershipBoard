@@ -180,12 +180,12 @@ namespace MilLeadershipBoard.Resources
         }
 
         /// <summary>
-        /// Method used to get a <see cref="StorageFolder"/> instance of the dated resource folder.
+        /// Method used to asynchronously get a <see cref="StorageFolder"/> instance of the dated resource folder.
         /// </summary>
-        /// <returns>A <see cref="StorageFolder"/> instance of the dated resource folder.</returns>
-        private static StorageFolder GetDatedResourceStorageFolder()
+        /// <returns>An awaitable <see cref="Task"/> resulting in a <see cref="StorageFolder"/> instance of the dated resource folder.</returns>
+        private static async Task<StorageFolder> GetDatedResourceStorageFolderAsync()
         {
-            throw new NotImplementedException();
+            return await StorageFolder.GetFolderFromPathAsync(DatedResourcePath);
         }
 
         /// <summary>
@@ -272,7 +272,8 @@ namespace MilLeadershipBoard.Resources
             }
 
             // Create the StorageFile instance
-            StorageFile datedResourceFile = await GetDatedResourceStorageFolder().CreateFileAsync(resourceFileName, CreationCollisionOption.ReplaceExisting);
+            StorageFolder datedResourceStorageFolder = await GetDatedResourceStorageFolderAsync();
+            StorageFile datedResourceFile = await datedResourceStorageFolder.CreateFileAsync(resourceFileName, CreationCollisionOption.ReplaceExisting);
 
             // Save the resource image data
             using (StorageStreamTransaction transaction = await datedResourceFile.OpenTransactedWriteAsync())

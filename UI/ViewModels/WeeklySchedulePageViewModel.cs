@@ -152,26 +152,24 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// <returns>The file path of a weekly schedule image file.</returns>
         private async Task PickWeeklyScheduleImageResource(string resourceName)
         {
-            AddWeeklySchedulePage content = new AddWeeklySchedulePage();
+            AddWeeklySchedulePage content = new AddWeeklySchedulePage(resourceName);
 
             ContentDialog dialog = new ContentDialog()
             {
                 Title = ResourceManager.GetString("WeeklySchedulePage/AddDialog/Title"),
                 DefaultButton = ContentDialogButton.Primary,
                 PrimaryButtonText = ResourceManager.GetString("WeeklySchedulePage/AddDialog/PrimaryButtonText"),
+                PrimaryButtonCommand = content.AddScheduleCommand,
+                IsPrimaryButtonEnabled = content.CanAdd,
                 SecondaryButtonText = ResourceManager.GetString("WeeklySchedulePage/AddDialog/SecondaryButtonText"),
                 Content = content,
                 XamlRoot = View.XamlRoot
             };
 
+            // Ensure the enabled state of the primary button gets updated automatically
+            content.CanAddChanged += (s, canAdd) => dialog.IsPrimaryButtonEnabled = canAdd;
+
             await dialog.ShowAsync();
-
-            FileOpenPicker picker = new FileOpenPicker(View.XamlRoot.ContentIslandEnvironment.AppWindowId)
-            {
-                CommitButtonText = ResourceManager.GetString("WeeklySchedulePage/SelectScheduleStoragePicker/CommitButtonText")
-            };
-
-            PickFileResult? result = await picker.PickSingleFileAsync();
         }
 
         private void OnWeeklyScheduleLoadingTaskCompleted(Task loadingTask)
@@ -291,8 +289,6 @@ namespace MilLeadershipBoard.UI.ViewModels
         public async Task InvokeWeeklyScheduleAChange()
         {
             await PickWeeklyScheduleImageResource(WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME);
-
-            ResourceManager.CreateDatedResourceFile("", WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME, CurrentWeeklyScheduleDate);
         }
 
         /// <summary>
@@ -301,8 +297,6 @@ namespace MilLeadershipBoard.UI.ViewModels
         public async Task InvokeWeeklyScheduleBChange()
         {
             await PickWeeklyScheduleImageResource(WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME);
-
-            ResourceManager.CreateDatedResourceFile("", WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME, CurrentWeeklyScheduleDate);
         }
 
         public void OnParentPageLoaded()

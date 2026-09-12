@@ -3,6 +3,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
+using Microsoft.Windows.Storage.Pickers;
 using MilLeadershipBoard.Config;
 using MilLeadershipBoard.Resources;
 using MilLeadershipBoard.UI.Pages;
@@ -16,6 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Data.Pdf;
+using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
@@ -44,6 +46,16 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// Field containing the <see cref="RelayCommand"/> instance used for the <see cref="BrowseScheduleFileCommand"/> property.
         /// </summary>
         private RelayCommand _browseScheduleFileCommand;
+
+        /// <summary>
+        /// Field containing the value of the <see cref="CanAdd"/> property.
+        /// </summary>
+        private bool _canAdd = false;
+
+        /// <summary>
+        /// Field containing the value of the <see cref="DateFormatter"/> property.
+        /// </summary>
+        private Func<DateOnly, DateOnly> _dateFormatter = (d) => d;
 
         /// <summary>
         /// Field containing the value of the <see cref="FileStatusMessageText"/> property.
@@ -108,6 +120,45 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// Gets the command to invoke the browsing for a 
         /// </summary>
         public ICommand BrowseScheduleFileCommand => _browseScheduleFileCommand;
+
+        /// <summary>
+        /// Gets if the schedule can be added.
+        /// </summary>
+        public bool CanAdd
+        {
+            private set
+            {
+                if (value == _canAdd)
+                {
+                    return;
+                }
+
+                _canAdd = value;
+
+                OnPropertyChanged();
+                OnCanAddChanged();
+            }
+            get => _canAdd;
+        }
+
+        /// <summary>
+        /// Sets or gets a <see cref="Func{T, TResult}"/> used to format the user selected date before the dated resource is created.
+        /// </summary>
+        public Func<DateOnly, DateOnly> DateFormatter
+        {
+            set
+            {
+                if (value == _dateFormatter)
+                {
+                    return;
+                }
+
+                _dateFormatter = value;
+
+                OnPropertyChanged();
+            }
+            get => _dateFormatter;
+        }
 
         /// <summary>
         /// Gets the status message text of the file status message.
@@ -195,7 +246,9 @@ namespace MilLeadershipBoard.UI.ViewModels
             get => _pdfPageCount;
         }
 
-
+        /// <summary>
+        /// Sets or gets the <see cref="DateTimeOffset"/> of the date of the schedule.
+        /// </summary>
         public DateTimeOffset ScheduleDateTimeOffset
         {
             set
@@ -212,7 +265,9 @@ namespace MilLeadershipBoard.UI.ViewModels
             get => _scheduleDateTimeOffset;
         }
 
-
+        /// <summary>
+        /// Sets or gets the file path for the schedule image or pdf file.
+        /// </summary>
         public string SchedulePath
         {
             set
@@ -230,7 +285,9 @@ namespace MilLeadershipBoard.UI.ViewModels
             get => _schedulePath;
         }
 
-
+        /// <summary>
+        /// Sets or gets which page of a pdf page is used for the schedule image.
+        /// </summary>
         public int SelectedPdfPage
         {
             set
@@ -249,6 +306,11 @@ namespace MilLeadershipBoard.UI.ViewModels
         }
 
         //   ---   Public Events   ---
+
+        /// <summary>
+        /// Raised when the value of the <see cref="CanAdd"/> property changed.
+        /// </summary>
+        public event TypedEventHandler<AddSchedulePageViewModel, bool>? CanAddChanged;
 
         /// <inheritdoc cref="INotifyPropertyChanged.PropertyChanged"/>
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -302,9 +364,28 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// <summary>
         /// Method used to browse for a schedule file.
         /// </summary>
-        private void BrowseFile()
+        private async void BrowseFile()
         {
-            throw new NotImplementedException();
+            FileOpenPicker picker = new FileOpenPicker(View.XamlRoot.ContentIslandEnvironment.AppWindowId)
+            {
+                Title = ResourceManager.GetString("AddScheduleViewModel/SelectScheduleFileOpenPicker/Title"),
+                CommitButtonText = ResourceManager.GetString("AddScheduleViewModel/SelectScheduleFileOpenPicker/CommitButtonText")
+            };
+
+            if (Path.Exists(SchedulePath))
+            {
+                picker.SuggestedFolder = Path.GetDirectoryName(SchedulePath);
+                picker.SuggestedStartFolder = Path.GetDirectoryName(SchedulePath);
+            }
+
+            PickFileResult? result = await picker.PickSingleFileAsync();
+
+            if (result is null)
+            {
+                return;
+            }
+
+            SchedulePath = result.Path;
         }
 
         /// <summary>
@@ -314,6 +395,15 @@ namespace MilLeadershipBoard.UI.ViewModels
         {
             IsFileStatusMessageActive = false;
             OnPropertyChanged(nameof(IsFileStatusMessageActive));
+        }
+
+        /// <summary>
+        /// Method used to get the formatted <see cref="DateOnly"/> representing the set resource date.
+        /// </summary>
+        /// <returns></returns>
+        private DateOnly GetFormattedResourceDate()
+        {
+            return DateFormatter(Util.Util.DateTimeOffsetToDateOnly(ScheduleDateTimeOffset));
         }
 
         /// <summary>
@@ -457,45 +547,52 @@ namespace MilLeadershipBoard.UI.ViewModels
                                 break;
                         }
 
-                        CurrentScheduleFile = null;
-
-                        // Deactivate the rendering visuals
-                        IsPdfRendering = false;
-
-                        PdfOptionsPanelVisibility = Visibility.Collapsed;
-
-                        return;
+                        SchedulePdfFile = null;
                     }
 
-                    if (SchedulePdfFile.IsPasswordProtected)
+                    if ((SchedulePdfFile is not null) && SchedulePdfFile.IsPasswordProtected)
                     {
                         SetFileStatusMessage("FilePasswordProtectedError");
 
                         SchedulePdfFile = null;
-                        CurrentScheduleFile = null;
-
-                        // Deactivate the rendering visuals
-                        IsPdfRendering = false;
-
-                        PdfOptionsPanelVisibility = Visibility.Collapsed;
-
-                        return;
                     }
 
-                    PdfPageCount = (int)SchedulePdfFile.PageCount;
+                    issuePresent = SchedulePdfFile is null;
 
-                    // Refresh the preview
-                    await RefreshPdfFilePreview();
+                    if (!issuePresent)
+                    {
+                        PdfPageCount = (int)SchedulePdfFile!.PageCount;
+
+                        // Refresh the preview
+                        await RefreshPdfFilePreview();
+                    }
                 }
             }
 
             if (issuePresent)
             {
+                // Deactivate the rendering visuals
+                IsPdfRendering = false;
+
+                // Reset the file properties
+                CurrentScheduleFile = null;
+                SchedulePdfFile = null;
+
                 PdfOptionsPanelVisibility = Visibility.Collapsed;
             }
+
+            CanAdd = !issuePresent;
         }
 
         //   ---   Protected Methods   ---
+
+        /// <summary>
+        /// Raises the <see cref="CanAddChanged"/> event.
+        /// </summary>
+        protected void OnCanAddChanged()
+        {
+            CanAddChanged?.Invoke(this, CanAdd);
+        }
 
         /// <summary>
         /// Raises the <see cref="PropertyChanged"/> event.
@@ -511,6 +608,39 @@ namespace MilLeadershipBoard.UI.ViewModels
         public void Dispose()
         {
 
+        }
+
+        /// <summary>
+        /// Method used to add the currently selected image or pdf page as the schedule for the selected <paramref name="resourceName"/>.
+        /// </summary>
+        /// <param name="resourceName">Name of the dated resource of the schedule image.</param>
+        public async Task AddSchedule(string resourceName)
+        {
+            if ((CurrentScheduleFile is null) || (!CanAdd))
+            {
+                // TODO: Add error handling and show status messages
+                return;
+            }
+
+            if (SchedulePdfFile is null)
+            {
+                throw new InvalidProgramException("Invalid program state reached: The pdf file should be addable, but no pdf file instance exists.");
+            }
+
+            DateOnly formattedResourceDate = GetFormattedResourceDate();
+
+            if (SchedulePdfFile is null)
+            {
+                // Add a simple image file
+                ResourceManager.CreateDatedResourceFile(SchedulePath, resourceName, formattedResourceDate);
+            }
+            else
+            {
+                using (PdfPage pdfPage = SchedulePdfFile.GetPage((uint)SelectedPdfPage - 1))
+                {
+                    await ResourceManager.CreateDatedResourceFile(pdfPage, resourceName, formattedResourceDate);
+                }
+            }
         }
     }
 }

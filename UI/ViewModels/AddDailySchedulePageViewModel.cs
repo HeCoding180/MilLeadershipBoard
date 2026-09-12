@@ -70,8 +70,8 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         public DateTimeOffset ScheduleDateTimeOffset
         {
-            set => ScheduleDate = DateOnly.FromDateTime(value.DateTime);
-            get => new DateTimeOffset(ScheduleDate.ToDateTime(TimeOnly.MinValue),TimeSpan.Zero);
+            set => ScheduleDate = Util.Util.DateTimeOffsetToDateOnly(value);
+            get => Util.Util.DateOnlyToDateTimeOffset(ScheduleDate);
         }
 
         /// <summary>

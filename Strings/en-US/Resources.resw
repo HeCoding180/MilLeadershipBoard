@@ -288,11 +288,11 @@
   <data name="DailySchedulePage.AddDialog.SecondaryButtonText" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="AddDailySchedulePage.SelectScheduleFileOpenPicker.CommitButtonText" xml:space="preserve">
+  <data name="AddScheduleViewModel.SelectScheduleFileOpenPicker.CommitButtonText" xml:space="preserve">
     <value>Select</value>
   </data>
-  <data name="AddDailySchedulePage.SelectScheduleFileOpenPicker.Title" xml:space="preserve">
-    <value>Select a daily schedule image...</value>
+  <data name="AddScheduleViewModel.SelectScheduleFileOpenPicker.Title" xml:space="preserve">
+    <value>Select a schedule image...</value>
   </data>
   <data name="MaximizeableImageView.Image.Tooltip.Content" xml:space="preserve">
     <value>Click to enlarge</value>
