@@ -1,6 +1,6 @@
 <div align="center">
 
-![MilLeadershipBoard Logo](/docs/Images/MilLeadershipBoard_512x512.png)
+![MilLeadershipBoard Logo](/docs/Images/MilLeadershipBoard_Logo.png)
 
 # MilLeadershipBoard
 
