@@ -36,5 +36,21 @@ namespace MilLeadershipBoard.Util
             int diff = (7 + (int)date.DayOfWeek - (int)DayOfWeek.Monday) % 7;
             return date.AddDays(-diff);
         }
+
+        /// <summary>
+        /// Method used to convert a <see cref="DateTimeOffset"/> to a <see cref="DateOnly"/> struct.
+        /// </summary>
+        /// <param name="dateTimeOffset">The <see cref="DateTimeOffset"/> that is to be converted to a <see cref="DateOnly"/> struct.</param>
+        /// <returns>A <see cref="DateOnly"/> representing the specified <paramref name="dateTimeOffset"/>.</returns>
+        public static DateOnly DateTimeOffsetToDateOnly(DateTimeOffset dateTimeOffset)
+            => DateOnly.FromDateTime(dateTimeOffset.DateTime);
+
+        /// <summary>
+        /// Method used to convert a <see cref="DateOnly"/> to a <see cref="DateTimeOffset"/> struct.
+        /// </summary>
+        /// <param name="date">The <see cref="DateOnly"/> that is to be converted to a <see cref="DateTimeOffset"/> struct.</param>
+        /// <returns>A <see cref="DateTimeOffset"/> representing the specified <paramref name="date"/>.</returns>
+        public static DateTimeOffset DateOnlyToDateTimeOffset(DateOnly date)
+            => new DateTimeOffset(date.ToDateTime(TimeOnly.MinValue), TimeSpan.Zero);
     }
 }

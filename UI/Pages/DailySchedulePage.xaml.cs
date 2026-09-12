@@ -38,17 +38,12 @@ namespace MilLeadershipBoard.UI.Pages
         /// </summary>
         public DailySchedulePage()
         {
-            ViewModel = new DailySchedulePageViewModel(DispatcherQueue);
+            ViewModel = new DailySchedulePageViewModel(this);
 
             InitializeComponent();
         }
 
         //   ---   Private Methods   ---
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            ViewModel.XamlRoot = XamlRoot;
-        }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {

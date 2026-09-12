@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <local:AddSchedulePageBase
-    x:Class="MilLeadershipBoard.UI.Pages.AddDailySchedulePage"
+    x:Class="MilLeadershipBoard.UI.Pages.AddWeeklySchedulePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MilLeadershipBoard.UI.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Unloaded="Page_Unloaded"
-    DataContext="{x:Bind ViewModel, Mode=OneTime}">
-    
+    mc:Ignorable="d">
+
     <StackPanel
         Spacing="8">
-
+        
         <DatePicker
-            x:Uid="AddDailySchedulePage/ScheduleDatePicker"
-            x:Name="ScheduleDatePicker"
+            x:Uid="AddWeeklySchedulePage/ScheduleWeekDatePicker"
+            x:Name="ScheduleWeekDatePicker"
             Date="{x:Bind ViewModel.ScheduleDateTimeOffset, Mode=TwoWay}"/>
 
         <Grid
@@ -26,7 +24,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBox
-                x:Uid="AddDailySchedulePage/SchedulePathTextBox"
+                x:Uid="AddWeeklySchedulePage/SchedulePathTextBox"
                 Grid.Column="0"
                 x:Name="SchedulePathTextBox"
                 Text="{x:Bind ViewModel.SchedulePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -34,7 +32,7 @@
                 MinWidth="400"/>
 
             <Button
-                x:Uid="Generic/BrowseButton"
+                x:Uid="AddWeeklySchedulePage/BrowseScheduleButton"
                 Grid.Column="1"
                 x:Name="BrowseScheduleButton"
                 Command="{x:Bind ViewModel.BrowseScheduleFileCommand, Mode=OneWay}"
@@ -52,11 +50,11 @@
             <Grid
                 Grid.Column="0"
                 VerticalAlignment="Center">
-
+                
                 <FontIcon Glyph="&#xE814;"
-                    Foreground="{ThemeResource SystemFillColorCautionBackgroundBrush}"/>
+                          Foreground="{ThemeResource SystemFillColorCautionBackgroundBrush}"/>
                 <FontIcon Glyph="&#xE7BA;"
-                    Foreground="{ThemeResource SystemFillColorCautionBrush}"/>
+                          Foreground="{ThemeResource SystemFillColorCautionBrush}"/>
             </Grid>
 
             <TextBlock
@@ -73,7 +71,7 @@
             Spacing="8">
 
             <TextBlock
-                x:Uid="AddDailySchedulePage/PdfPreviewHeaderTextBlock"
+                x:Uid="AddWeeklySchedulePage/PdfPreviewHeaderTextBlock"
                 x:Name="PdfPreviewHeaderTextBlock"/>
 
             <Grid>
@@ -90,7 +88,7 @@
             </Grid>
 
             <NumberBox
-                x:Uid="AddDailySchedulePage/PdfPageNumberBox"
+                x:Uid="AddWeeklySchedulePage/PdfPageNumberBox"
                 x:Name="PdfPageNumberBox"
                 Value="{x:Bind ViewModel.SelectedPdfPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 SmallChange="1"

@@ -24,6 +24,7 @@
     <None Remove="Resources\Styles.xaml" />
     <None Remove="UI\Pages\AddDailySchedulePage.xaml" />
     <None Remove="UI\Pages\AddLessionPage.xaml" />
+    <None Remove="UI\Pages\AddWeeklySchedulePage.xaml" />
     <None Remove="UI\Pages\BreaksPage.xaml" />
     <None Remove="UI\Pages\DailySchedulePage.xaml" />
     <None Remove="UI\Pages\DashboardPage.xaml" />
@@ -66,6 +67,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\Windows\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="UI\Pages\AddWeeklySchedulePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="UI\UserControls\DailyScheduleView.xaml">

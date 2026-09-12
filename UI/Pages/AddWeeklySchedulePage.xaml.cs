@@ -22,24 +22,20 @@ namespace MilLeadershipBoard.UI.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AddDailySchedulePage : AddSchedulePageBase
+    public sealed partial class AddWeeklySchedulePage : AddSchedulePageBase
     {
         //   ---   Constructors   ---
 
         /// <summary>
-        /// Creates a new instance of the <see cref="AddDailySchedulePage"/> class.
+        /// Creates a new instance of the <see cref="AddWeeklySchedulePage"/> class.
         /// </summary>
         /// <param name="resourceName">The name of the resource used for the schedule.</param>
-        public AddDailySchedulePage(string resourceName) : base(resourceName)
+        public AddWeeklySchedulePage(string resourceName) : base(resourceName)
         {
+            // Set the DateFormatter of the ViewModel to always use the monday of the week
+            ViewModel.DateFormatter = Util.Util.GetMondayOfWeek;
+
             InitializeComponent();
-        }
-
-        //   ---   Private Methods   ---
-
-        private void Page_Unloaded(object sender, RoutedEventArgs e)
-        {
-            ViewModel.Dispose();
         }
     }
 }

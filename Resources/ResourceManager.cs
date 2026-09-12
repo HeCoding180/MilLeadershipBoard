@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Data.Pdf;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
@@ -96,6 +97,11 @@ namespace MilLeadershipBoard.Resources
         //   ---   Public Constants   ---
 
         /// <summary>
+        /// Constant string containing the default file extension used for dated resource files.
+        /// </summary>
+        public const string DEFAULT_DATED_RESOURCE_FILE_EXTENSION = ".png";
+
+        /// <summary>
         /// Constant <see cref="string[]"/> containing all valid file extensions for dated image resource files.
         /// </summary>
         public static readonly string[] VALID_IMAGE_RESOURCE_FILE_EXTENSIONS = [".jpeg", ".png", ".bmp", ".gif", ".tiff", ".jxr", ".hdp", ".wdp", ".ico", ".svg"];
@@ -115,7 +121,12 @@ namespace MilLeadershipBoard.Resources
         /// <summary>
         /// Gets the <see cref="ResourceLoader"/> instance that can be used to load resources such as UI strings.
         /// </summary>
-        public static ResourceLoader ResourceLoader { get; } = new ResourceLoader();
+        public static ResourceLoader DefaultResourceLoader { get; } = new ResourceLoader();
+
+        /// <summary>
+        /// Gets the <see cref="ResourceLoader"/> instance that can be used to load status message strings.
+        /// </summary>
+        public static ResourceLoader StatusMessageResourceLoader { get; } = new ResourceLoader(ResourceLoader.GetDefaultResourceFilePath(), "StatusMessages");
 
         //   ---   Public Events   ---
 
@@ -166,6 +177,15 @@ namespace MilLeadershipBoard.Resources
             string dateStr = Path.GetFileNameWithoutExtension(fileName).Split('_').Last();
 
             return DateOnly.ParseExact(dateStr, DATE_FORMAT_STRING, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// Method used to asynchronously get a <see cref="StorageFolder"/> instance of the dated resource folder.
+        /// </summary>
+        /// <returns>An awaitable <see cref="Task"/> resulting in a <see cref="StorageFolder"/> instance of the dated resource folder.</returns>
+        private static async Task<StorageFolder> GetDatedResourceStorageFolderAsync()
+        {
+            return await StorageFolder.GetFolderFromPathAsync(DatedResourcePath);
         }
 
         /// <summary>
@@ -232,6 +252,39 @@ namespace MilLeadershipBoard.Resources
         }
 
         /// <summary>
+        /// Method used to create a dated resource from a <see cref="PdfPage"/>.
+        /// </summary>
+        /// <param name="pdfPage">The <see cref="PdfPage"/> instance from which the dated resource image is to be created.</param>
+        /// <param name="resourceName">Name of the resource.</param>
+        /// <param name="date">Date of the dated resource.</param>
+        /// <param name="overwrite">Defines if the dated resource should be overwritten if it already exists.</param>
+        public static async Task CreateDatedResourceFile(PdfPage pdfPage, string resourceName, DateOnly date, bool overwrite = true)
+        {
+            string resourceFileName = GenerateDatedResourceFileName(resourceName, date, DEFAULT_DATED_RESOURCE_FILE_EXTENSION);
+
+            EnsureDatedResourceDirectory();
+
+            bool resourceExisted = DatedResourceExists(resourceName, date);
+            if (resourceExisted)
+            {
+                // Delete existing resources
+                DeleteDatedResource(resourceName, date, false);
+            }
+
+            // Create the StorageFile instance
+            StorageFolder datedResourceStorageFolder = await GetDatedResourceStorageFolderAsync();
+            StorageFile datedResourceFile = await datedResourceStorageFolder.CreateFileAsync(resourceFileName, CreationCollisionOption.ReplaceExisting);
+
+            // Save the resource image data
+            using (StorageStreamTransaction transaction = await datedResourceFile.OpenTransactedWriteAsync())
+            {
+                await pdfPage.RenderToStreamAsync(transaction.Stream);
+            }
+
+            OnDatedResourceChanged(resourceName, date, resourceExisted ? DatedResourceChangedAction.Modify : DatedResourceChangedAction.Add);
+        }
+
+        /// <summary>
         /// Method used to check if a dated resource file exists.
         /// </summary>
         /// <param name="resourceName">Name of the resource.</param>
@@ -247,7 +300,8 @@ namespace MilLeadershipBoard.Resources
         /// </summary>
         /// <param name="resourceName">The name of the dated resource.</param>
         /// <param name="date">The date of the dated resource.</param>
-        public static void DeleteDatedResource(string resourceName, DateOnly date)
+        /// <param name="raiseEvent">Defines if an event should be raised for the resource deletion. Default: <see langword="true"/></param>
+        public static void DeleteDatedResource(string resourceName, DateOnly date, bool raiseEvent = true)
         {
             TryGetDatedResourceFiles(resourceName, date, out string[] paths);
 
@@ -257,7 +311,10 @@ namespace MilLeadershipBoard.Resources
                 File.Delete(path);
             }
 
-            OnDatedResourceChanged(resourceName, date, DatedResourceChangedAction.Remove);
+            if (raiseEvent)
+            {
+                OnDatedResourceChanged(resourceName, date, DatedResourceChangedAction.Remove);
+            }
         }
 
         /// <summary>
@@ -320,8 +377,18 @@ namespace MilLeadershipBoard.Resources
             return [.. paths.Select(GetDatedResourceFileDate).Distinct()];
         }
 
+        /// <summary>
+        /// Returns the generic status message specified by the <paramref name="messageId"/>.
+        /// </summary
+        public static string GetGenericStatusMessage(string messageId) => StatusMessageResourceLoader.GetString("Generic/" + messageId);
+
         /// <inheritdoc cref="ResourceLoader.GetString"/>
-        public static string GetString(string resourceId) => ResourceLoader.GetString(resourceId);
+        public static string GetString(string resourceId) => DefaultResourceLoader.GetString(resourceId);
+
+        /// <summary>
+        /// Returns the status message specified by the <paramref name="messageId"/>.
+        /// </summary>
+        public static string GetStatusMessage(string messageId) => StatusMessageResourceLoader.GetString(messageId);
 
         /// <summary>
         /// Method used to check if a path is valid for a dated image resource.
