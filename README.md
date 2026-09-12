@@ -1,6 +1,12 @@
+<div align="center">
+
+![MilLeadershipBoard Logo](/docs/Images/MilLeadershipBoard_512x512.png)
+
 # MilLeadershipBoard
 
 The MilLeadershipBoard is a military dashboard used to track troop locations, training lessions and daily/weekly schedules during training.
+
+</div>
 
 **Note**:
 This application is currently in a demo version. It has the basic functionality that were originally planned but not much work has been put into UX *yet*. Many things regarding UX and UI design might change in the future.
