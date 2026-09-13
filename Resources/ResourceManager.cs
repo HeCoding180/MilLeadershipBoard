@@ -109,11 +109,6 @@ namespace MilLeadershipBoard.Resources
         //   ---   Public Properties   ---
 
         /// <summary>
-        /// Gets a <see langword="string"/> containing the path to the application's local appdata path.
-        /// </summary>
-        public static string LocalAppDataPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MilLeadershipBoard");
-
-        /// <summary>
         /// Gets a <see langword="string"/> containing the path to the folder containing the dated resources.
         /// </summary>
         public static string DatedResourcePath => Path.Combine(LocalAppDataPath, "DatedResources");
@@ -124,9 +119,51 @@ namespace MilLeadershipBoard.Resources
         public static ResourceLoader DefaultResourceLoader { get; } = new ResourceLoader();
 
         /// <summary>
+        /// Gets a <see langword="string"/> containing the path to the application's local appdata path.
+        /// </summary>
+        public static string LocalAppDataPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MilLeadershipBoard");
+
+        /// <summary>
         /// Gets the <see cref="ResourceLoader"/> instance that can be used to load status message strings.
         /// </summary>
         public static ResourceLoader StatusMessageResourceLoader { get; } = new ResourceLoader(ResourceLoader.GetDefaultResourceFilePath(), "StatusMessages");
+
+        //   ---   Public Properties (generic strings)   ---
+
+        /// <summary>
+        /// Gets the string of the Generic.Accept resource.
+        /// </summary>
+        public static string AcceptString => GetString("Generic/Accept");
+
+        /// <summary>
+        /// Gets the string of the Generic.Add resource.
+        /// </summary>
+        public static string AddString => GetString("Generic/Add");
+
+        /// <summary>
+        /// Gets the string of the Generic.Cancel resource.
+        /// </summary>
+        public static string CancelString => GetString("Generic/Cancel");
+
+        /// <summary>
+        /// Gets the string of the Generic.Create resource.
+        /// </summary>
+        public static string CreateString => GetString("Generic/Create");
+
+        /// <summary>
+        /// Gets the string of the Generic.No resource.
+        /// </summary>
+        public static string NoString => GetString("Generic/No");
+
+        /// <summary>
+        /// Gets the string of the Generic.Select resource.
+        /// </summary>
+        public static string SelectString => GetString("Generic/Select");
+
+        /// <summary>
+        /// Gets the string of the Generic.Yes resource.
+        /// </summary>
+        public static string YesString => GetString("Generic/Yes");
 
         //   ---   Public Events   ---
 

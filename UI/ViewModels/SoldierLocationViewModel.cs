@@ -140,23 +140,25 @@ namespace MilLeadershipBoard.UI.ViewModels
                 return;
             }
 
+            ICommand primaryButtonCommand = new RelayCommand(() =>
+            {
+                while (Location.Soldiers.Any())
+                {
+                    // Unassign all soldiers from this location.
+                    Location.Soldiers[0].LocationId = ConfigManager.Config.DefaultLocationId;
+                }
+
+                ConfigManager.Config.Locations.Remove(Location);
+            });
+
             ContentDialog dialog = new ContentDialog()
             {
                 Title = ResourceManager.GetString("SoldierLocationView/DeleteDialog/Title"),
                 Content = ResourceManager.GetString("SoldierLocationView/DeleteDialog/Content"),
                 DefaultButton = ContentDialogButton.Primary,
-                PrimaryButtonText = ResourceManager.GetString("SoldierLocationView/DeleteDialog/AcceptButtonText"),
-                PrimaryButtonCommand = new RelayCommand(() =>
-                {
-                    while (Location.Soldiers.Any())
-                    {
-                        // Unassign all soldiers from this location.
-                        Location.Soldiers[0].LocationId = ConfigManager.Config.DefaultLocationId;
-                    }
-
-                    ConfigManager.Config.Locations.Remove(Location);
-                }),
-                SecondaryButtonText = ResourceManager.GetString("SoldierLocationView/DeleteDialog/RejectButtonText"),
+                PrimaryButtonText = ResourceManager.YesString,
+                PrimaryButtonCommand = primaryButtonCommand,
+                SecondaryButtonText = ResourceManager.NoString,
                 XamlRoot = XamlRoot
             };
 
@@ -197,9 +199,9 @@ namespace MilLeadershipBoard.UI.ViewModels
                 Title = ResourceManager.GetString("SoldierLocationView/MakeDefaultDialog/Title"),
                 Content = ResourceManager.GetString("SoldierLocationView/MakeDefaultDialog/Content"),
                 DefaultButton = ContentDialogButton.Primary,
-                PrimaryButtonText = ResourceManager.GetString("SoldierLocationView/MakeDefaultDialog/AcceptButtonText"),
+                PrimaryButtonText = ResourceManager.YesString,
                 PrimaryButtonCommand = new RelayCommand(() => ConfigManager.Config.DefaultLocationId = Location.Id),
-                SecondaryButtonText = ResourceManager.GetString("SoldierLocationView/MakeDefaultDialog/RejectButtonText"),
+                SecondaryButtonText = ResourceManager.NoString,
                 XamlRoot = XamlRoot
             };
 
@@ -229,9 +231,9 @@ namespace MilLeadershipBoard.UI.ViewModels
                 Content = nameTextBox,
                 DefaultButton = ContentDialogButton.Primary,
                 IsPrimaryButtonEnabled = !string.IsNullOrWhiteSpace(LocationName),
-                PrimaryButtonText = ResourceManager.GetString("SoldierLocationView/RenameDialog/AcceptButtonText"),
+                PrimaryButtonText = ResourceManager.AcceptString,
                 PrimaryButtonCommand = new RelayCommand(() => LocationName = nameTextBox.Text),
-                SecondaryButtonText = ResourceManager.GetString("SoldierLocationView/RenameDialog/RejectButtonText"),
+                SecondaryButtonText = ResourceManager.CancelString,
                 XamlRoot = XamlRoot
             };
 

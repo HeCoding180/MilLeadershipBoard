@@ -132,12 +132,6 @@
   <data name="LocationsPage.LocationNameTextBox.PlaceholderText" xml:space="preserve">
     <value>Name für den Standort eingeben</value>
   </data>
-  <data name="LocationsPage.AddLocationDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Erstellen</value>
-  </data>
-  <data name="LocationsPage.AddLocationDialog.SecondaryButtonText" xml:space="preserve">
-    <value>Abbrechen</value>
-  </data>
   <data name="LocationsPage.AddLocationDialog.Title" xml:space="preserve">
     <value>Standort Hinzufügen</value>
   </data>
@@ -146,12 +140,6 @@
   </data>
   <data name="SoldierLocationView.DeleteFlyoutButton.Text" xml:space="preserve">
     <value>Löschen</value>
-  </data>
-  <data name="SoldierLocationView.MakeDefaultDialog.AcceptButtonText" xml:space="preserve">
-    <value>Ja</value>
-  </data>
-  <data name="SoldierLocationView.DeleteDialog.AcceptButtonText" xml:space="preserve">
-    <value>Ja</value>
   </data>
   <data name="SoldierLocationView.MakeDefaultDialog.Content" xml:space="preserve">
     <value>Möchten Sie diesen Standort als Standard-Standort festlegen?</value>
@@ -177,20 +165,8 @@
   <data name="WeeklySchedulePage_Title.Text" xml:space="preserve">
     <value>Wochenplan</value>
   </data>
-  <data name="SoldierLocationView.MakeDefaultDialog.RejectButtonText" xml:space="preserve">
-    <value>Nein</value>
-  </data>
-  <data name="SoldierLocationView.DeleteDialog.RejectButtonText" xml:space="preserve">
-    <value>Nein</value>
-  </data>
   <data name="SoldierLocationView.RenameDialog.Title" xml:space="preserve">
     <value>Standort Umbebennen</value>
-  </data>
-  <data name="SoldierLocationView.RenameDialog.AcceptButtonText" xml:space="preserve">
-    <value>Bestätigen</value>
-  </data>
-  <data name="SoldierLocationView.RenameDialog.RejectButtonText" xml:space="preserve">
-    <value>Abbrechen</value>
   </data>
   <data name="SoldiersPage.FirstNameTextBox.PlaceholderText" xml:space="preserve">
     <value>Vorname eingeben</value>
@@ -237,17 +213,8 @@
   <data name="WeeklySchedulePage.ScheduleSelectionTextBlock.Text" xml:space="preserve">
     <value>Zeitplan Auswählen...</value>
   </data>
-  <data name="WeeklySchedulePage.SelectScheduleStoragePicker.CommitButtonText" xml:space="preserve">
-    <value>Öffnen</value>
-  </data>
   <data name="WeeklySchedulePage.ScheduleImageToolTip.Content" xml:space="preserve">
     <value>Doppelt anclicken um abzuändern</value>
-  </data>
-  <data name="LessionsPage.AddLessionContentDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Hinzufügen</value>
-  </data>
-  <data name="LessionsPage.AddLessionContentDialog.SecondaryButtonText" xml:space="preserve">
-    <value>Abbrechen</value>
   </data>
   <data name="AddLessionsPage.NameTextBox.Header" xml:space="preserve">
     <value>Lektionsname</value>
@@ -270,15 +237,6 @@
   <data name="LessionDataView.CompleteFlyoutButton.Text" xml:space="preserve">
     <value>Abschliessen</value>
   </data>
-  <data name="DailySchedulePage.AddDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Hinzufügen</value>
-  </data>
-  <data name="DailySchedulePage.AddDialog.SecondaryButtonText" xml:space="preserve">
-    <value>Abbrechen</value>
-  </data>
-  <data name="AddScheduleViewModel.SelectScheduleFileOpenPicker.CommitButtonText" xml:space="preserve">
-    <value>Auswählen</value>
-  </data>
   <data name="AddScheduleViewModel.SelectScheduleFileOpenPicker.Title" xml:space="preserve">
     <value>Bilddatei für den Zeitplan auswählen...</value>
   </data>
@@ -290,12 +248,6 @@
   </data>
   <data name="WeeklySchedulePage.AddDialog.Title" xml:space="preserve">
     <value>Wochenplan Hinzufügen</value>
-  </data>
-  <data name="WeeklySchedulePage.AddDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Hinzufügen</value>
-  </data>
-  <data name="WeeklySchedulePage.AddDialog.SecondaryButtonText" xml:space="preserve">
-    <value>Abbrechen</value>
   </data>
   <data name="AddWeeklySchedulePage.ScheduleWeekDatePicker.Header" xml:space="preserve">
     <value>Datum Wochenplan</value>
@@ -315,9 +267,6 @@
   <data name="AddDailySchedulePage.SchedulePathTextBox.PlaceholderText" xml:space="preserve">
     <value>Dateipfad für den Tagesplan eingeben</value>
   </data>
-  <data name="AddWeeklySchedulePage.BrowseScheduleButton.Content" xml:space="preserve">
-    <value>Browse</value>
-  </data>
   <data name="AddWeeklySchedulePage.PdfPageNumberBox.Header" xml:space="preserve">
     <value>Seite</value>
   </data>
@@ -332,5 +281,26 @@
   </data>
   <data name="Generic.BrowseButton.Content" xml:space="preserve">
     <value>Browse</value>
+  </data>
+  <data name="Generic.Yes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="Generic.No" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="Generic.Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="Generic.Add" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="Generic.Select" xml:space="preserve">
+    <value>Auswählen</value>
+  </data>
+  <data name="Generic.Create" xml:space="preserve">
+    <value>Erstellen</value>
+  </data>
+  <data name="Generic.Accept" xml:space="preserve">
+    <value>Bestätigen</value>
   </data>
 </root>

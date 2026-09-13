@@ -68,9 +68,9 @@ namespace MilLeadershipBoard.UI.ViewModels
             {
                 Title = ResourceManager.GetString("LocationsPage/AddLocationDialog/Title"),
                 IsPrimaryButtonEnabled = false,
-                PrimaryButtonText = ResourceManager.GetString("LocationsPage/AddLocationDialog/PrimaryButtonText"),
+                PrimaryButtonText = ResourceManager.CreateString,
                 PrimaryButtonCommand = new RelayCommand(() => CreateLocation(nameTextBox.Text)),
-                SecondaryButtonText = ResourceManager.GetString("LocationsPage/AddLocationDialog/SecondaryButtonText"),
+                SecondaryButtonText = ResourceManager.CancelString,
                 Content = nameTextBox,
                 DefaultButton = ContentDialogButton.Primary,
                 XamlRoot = XamlRoot

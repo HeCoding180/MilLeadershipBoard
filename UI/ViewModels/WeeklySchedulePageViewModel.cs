@@ -159,10 +159,10 @@ namespace MilLeadershipBoard.UI.ViewModels
             {
                 Title = ResourceManager.GetString("WeeklySchedulePage/AddDialog/Title"),
                 DefaultButton = ContentDialogButton.Primary,
-                PrimaryButtonText = ResourceManager.GetString("WeeklySchedulePage/AddDialog/PrimaryButtonText"),
+                PrimaryButtonText = ResourceManager.AddString,
                 PrimaryButtonCommand = content.AddScheduleCommand,
                 IsPrimaryButtonEnabled = content.CanAdd,
-                SecondaryButtonText = ResourceManager.GetString("WeeklySchedulePage/AddDialog/SecondaryButtonText"),
+                SecondaryButtonText = ResourceManager.CancelString,
                 Content = content,
                 XamlRoot = View.XamlRoot
             };

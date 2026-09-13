@@ -32,7 +32,7 @@
                 MinWidth="400"/>
 
             <Button
-                x:Uid="AddWeeklySchedulePage/BrowseScheduleButton"
+                x:Uid="Generic/BrowseButton"
                 Grid.Column="1"
                 x:Name="BrowseScheduleButton"
                 Command="{x:Bind ViewModel.BrowseScheduleFileCommand, Mode=OneWay}"

@@ -77,9 +77,9 @@ namespace MilLeadershipBoard.UI.ViewModels
             {
                 Title = ResourceManager.GetString("LessionsPage/AddLessionContentDialog/Title"),
                 DefaultButton = ContentDialogButton.Primary,
-                PrimaryButtonText = ResourceManager.GetString("LessionsPage/AddLessionContentDialog/PrimaryButtonText"),
+                PrimaryButtonText = ResourceManager.AddString,
                 IsPrimaryButtonEnabled = false,
-                SecondaryButtonText = ResourceManager.GetString("LessionsPage/AddLessionContentDialog/SecondaryButtonText"),
+                SecondaryButtonText = ResourceManager.CancelString,
                 XamlRoot = XamlRoot
             };
 

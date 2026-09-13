@@ -369,7 +369,7 @@ namespace MilLeadershipBoard.UI.ViewModels
             FileOpenPicker picker = new FileOpenPicker(View.XamlRoot.ContentIslandEnvironment.AppWindowId)
             {
                 Title = ResourceManager.GetString("AddScheduleViewModel/SelectScheduleFileOpenPicker/Title"),
-                CommitButtonText = ResourceManager.GetString("AddScheduleViewModel/SelectScheduleFileOpenPicker/CommitButtonText")
+                CommitButtonText = ResourceManager.SelectString
             };
 
             if (Path.Exists(SchedulePath))
