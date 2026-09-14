@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Input;
 using MilLeadershipBoard.UI.UserControls;
 using System;
 using System.Collections.Generic;
@@ -235,6 +236,22 @@ namespace MilLeadershipBoard.UI.ViewModels
         //   ---   Public Methods   ---
 
         /// <summary>
+        /// Callback method for the <see cref="ClickEventWrapper.SingleTapped"/> event used to open the maximized view of the image.
+        /// </summary>
+        public void BaseImageControlClickEventWrapper_SingleTapped(object sender, TappedRoutedEventArgs e)
+        {
+            OpenMaximizedView();
+        }
+
+        /// <summary>
+        /// Callback method for the <see cref="ClickEventWrapper.Tapped"/> used to close the maximized view of the image.
+        /// </summary>
+        public void BaseImageControlClickEventWrapper_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            CloseMaximizedView();
+        }
+
+        /// <summary>
         /// Method used to close the maximized view of the image.
         /// </summary>
         public void CloseMaximizedView()
@@ -276,6 +293,9 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         public void OpenMaximizedView()
         {
+            // TODO: Migrate the maximized view to the main page.
+            RefreshVisualProperties();
+
             IsMaximizedViewOpen = true;
         }
 
