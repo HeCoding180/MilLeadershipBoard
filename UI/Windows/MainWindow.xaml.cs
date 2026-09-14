@@ -24,7 +24,7 @@ namespace MilLeadershipBoard.UI.Windows
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainWindow : Window
+    public sealed partial class MainWindow : Window, IMessageHostWindow
     {
         //   ---   Public Properties   ---
 
@@ -32,6 +32,16 @@ namespace MilLeadershipBoard.UI.Windows
         /// Gets the <see cref="UIElement"/> that contains the main content.
         /// </summary>
         public UIElement MainContentElement => ContentFrame;
+
+        //   ---   Public Properties (overrides)   ---
+
+        public Visibility MessagePaneVisibility
+        {
+            set => MessageHostGrid.Visibility = value;
+            get => MessageHostGrid.Visibility;
+        }
+
+        public StackPanel MessageStackPanel => MessageHostStackPanel;
 
         //   ---   Constructors   ---
 

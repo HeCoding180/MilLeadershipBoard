@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
 using MilLeadershipBoard.Config;
+using MilLeadershipBoard.Messaging;
 using MilLeadershipBoard.UI.Windows;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -55,7 +57,18 @@ namespace MilLeadershipBoard
 
         //   ---   Private Methods   ---
 
-        private void _window_Closed(object sender, WindowEventArgs args)
+        private void MainWindowInstance_Activated(object sender, WindowActivatedEventArgs args)
+        {
+            if (MainWindowInstance is null)
+            {
+                throw new InvalidProgramException("MainWindow instance was null at its activation");
+            }
+
+            // Set the main window as the message host for the MessageDispatcher's messages
+            MessageDispatcher.SetMessageHost(MainWindowInstance);
+        }
+
+        private void MainWindowInstance_Closed(object sender, WindowEventArgs args)
         {
             // Save config and user data
             ConfigManager.SaveData();
@@ -70,7 +83,8 @@ namespace MilLeadershipBoard
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             MainWindowInstance = new MainWindow();
-            MainWindowInstance.Closed += _window_Closed;
+            MainWindowInstance.Activated += MainWindowInstance_Activated;
+            MainWindowInstance.Closed += MainWindowInstance_Closed;
 
             MainWindowInstance.Activate();
         }

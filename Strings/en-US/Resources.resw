@@ -306,4 +306,13 @@
   <data name="Generic.Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="MessageDispatcher.ShowErrorDetailsTextBlock.Expand" xml:space="preserve">
+    <value>Show Exception Details</value>
+  </data>
+  <data name="MessageDispatcher.ShowErrorDetailsTextBlock.Contract" xml:space="preserve">
+    <value>Hide Exception Details</value>
+  </data>
+  <data name="WeeklySchedulePageViewModel.LoadingFailedMessage.Title" xml:space="preserve">
+    <value>The weekly schedule could not be loaded</value>
+  </data>
 </root>

@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.Windows.Storage.Pickers;
 using MilLeadershipBoard.Config;
+using MilLeadershipBoard.Messaging;
 using MilLeadershipBoard.Resources;
 using MilLeadershipBoard.UI.Pages;
 using System;
@@ -153,6 +154,8 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// <returns>The file path of a weekly schedule image file.</returns>
         private async Task PickWeeklyScheduleImageResource(string resourceName)
         {
+            MessageDispatcher.ShowExceptionMessage("Dummy title", new Exception("This is a dummy exception!"));
+
             AddWeeklySchedulePage content = new AddWeeklySchedulePage(resourceName);
 
             ContentDialog dialog = new ContentDialog()
@@ -175,10 +178,9 @@ namespace MilLeadershipBoard.UI.ViewModels
 
         private void OnWeeklyScheduleLoadingTaskCompleted(Task loadingTask)
         {
-            if (!loadingTask.IsCompletedSuccessfully)
+            if (loadingTask.IsFaulted)
             {
-                // TODO: Implement exception handling
-                return;
+                MessageDispatcher.ShowExceptionMessage(ResourceManager.GetString("WeeklySchedulePageViewModel/LoadingFailedMessage/Title"), loadingTask.Exception);
             }
         }
 

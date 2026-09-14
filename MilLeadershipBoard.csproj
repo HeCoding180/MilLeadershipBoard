@@ -33,6 +33,7 @@
     <None Remove="UI\Pages\SoldiersPage.xaml" />
     <None Remove="UI\Pages\WeeklySchedulePage.xaml" />
     <None Remove="UI\UserControls\DailyScheduleView.xaml" />
+    <None Remove="UI\UserControls\ExceptionMessageView.xaml" />
     <None Remove="UI\UserControls\LessionDataView.xaml" />
     <None Remove="UI\UserControls\MaximizeableImageView.xaml" />
   </ItemGroup>
@@ -67,7 +68,9 @@
     <PackageReference Include="WinUI.TableView" Version="1.4.1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UI\Windows\" />
+    <Page Update="UI\UserControls\ExceptionMessageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="UI\Pages\AddWeeklySchedulePage.xaml">
