@@ -156,6 +156,11 @@ namespace MilLeadershipBoard.Resources
         public static string NoString => GetString("Generic/No");
 
         /// <summary>
+        /// Gets the string of the Generic.Ok resource.
+        /// </summary>
+        public static string OkString => GetString("Generic/Ok");
+
+        /// <summary>
         /// Gets the string of the Generic.Select resource.
         /// </summary>
         public static string SelectString => GetString("Generic/Select");

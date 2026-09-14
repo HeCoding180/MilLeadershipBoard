@@ -303,4 +303,7 @@
   <data name="Generic.Accept" xml:space="preserve">
     <value>Accept</value>
   </data>
+  <data name="Generic.Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
 </root>

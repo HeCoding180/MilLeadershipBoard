@@ -59,18 +59,12 @@ namespace MilLeadershipBoard.UI.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (DataContext is WeeklySchedulePageViewModel vm)
-            {
-                vm.OnParentPageLoaded();
-            }
+            ViewModel.OnParentPageLoaded();
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (DataContext is IDisposable dc)
-            {
-                dc.Dispose();
-            }
+            ViewModel.Dispose();
         }
     }
 }

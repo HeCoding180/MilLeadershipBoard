@@ -272,7 +272,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// <summary>
         /// Method used to dispose of this <see cref="BreaksPageViewModel"/> instance.
         /// </summary>
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             ResourceManager.DatedResourceChanged -= ResourceManager_DatedResourceChanged;
 
