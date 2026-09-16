@@ -9,11 +9,57 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid
+        x:Name="BaseGrid">
+
         <uc:MaximizeableImageView
             Header="{x:Bind ViewModel.HeaderText, Mode=OneWay}"
             HeaderStyle="{StaticResource BodyLargeTextBlockStyle}"
             Source="{x:Bind Model.Source, Mode=OneWay}"
             Stretch="Uniform"/>
+
+        <Border
+            x:Name="OptionsButtonBorder"
+            Background="{ThemeResource OverlayButtonBackgroundColor}"
+            Visibility="{x:Bind ViewModel.OptionsButtonVisibility, Mode=OneWay}"
+            CornerRadius="{StaticResource ControlCornerRadius}"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Margin="12,48">
+
+            <Border.Shadow>
+                <ThemeShadow/>
+            </Border.Shadow>
+
+            <Button
+                x:Name="OptionsButton">
+
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem
+                            x:Name="EditFlyoutItem"
+                            x:Uid="DailyScheduleView/OptionsFlyout/EditButton"
+                            Command="{x:Bind ViewModel.EditDateCommand, Mode=OneTime}">
+
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Edit"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+
+                        <MenuFlyoutItem
+                            x:Name="DeleteFlyoutItem"
+                            x:Uid="DailyScheduleView/OptionsFlyout/DeleteButton"
+                            Command="{x:Bind ViewModel.DeleteCommand, Mode=OneTime}">
+
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Delete"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </Button.Flyout>
+
+                <FontIcon Glyph="&#xE70D;" />
+            </Button>
+        </Border>
     </Grid>
 </UserControl>

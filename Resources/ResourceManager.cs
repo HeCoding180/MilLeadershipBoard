@@ -97,6 +97,11 @@ namespace MilLeadershipBoard.Resources
         //   ---   Public Constants   ---
 
         /// <summary>
+        /// Constant string containing the resource name for daily schedule images.
+        /// </summary>
+        public const string DAILY_SCHEDULE_IMAGE_RESOURCE_NAME = "DailyScheduleImage";
+
+        /// <summary>
         /// Constant string containing the default file extension used for dated resource files.
         /// </summary>
         public const string DEFAULT_DATED_RESOURCE_FILE_EXTENSION = ".png";
@@ -105,6 +110,16 @@ namespace MilLeadershipBoard.Resources
         /// Constant <see cref="string[]"/> containing all valid file extensions for dated image resource files.
         /// </summary>
         public static readonly string[] VALID_IMAGE_RESOURCE_FILE_EXTENSIONS = [".jpeg", ".png", ".bmp", ".gif", ".tiff", ".jxr", ".hdp", ".wdp", ".ico", ".svg"];
+
+        /// <summary>
+        /// Constant containing the name of the dated resource of the weekly schedule A.
+        /// </summary>
+        public const string WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME = "WeeklyScheduleA";
+
+        /// <summary>
+        /// Constant containing the name of the dated resource of the weekly schedule B.
+        /// </summary>
+        public const string WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME = "WeeklyScheduleB";
 
         //   ---   Public Properties   ---
 
@@ -271,6 +286,47 @@ namespace MilLeadershipBoard.Resources
         }
 
         //   ---   Public Methods   ---
+
+        /// <summary>
+        /// Method ued to change the date of a dated resource.
+        /// </summary>
+        /// <param name="resourceName">Name of the resource whose date is to be changed.</param>
+        /// <param name="oldDate">The old date of the dated resource.</param>
+        /// <param name="newDate">The new date of the dated resource.</param>
+        /// <exception cref="DatedResourceNotExistingException">Thrown if the old dated resource doesn't exist.</exception>
+        public static void ChangeResourceDate(string resourceName, DateOnly oldDate, DateOnly newDate)
+        {
+            bool resourceFilesExist = TryGetDatedResourceFiles(resourceName, oldDate, out string[] resourceFilePaths);
+
+            if (!resourceFilesExist)
+            {
+                throw new DatedResourceNotExistingException($"The dated resource '{resourceName}' does not exist.")
+                {
+                    ResourceName = resourceName,
+                    ResourceDate = oldDate
+                };
+            }
+
+            // Raise the remove event for the old resource
+            OnDatedResourceChanged(resourceName, oldDate, DatedResourceChangedAction.Remove);
+
+            bool destinationResourceExists = false;
+
+            foreach (string oldPath in resourceFilePaths)
+            {
+                string newPath = GenerateDatedResourcePath(resourceName, newDate, Path.GetExtension(oldPath));
+
+                if (File.Exists(newPath))
+                {
+                    destinationResourceExists = true;
+                }
+
+                File.Move(oldPath, newPath, true);
+            }
+
+            // Raise the add/modify event for the new resource
+            OnDatedResourceChanged(resourceName, newDate, destinationResourceExists ? DatedResourceChangedAction.Modify : DatedResourceChangedAction.Add);
+        }
 
         /// <summary>
         /// Method used to create a dated resource out of a file.

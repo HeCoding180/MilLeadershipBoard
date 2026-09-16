@@ -24,18 +24,6 @@ namespace MilLeadershipBoard.UI.ViewModels
 {
     public class WeeklySchedulePageViewModel : IDisposable, INotifyPropertyChanged
     {
-        //   ---   Private Constants   ---
-
-        /// <summary>
-        /// Constant containing the name of the dated resource of the weekly schedule A.
-        /// </summary>
-        private const string WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME = "WeeklyScheduleA";
-
-        /// <summary>
-        /// Constant containing the name of the dated resource of the weekly schedule B.
-        /// </summary>
-        private const string WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME = "WeeklyScheduleB";
-
         //   ---   Private Fields   ---
 
         /// <summary>
@@ -191,10 +179,10 @@ namespace MilLeadershipBoard.UI.ViewModels
         {
             switch (args.ResourceName)
             {
-                case WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME:
+                case ResourceManager.WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME:
                     TryLoadWeeklyScheduleAImage();
                     break;
-                case WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME:
+                case ResourceManager.WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME:
                     TryLoadWeeklyScheduleBImage();
                     break;
                 default:
@@ -207,7 +195,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         private void TryLoadWeeklyScheduleAImage()
         {
-            Task loadingTask = ResourceManager.TryLoadDatedImageResource(WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME,
+            Task loadingTask = ResourceManager.TryLoadDatedImageResource(ResourceManager.WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME,
                                                                          CurrentWeeklyScheduleDate,
                                                                          WeeklyScheduleAImage);
 
@@ -219,7 +207,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         private void TryLoadWeeklyScheduleBImage()
         {
-            Task loadingTask = ResourceManager.TryLoadDatedImageResource(WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME,
+            Task loadingTask = ResourceManager.TryLoadDatedImageResource(ResourceManager.WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME,
                                                                          CurrentWeeklyScheduleDate,
                                                                          WeeklyScheduleBImage);
 
@@ -291,7 +279,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         public async Task InvokeWeeklyScheduleAChange()
         {
-            await PickWeeklyScheduleImageResource(WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME);
+            await PickWeeklyScheduleImageResource(ResourceManager.WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME);
         }
 
         /// <summary>
@@ -299,7 +287,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         public async Task InvokeWeeklyScheduleBChange()
         {
-            await PickWeeklyScheduleImageResource(WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME);
+            await PickWeeklyScheduleImageResource(ResourceManager.WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME);
         }
 
         public void OnParentPageLoaded()

@@ -315,4 +315,25 @@
   <data name="WeeklySchedulePageViewModel.LoadingFailedMessage.Title" xml:space="preserve">
     <value>The weekly schedule could not be loaded</value>
   </data>
+  <data name="DailyScheduleView.OptionsFlyout.DeleteButton.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DailyScheduleView.OptionsFlyout.EditButton.Text" xml:space="preserve">
+    <value>Change Date</value>
+  </data>
+  <data name="DailyScheduleView.DeletionFailedMessage" xml:space="preserve">
+    <value>The schedule could not be deleted</value>
+  </data>
+  <data name="DailyScheduleView.DateEditingFailedMessage" xml:space="preserve">
+    <value>The date could not be changed</value>
+  </data>
+  <data name="DailyScheduleViewModel.DeleteDialog.Title" xml:space="preserve">
+    <value>Delete Daily Schedule?</value>
+  </data>
+  <data name="DailyScheduleViewModel.DeleteDialog.Content" xml:space="preserve">
+    <value>Do you really want to delete this daily schedule?</value>
+  </data>
+  <data name="DailyScheduleViewModel.EditDateDialog.Title" xml:space="preserve">
+    <value>Change Schedule Date</value>
+  </data>
 </root>

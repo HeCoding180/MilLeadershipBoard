@@ -12,6 +12,9 @@
                 x:Key="DimForegroundColor"
                 Color="#A0FFFFFF"/>
             <SolidColorBrush
+                x:Key="OverlayButtonBackgroundColor"
+                Color="#1F000000"/>
+            <SolidColorBrush
                 x:Key="PopupBackgroundBrush"
                 Color="#1F1F1F"/>
             <SolidColorBrush
@@ -24,7 +27,10 @@
                 Color="#0E000000"/>
             <SolidColorBrush
                 x:Key="DimForegroundColor"
-                Color="#a0000000"/>
+                Color="#A0000000"/>
+            <SolidColorBrush
+                x:Key="OverlayButtonBackgroundColor"
+                Color="#1FFFFFFF"/>
             <SolidColorBrush
                 x:Key="PopupBackgroundBrush"
                 Color="#EFEFEF"/>

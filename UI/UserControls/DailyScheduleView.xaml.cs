@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -60,8 +61,15 @@ namespace MilLeadershipBoard.UI.UserControls
 
             InitializeComponent();
 
+            // Link ViewModel event callbacks to the events
+            PointerEntered += ViewModel.OnPointerEntered;
+            PointerExited += ViewModel.OnPointerExited;
+
             // Register DependencyProperty change callbacks
             RegisterPropertyChangedCallback(ModelProperty, ViewModel.OnModelChanged);
+
+            // Elevate the options button
+            OptionsButtonBorder.Translation += new Vector3(0.0f, 0.0f, 24.0f);
         }
     }
 }
