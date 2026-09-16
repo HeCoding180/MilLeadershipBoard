@@ -60,7 +60,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// <summary>
         /// Field containing the value of the <see cref="FileStatusMessageText"/> property.
         /// </summary>
-        private string _fileStatusMessageText = string.Empty;
+        private string _fileStatusMessageText = ResourceManager.GetGenericStatusMessage("FilePathEmptyError");
 
         /// <summary>
         /// Field containing the value of the <see cref="IsPdfRendering"/> property.
@@ -182,7 +182,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// <summary>
         /// Gets whether a file status message is active.
         /// </summary>
-        public bool IsFileStatusMessageActive { private set; get; }
+        public bool IsFileStatusMessageActive { private set; get; } = true;
 
         /// <summary>
         /// Sets or gets whehter the pdf preview image is currently getting rendered.
@@ -521,12 +521,12 @@ namespace MilLeadershipBoard.UI.ViewModels
                 // Create a StorageFile from the path
                 CurrentScheduleFile = await StorageFile.GetFileFromPathAsync(SchedulePath);
 
-                // Activate the rendering visuals
-                IsPdfRendering = true;
-                PdfOptionsPanelVisibility = Visibility.Visible;
-
                 if (isPdfFile)
                 {
+                    // Activate the rendering visuals
+                    IsPdfRendering = true;
+                    PdfOptionsPanelVisibility = Visibility.Visible;
+
                     // Load the pdf file
                     try
                     {
@@ -620,11 +620,6 @@ namespace MilLeadershipBoard.UI.ViewModels
             {
                 // TODO: Add error handling and show status messages
                 return;
-            }
-
-            if (SchedulePdfFile is null)
-            {
-                throw new InvalidProgramException("Invalid program state reached: The pdf file should be addable, but no pdf file instance exists.");
             }
 
             DateOnly formattedResourceDate = GetFormattedResourceDate();
