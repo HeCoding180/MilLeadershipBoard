@@ -288,6 +288,47 @@ namespace MilLeadershipBoard.Resources
         //   ---   Public Methods   ---
 
         /// <summary>
+        /// Method ued to change the date of a dated resource.
+        /// </summary>
+        /// <param name="resourceName">Name of the resource whose date is to be changed.</param>
+        /// <param name="oldDate">The old date of the dated resource.</param>
+        /// <param name="newDate">The new date of the dated resource.</param>
+        /// <exception cref="DatedResourceNotExistingException">Thrown if the old dated resource doesn't exist.</exception>
+        public static void ChangeResourceDate(string resourceName, DateOnly oldDate, DateOnly newDate)
+        {
+            bool resourceFilesExist = TryGetDatedResourceFiles(resourceName, oldDate, out string[] resourceFilePaths);
+
+            if (!resourceFilesExist)
+            {
+                throw new DatedResourceNotExistingException($"The dated resource '{resourceName}' does not exist.")
+                {
+                    ResourceName = resourceName,
+                    ResourceDate = oldDate
+                };
+            }
+
+            // Raise the remove event for the old resource
+            OnDatedResourceChanged(resourceName, oldDate, DatedResourceChangedAction.Remove);
+
+            bool destinationResourceExists = false;
+
+            foreach (string oldPath in resourceFilePaths)
+            {
+                string newPath = GenerateDatedResourcePath(resourceName, newDate, Path.GetExtension(oldPath));
+
+                if (File.Exists(newPath))
+                {
+                    destinationResourceExists = true;
+                }
+
+                File.Move(oldPath, newPath, true);
+            }
+
+            // Raise the add/modify event for the new resource
+            OnDatedResourceChanged(resourceName, newDate, destinationResourceExists ? DatedResourceChangedAction.Modify : DatedResourceChangedAction.Add);
+        }
+
+        /// <summary>
         /// Method used to create a dated resource out of a file.
         /// </summary>
         /// <param name="filePath">Path of the file that is to be cached.</param>

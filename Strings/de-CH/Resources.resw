@@ -318,4 +318,22 @@
   <data name="DailyScheduleView.OptionsFlyout.DeleteButton.Text" xml:space="preserve">
     <value>Löschen</value>
   </data>
+  <data name="DailyScheduleView.OptionsFlyout.EditButton.Text" xml:space="preserve">
+    <value>Datum Ändern</value>
+  </data>
+  <data name="DailyScheduleView.DeletionFailedMessage" xml:space="preserve">
+    <value>Der Tagesplan konnte leider nicht gelöscht werden</value>
+  </data>
+  <data name="DailyScheduleView.DateEditingFailedMessage" xml:space="preserve">
+    <value>Das Datum konnte leider nicht geändert werden</value>
+  </data>
+  <data name="DailyScheduleViewModel.DeleteDialog.Title" xml:space="preserve">
+    <value>Tagesplan Löschen?</value>
+  </data>
+  <data name="DailyScheduleViewModel.DeleteDialog.Content" xml:space="preserve">
+    <value>Möchten sie diesen Tagesplan wirklich löschen?</value>
+  </data>
+  <data name="DailyScheduleViewModel.EditDateDialog.Title" xml:space="preserve">
+    <value>Datum Tagesplan Ändern</value>
+  </data>
 </root>

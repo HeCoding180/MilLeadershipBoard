@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
 using MilLeadershipBoard.Config;
+using MilLeadershipBoard.Messaging;
 using MilLeadershipBoard.Models;
 using MilLeadershipBoard.Resources;
 using MilLeadershipBoard.UI.Pages;
@@ -33,6 +34,11 @@ namespace MilLeadershipBoard.UI.ViewModels
         private RelayCommand _deleteCommand;
 
         /// <summary>
+        /// Field containing the <see cref="RelayCommand"/> instance used by the <see cref="EditDateCommand"/> property.
+        /// </summary>
+        private RelayCommand _editDateCommand;
+
+        /// <summary>
         /// Field containing the value of the <see cref="OptionsButtonVisibility"/> property.
         /// </summary>
         private Visibility _optionsButtonVisibility = Visibility.Collapsed;
@@ -55,6 +61,11 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// Gets the <see cref="ICommand"/> used to delete this daily schedule.
         /// </summary>
         public ICommand DeleteCommand => _deleteCommand;
+
+        /// <summary>
+        /// Gets the <see cref="ICommand"/> used to edit the date of this daily schedule.
+        /// </summary>
+        public ICommand EditDateCommand => _editDateCommand;
 
         /// <summary>
         /// Gets the header text that is to be displayed.
@@ -95,7 +106,9 @@ namespace MilLeadershipBoard.UI.ViewModels
         {
             View = view;
 
-            _deleteCommand = new RelayCommand(OnDelete);
+            // Create the RelayCommands for the button actions
+            _deleteCommand = new RelayCommand(InvokeScheduleDeletion);
+            _editDateCommand = new RelayCommand(InvokeDateEditing);
         }
 
         //   ---   Private Methods   ---
@@ -103,9 +116,96 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// <summary>
         /// Method used to invoke the deletion of this daily schedule.
         /// </summary>
-        private void OnDelete()
+        private async Task DeleteAsync()
         {
-            ResourceManager.DeleteDatedResource(ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, Model.Date);
+            RelayCommand primaryCommand = new RelayCommand(() => ResourceManager.DeleteDatedResource(ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, Model.Date));
+
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = ResourceManager.GetString("DailyScheduleViewModel/DeleteDialog/Title"),
+                Content = ResourceManager.GetString("DailyScheduleViewModel/DeleteDialog/Content"),
+                PrimaryButtonText = ResourceManager.YesString,
+                PrimaryButtonCommand = primaryCommand,
+                SecondaryButtonText = ResourceManager.NoString,
+                DefaultButton = ContentDialogButton.Primary,
+                XamlRoot = View.XamlRoot
+            };
+
+            await dialog.ShowAsync();
+        }
+
+        /// <summary>
+        /// Method used to invoke the deletion of this daily schedule.
+        /// </summary>
+        private async Task EditDateAsync()
+        {
+            DatePicker content = new DatePicker()
+            {
+                Header = ResourceManager.GetString("AddDailySchedulePage/ScheduleDatePicker/Header"),
+                Date = Util.Util.DateOnlyToDateTimeOffset(Model.Date),
+            };
+
+            RelayCommand primaryCommand = new RelayCommand(()
+                => ResourceManager.ChangeResourceDate(ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME,
+                                                      Model.Date,
+                                                      Util.Util.DateTimeOffsetToDateOnly(content.Date)));
+
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = ResourceManager.GetString("DailyScheduleViewModel/EditDateDialog/Title"),
+                Content = content,
+                PrimaryButtonText = ResourceManager.AcceptString,
+                PrimaryButtonCommand = primaryCommand,
+                SecondaryButtonText = ResourceManager.CancelString,
+                DefaultButton = ContentDialogButton.Primary,
+                XamlRoot = View.XamlRoot
+            };
+
+            await dialog.ShowAsync();
+        }
+
+        /// <summary>
+        /// Method used to invoke the editing of the schedule date.
+        /// </summary>
+        private void InvokeDateEditing()
+        {
+            Task dateEditingTask = EditDateAsync();
+
+            dateEditingTask.ContinueWith(OnDateEdtiningCompleted);
+        }
+
+        /// <summary>
+        /// Method used to invoke the deleton of this daily schedule.
+        /// </summary>
+        private void InvokeScheduleDeletion()
+        {
+            Task deletionTask = DeleteAsync();
+
+            deletionTask.ContinueWith(OnScheduleDeletionCompleted);
+        }
+
+        /// <summary>
+        /// Method executed upon completion of the date editing task.
+        /// </summary>
+        /// <param name="completionTask">The <see cref="Task"/> that completed.</param>
+        private void OnDateEdtiningCompleted(Task completionTask)
+        {
+            if (completionTask.IsFaulted)
+            {
+                MessageDispatcher.ShowExceptionMessage(ResourceManager.GetString("DailyScheduleView/DateEditingFailedMessage"), completionTask.Exception);
+            }
+        }
+
+        /// <summary>
+        /// Method executed upon completion of the schedule deletion task.
+        /// </summary>
+        /// <param name="completionTask">The <see cref="Task"/> that completed.</param>
+        private void OnScheduleDeletionCompleted(Task completionTask)
+        {
+            if (completionTask.IsFaulted)
+            {
+                MessageDispatcher.ShowExceptionMessage(ResourceManager.GetString("DailyScheduleView/DeletionFailedMessage"), completionTask.Exception);
+            }
         }
 
         //   ---   Protected Methods   ---
