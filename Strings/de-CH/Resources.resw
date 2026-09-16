@@ -315,4 +315,7 @@
   <data name="WeeklySchedulePageViewModel.LoadingFailedMessage.Title" xml:space="preserve">
     <value>Wochenplan konnte nicht geladen werden</value>
   </data>
+  <data name="DailyScheduleView.OptionsFlyout.DeleteButton.Text" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
 </root>

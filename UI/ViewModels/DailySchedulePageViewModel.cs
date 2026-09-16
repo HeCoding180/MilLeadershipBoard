@@ -23,13 +23,6 @@ namespace MilLeadershipBoard.UI.ViewModels
 {
     public class DailySchedulePageViewModel : IDisposable, INotifyPropertyChanged
     {
-        //   ---   Public Constants   ---
-
-        /// <summary>
-        /// Constant string containing the resource name for daily schedule images.
-        /// </summary>
-        public const string DAILY_SCHEDULE_IMAGE_RESOURCE_NAME = "DailyScheduleImage";
-
         //   ---   Private Fields   ---
 
         /// <summary>
@@ -99,12 +92,12 @@ namespace MilLeadershipBoard.UI.ViewModels
             ResourceManager.DatedResourceChanged += ResourceManager_DatedResourceChanged;
 
             // Load all existing daily schedule images
-            DateOnly[] availableResourceDates = ResourceManager.GetAvailableResourceDates(DAILY_SCHEDULE_IMAGE_RESOURCE_NAME);
+            DateOnly[] availableResourceDates = ResourceManager.GetAvailableResourceDates(ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME);
             foreach (DateOnly date in availableResourceDates)
             {
                 if (date < DateOnly.FromDateTime(DateTime.Today))
                 {
-                    ResourceManager.DeleteDatedResource(DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, date);
+                    ResourceManager.DeleteDatedResource(ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, date);
 
                     continue;
                 }
@@ -149,7 +142,7 @@ namespace MilLeadershipBoard.UI.ViewModels
                             image = new BitmapImage();
                         }
 
-                        Task loadingTask = ResourceManager.TryLoadDatedImageResource(DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, date, image);
+                        Task loadingTask = ResourceManager.TryLoadDatedImageResource(ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, date, image);
                         loadingTask.ContinueWith(OnImageLoadingTaskComplete, VMLifetimeCancellationToken);
 
                         if (i == 0)
@@ -179,7 +172,7 @@ namespace MilLeadershipBoard.UI.ViewModels
                 {
                     BitmapImage image = new BitmapImage();
 
-                    Task loadingTask = ResourceManager.TryLoadDatedImageResource(DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, date, image);
+                    Task loadingTask = ResourceManager.TryLoadDatedImageResource(ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, date, image);
                     loadingTask.ContinueWith(OnImageLoadingTaskComplete, VMLifetimeCancellationToken);
 
                     DailySchedules.Add(new DailySchedule(date, image));
@@ -250,7 +243,7 @@ namespace MilLeadershipBoard.UI.ViewModels
                 });
 
                 // Delete the dated resource
-                ResourceManager.DeleteDatedResource(DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, mostRecentScheduleDate);
+                ResourceManager.DeleteDatedResource(ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, mostRecentScheduleDate);
 
                 return;
             }
@@ -300,7 +293,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         private void ResourceManager_DatedResourceChanged(DatedResourceChangedEventArgs args)
         {
             // Check if the resource name matches
-            if (args.ResourceName != DAILY_SCHEDULE_IMAGE_RESOURCE_NAME)
+            if (args.ResourceName != ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME)
             {
                 return;
             }
@@ -309,7 +302,7 @@ namespace MilLeadershipBoard.UI.ViewModels
             if (args.Date < DateOnly.FromDateTime(DateTime.Today))
             {
                 // Delete outdated resource
-                ResourceManager.DeleteDatedResource(DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, args.Date);
+                ResourceManager.DeleteDatedResource(ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, args.Date);
                 return;
             }
 
@@ -346,7 +339,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// </summary>
         protected async void InvokeAddDailySchedule()
         {
-            AddDailySchedulePage content = new AddDailySchedulePage(DAILY_SCHEDULE_IMAGE_RESOURCE_NAME);
+            AddDailySchedulePage content = new AddDailySchedulePage(ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME);
 
             ContentDialog dialog = new ContentDialog()
             {

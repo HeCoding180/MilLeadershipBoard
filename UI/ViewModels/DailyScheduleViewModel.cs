@@ -28,6 +28,11 @@ namespace MilLeadershipBoard.UI.ViewModels
         //   ---   Private Fields   ---
 
         /// <summary>
+        /// Field containing the <see cref="RelayCommand"/> instance used by the <see cref="DeleteCommand"/> property.
+        /// </summary>
+        private RelayCommand _deleteCommand;
+
+        /// <summary>
         /// Field containing the value of the <see cref="OptionsButtonVisibility"/> property.
         /// </summary>
         private Visibility _optionsButtonVisibility = Visibility.Collapsed;
@@ -35,11 +40,21 @@ namespace MilLeadershipBoard.UI.ViewModels
         //   ---   Private Properties   ---
 
         /// <summary>
+        /// Gets the model behind this ViewModel.
+        /// </summary>
+        private DailySchedule Model => View.Model ?? throw new InvalidProgramException("No model set in the DailyScheduleView.");
+
+        /// <summary>
         /// Gets the view instance this ViewModel is assigned to.
         /// </summary>
         private DailyScheduleView View { get; }
 
         //   ---   Public Properties   ---
+
+        /// <summary>
+        /// Gets the <see cref="ICommand"/> used to delete this daily schedule.
+        /// </summary>
+        public ICommand DeleteCommand => _deleteCommand;
 
         /// <summary>
         /// Gets the header text that is to be displayed.
@@ -79,6 +94,18 @@ namespace MilLeadershipBoard.UI.ViewModels
         public DailyScheduleViewModel(DailyScheduleView view)
         {
             View = view;
+
+            _deleteCommand = new RelayCommand(OnDelete);
+        }
+
+        //   ---   Private Methods   ---
+
+        /// <summary>
+        /// Method used to invoke the deletion of this daily schedule.
+        /// </summary>
+        private void OnDelete()
+        {
+            ResourceManager.DeleteDatedResource(ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, Model.Date);
         }
 
         //   ---   Protected Methods   ---
@@ -103,6 +130,14 @@ namespace MilLeadershipBoard.UI.ViewModels
         }
 
         /// <summary>
+        /// Callback method for when the model changes.
+        /// </summary>
+        public void OnModelChanged(DependencyObject sender, DependencyProperty modelProperty)
+        {
+            OnPropertyChanged(nameof(HeaderText));
+        }
+
+        /// <summary>
         /// Callback method for the <see cref="UIElement.PointerEntered"/> event of the view.
         /// </summary>
         public void OnPointerEntered(object sender, PointerRoutedEventArgs e)
@@ -116,14 +151,6 @@ namespace MilLeadershipBoard.UI.ViewModels
         public void OnPointerExited(object sender, PointerRoutedEventArgs e)
         {
             OptionsButtonVisibility = Visibility.Collapsed;
-        }
-
-        /// <summary>
-        /// Callback method for when the model changes.
-        /// </summary>
-        public void OnModelChanged(DependencyObject sender, DependencyProperty modelProperty)
-        {
-            OnPropertyChanged(nameof(HeaderText));
         }
     }
 }

@@ -97,6 +97,11 @@ namespace MilLeadershipBoard.Resources
         //   ---   Public Constants   ---
 
         /// <summary>
+        /// Constant string containing the resource name for daily schedule images.
+        /// </summary>
+        public const string DAILY_SCHEDULE_IMAGE_RESOURCE_NAME = "DailyScheduleImage";
+
+        /// <summary>
         /// Constant string containing the default file extension used for dated resource files.
         /// </summary>
         public const string DEFAULT_DATED_RESOURCE_FILE_EXTENSION = ".png";
@@ -105,6 +110,16 @@ namespace MilLeadershipBoard.Resources
         /// Constant <see cref="string[]"/> containing all valid file extensions for dated image resource files.
         /// </summary>
         public static readonly string[] VALID_IMAGE_RESOURCE_FILE_EXTENSIONS = [".jpeg", ".png", ".bmp", ".gif", ".tiff", ".jxr", ".hdp", ".wdp", ".ico", ".svg"];
+
+        /// <summary>
+        /// Constant containing the name of the dated resource of the weekly schedule A.
+        /// </summary>
+        public const string WEEKLY_SCHEDULE_A_DATED_RESOURCE_NAME = "WeeklyScheduleA";
+
+        /// <summary>
+        /// Constant containing the name of the dated resource of the weekly schedule B.
+        /// </summary>
+        public const string WEEKLY_SCHEDULE_B_DATED_RESOURCE_NAME = "WeeklyScheduleB";
 
         //   ---   Public Properties   ---
 

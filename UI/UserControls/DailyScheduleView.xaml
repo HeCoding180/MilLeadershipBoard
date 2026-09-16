@@ -23,11 +23,19 @@
             Visibility="{x:Bind ViewModel.OptionsButtonVisibility, Mode=OneWay}"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
-            Margin="12,38">
+            Margin="12,48">
             
             <Button.Flyout>
                 <MenuFlyout>
-                    
+                    <MenuFlyoutItem
+                        x:Name="DeleteFlyoutItem"
+                        x:Uid="DailyScheduleView/OptionsFlyout/DeleteButton"
+                        Command="{x:Bind ViewModel.DeleteCommand, Mode=OneTime}">
+
+                        <MenuFlyoutItem.Icon>
+                            <SymbolIcon Symbol="Delete"/>
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
                 </MenuFlyout>
             </Button.Flyout>
 
