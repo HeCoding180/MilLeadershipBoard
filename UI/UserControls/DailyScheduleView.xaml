@@ -9,11 +9,29 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid
+        x:Name="BaseGrid">
+        
         <uc:MaximizeableImageView
             Header="{x:Bind ViewModel.HeaderText, Mode=OneWay}"
             HeaderStyle="{StaticResource BodyLargeTextBlockStyle}"
             Source="{x:Bind Model.Source, Mode=OneWay}"
             Stretch="Uniform"/>
+
+        <Button
+            x:Name="OptionsButton"
+            Visibility="{x:Bind ViewModel.OptionsButtonVisibility, Mode=OneWay}"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Margin="12,38">
+            
+            <Button.Flyout>
+                <MenuFlyout>
+                    
+                </MenuFlyout>
+            </Button.Flyout>
+
+            <FontIcon Glyph="&#xE70D;" />
+        </Button>
     </Grid>
 </UserControl>

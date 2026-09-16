@@ -60,6 +60,10 @@ namespace MilLeadershipBoard.UI.UserControls
 
             InitializeComponent();
 
+            // Link ViewModel event callbacks to the events
+            PointerEntered += ViewModel.OnPointerEntered;
+            PointerExited += ViewModel.OnPointerExited;
+
             // Register DependencyProperty change callbacks
             RegisterPropertyChangedCallback(ModelProperty, ViewModel.OnModelChanged);
         }

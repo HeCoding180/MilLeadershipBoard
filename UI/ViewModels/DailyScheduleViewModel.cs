@@ -2,6 +2,7 @@
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
 using MilLeadershipBoard.Config;
 using MilLeadershipBoard.Models;
@@ -26,6 +27,11 @@ namespace MilLeadershipBoard.UI.ViewModels
     {
         //   ---   Private Fields   ---
 
+        /// <summary>
+        /// Field containing the value of the <see cref="OptionsButtonVisibility"/> property.
+        /// </summary>
+        private Visibility _optionsButtonVisibility = Visibility.Collapsed;
+
         //   ---   Private Properties   ---
 
         /// <summary>
@@ -39,6 +45,25 @@ namespace MilLeadershipBoard.UI.ViewModels
         /// Gets the header text that is to be displayed.
         /// </summary>
         public string HeaderText => View.Model?.Date.ToString(ConfigManager.Config.DailyScheduleDateFormat) ?? string.Empty;
+
+        /// <summary>
+        /// Sets or gets the <see cref="Visibility"/> of the options button in the view.
+        /// </summary>
+        public Visibility OptionsButtonVisibility
+        {
+            set
+            {
+                if (value == _optionsButtonVisibility)
+                {
+                    return;
+                }
+
+                _optionsButtonVisibility = value;
+
+                OnPropertyChanged();
+            }
+            get => _optionsButtonVisibility;
+        }
 
         //   ---   Public Events   ---
 
@@ -75,6 +100,22 @@ namespace MilLeadershipBoard.UI.ViewModels
         public void Dispose()
         {
 
+        }
+
+        /// <summary>
+        /// Callback method for the <see cref="UIElement.PointerEntered"/> event of the view.
+        /// </summary>
+        public void OnPointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            OptionsButtonVisibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Callback method for the <see cref="UIElement.PointerExited"/> event of the view.
+        /// </summary>
+        public void OnPointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            OptionsButtonVisibility = Visibility.Collapsed;
         }
 
         /// <summary>
