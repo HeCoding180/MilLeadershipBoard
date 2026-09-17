@@ -337,6 +337,6 @@
     <value>Datum Tagesplan Ändern</value>
   </data>
   <data name="AddDailySchedulePage.LoadingFailedMessage" xml:space="preserve">
-    <value>Die Tagespläne konnten nicht gestartet werden</value>
+    <value>Die Tagespläne konnten nicht geladen werden</value>
   </data>
 </root>

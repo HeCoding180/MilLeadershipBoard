@@ -337,6 +337,6 @@
     <value>Change Schedule Date</value>
   </data>
   <data name="AddDailySchedulePage.LoadingFailedMessage" xml:space="preserve">
-    <value>The daily schedules could not be loaded.</value>
+    <value>The daily schedules could not be loaded</value>
   </data>
 </root>
