@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Markup;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using MilLeadershipBoard.UI.ViewModels;
@@ -26,6 +27,7 @@ namespace MilLeadershipBoard.UI.UserControls
     /// <summary>
     /// Image control that allows displaying the set image in a maximized view.
     /// </summary>
+    [ContentProperty(Name = nameof(OverlayContent))]
     public sealed partial class MaximizeableImageView : UserControl
     {
         //   ---   Public Fields (static)   ---
@@ -53,6 +55,30 @@ namespace MilLeadershipBoard.UI.UserControls
                                                                                                     typeof(Style),
                                                                                                     typeof(MaximizeableImageView),
                                                                                                     new PropertyMetadata(null));
+
+        /// <summary>
+        /// Field containing the <see cref="DependencyProperty"/> for the <see cref="OverlayContent"/> property.
+        /// </summary>
+        public static readonly DependencyProperty OverlayContentProperty = DependencyProperty.Register(nameof(OverlayContent),
+                                                                                                       typeof(object),
+                                                                                                       typeof(MaximizeableImageView),
+                                                                                                       new PropertyMetadata(null));
+
+        /// <summary>
+        /// Field containing the <see cref="DependencyProperty"/> for the <see cref="OverlayContentTemplate"/> property.
+        /// </summary>
+        public static readonly DependencyProperty OverlayContentTemplateProperty = DependencyProperty.Register(nameof(OverlayContentTemplate),
+                                                                                                               typeof(DataTemplate),
+                                                                                                               typeof(MaximizeableImageView),
+                                                                                                               new PropertyMetadata(null));
+
+        /// <summary>
+        /// Field containing the <see cref="DependencyProperty"/> for the <see cref="OverlayContentVisibility"/> property.
+        /// </summary>
+        public static readonly DependencyProperty OverlayContentVisibilityProperty = DependencyProperty.Register(nameof(OverlayContentVisibility),
+                                                                                                                 typeof(Visibility),
+                                                                                                                 typeof(MaximizeableImageView),
+                                                                                                                 new PropertyMetadata(Visibility.Collapsed));
 
         /// <summary>
         /// Field containing the <see cref="DependencyProperty"/> for the <see cref="Source"/> property.
@@ -93,6 +119,33 @@ namespace MilLeadershipBoard.UI.UserControls
             get => (Visibility)GetValue(CloseButtonVisibilityProperty);
         }
 
+        /// <summary>
+        /// Sets or gets the content of the image overlay.
+        /// </summary>
+        public object OverlayContent
+        {
+            set => SetValue(OverlayContentProperty, value);
+            get => GetValue(OverlayContentProperty);
+        }
+
+        /// <summary>
+        /// Sets or gets the <see cref="DataTemplate"/> used for the content of the <see cref="ImageOverlayContentPresenter"/>.
+        /// </summary>
+        public DataTemplate OverlayContentTemplate
+        {
+            set => SetValue(OverlayContentTemplateProperty, value);
+            get => (DataTemplate)GetValue(OverlayContentTemplateProperty);
+        }
+
+        /// <summary>
+        /// Sets or gets the <see cref="Visibility"/> of the image overlay.
+        /// </summary>
+        public Visibility OverlayContentVisibility
+        {
+            set => SetValue(OverlayContentVisibilityProperty, value);
+            get => (Visibility)GetValue(OverlayContentVisibilityProperty);
+        }
+
         /// <inheritdoc cref="TextBox.Header"/>
         public string Header
         {
@@ -121,6 +174,35 @@ namespace MilLeadershipBoard.UI.UserControls
         {
             set => SetValue(StretchProperty, value);
             get => (Stretch)GetValue(StretchProperty);
+        }
+
+        //   ---   Public Events   ---
+
+        /// <summary>
+        /// Occurs when a pointer enters the hit test area of the image area.
+        /// </summary>
+        public event PointerEventHandler? ImagePointerEntered
+        {
+            add => ImageBaseGrid.PointerEntered += value;
+            remove => ImageBaseGrid.PointerEntered -= value;
+        }
+
+        /// <summary>
+        /// Occurs when a pointer leaves the hit test area of the image area.
+        /// </summary>
+        public event PointerEventHandler? ImagePointerExited
+        {
+            add => ImageBaseGrid.PointerExited += value;
+            remove => ImageBaseGrid.PointerExited -= value;
+        }
+
+        /// <summary>
+        /// Occurs when a pointer moves while the pointer remains within the hit test area of the image area.
+        /// </summary>
+        public event PointerEventHandler? ImagePointerMoved
+        {
+            add => ImageBaseGrid.PointerMoved += value;
+            remove => ImageBaseGrid.PointerMoved -= value;
         }
 
         //   ---   Constructors   ---
@@ -227,6 +309,24 @@ namespace MilLeadershipBoard.UI.UserControls
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             ViewModel.RefreshVisualProperties();
+        }
+
+        //   ---   Public Methods   ---
+
+        /// <summary>
+        /// Method used to hide the image overlay.
+        /// </summary>
+        public void HideOverlay()
+        {
+            OverlayContentVisibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Method used to show the image overlay.
+        /// </summary>
+        public void ShowOverlay()
+        {
+            OverlayContentVisibility = Visibility.Visible;
         }
     }
 }
