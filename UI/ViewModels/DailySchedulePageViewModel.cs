@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using MilLeadershipBoard.Config;
+using MilLeadershipBoard.Messaging;
 using MilLeadershipBoard.Models;
 using MilLeadershipBoard.Resources;
 using MilLeadershipBoard.UI.Pages;
@@ -81,6 +82,7 @@ namespace MilLeadershipBoard.UI.ViewModels
         public DailySchedulePageViewModel(DailySchedulePage view)
         {
             View = view;
+            View.Loaded += View_Loaded;
 
             // Initialize fields
             _addCommand = new RelayCommand(InvokeAddDailySchedule);
@@ -90,25 +92,6 @@ namespace MilLeadershipBoard.UI.ViewModels
 
             // Subscribe to events
             ResourceManager.DatedResourceChanged += ResourceManager_DatedResourceChanged;
-
-            // Load all existing daily schedule images
-            DateOnly[] availableResourceDates = ResourceManager.GetAvailableResourceDates(ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME);
-            foreach (DateOnly date in availableResourceDates)
-            {
-                if (date < DateOnly.FromDateTime(DateTime.Today))
-                {
-                    ResourceManager.DeleteDatedResource(ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, date);
-
-                    continue;
-                }
-
-                LoadDailyScheduleImage(date);
-            }
-
-            if(DailySchedules.Count > 0)
-            {
-                RefreshSchedulesList();
-            }
         }
 
         //   ---   Private Methods   ---
@@ -332,6 +315,22 @@ namespace MilLeadershipBoard.UI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Callback method for the <see cref="FrameworkElement.Loaded"/> event of the <see cref="View"/>.
+        /// </summary>
+        private void View_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Load all existing daily schedule images
+            try
+            {
+                LoadDailyScheduleImages();
+            }
+            catch (Exception ex)
+            {
+                MessageDispatcher.ShowExceptionMessage(ResourceManager.GetString("AddDailySchedulePage/LoadingFailedMessage"), ex);
+            }
+        }
+
         //   ---   Protected Methods   ---
 
         /// <summary>
@@ -378,6 +377,30 @@ namespace MilLeadershipBoard.UI.ViewModels
             ResourceManager.DatedResourceChanged -= ResourceManager_DatedResourceChanged;
 
             _vmLifetimeCts.Cancel();
+        }
+
+        /// <summary>
+        /// Method used to load all daily schedule images.
+        /// </summary>
+        public void LoadDailyScheduleImages()
+        {
+            DateOnly[] availableResourceDates = ResourceManager.GetAvailableResourceDates(ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME);
+            foreach (DateOnly date in availableResourceDates)
+            {
+                if (date < DateOnly.FromDateTime(DateTime.Today))
+                {
+                    ResourceManager.DeleteDatedResource(ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, date);
+
+                    continue;
+                }
+
+                LoadDailyScheduleImage(date);
+            }
+
+            if (DailySchedules.Count > 0)
+            {
+                RefreshSchedulesList();
+            }
         }
     }
 }
