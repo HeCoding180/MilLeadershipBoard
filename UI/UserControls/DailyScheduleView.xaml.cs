@@ -69,7 +69,7 @@ namespace MilLeadershipBoard.UI.UserControls
             RegisterPropertyChangedCallback(ModelProperty, ViewModel.OnModelChanged);
 
             // Elevate the options button
-            OptionsButtonBorder.Translation += new Vector3(0.0f, 0.0f, 24.0f);
+            OptionsButton.Translation += new Vector3(0.0f, 0.0f, 24.0f);
         }
     }
 }
