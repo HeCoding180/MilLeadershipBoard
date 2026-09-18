@@ -13,22 +13,22 @@
     <Grid>
         <Grid
             x:Name="ImageBaseGrid">
+                
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                x:Name="HeaderTextBlock"
+                Text="{x:Bind Header, Mode=OneWay}"
+                Style="{x:Bind HeaderStyle, Mode=OneWay}"
+                Visibility="{x:Bind ViewModel.HeaderVisibility, Mode=OneWay}"
+                Margin="0,0,0,12"/>
+
             <Grid
                 x:Name="ImageGrid">
-                
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock
-                    Grid.Row="0"
-                    x:Name="HeaderTextBlock"
-                    Text="{x:Bind Header, Mode=OneWay}"
-                    Style="{x:Bind HeaderStyle, Mode=OneWay}"
-                    Visibility="{x:Bind ViewModel.HeaderVisibility, Mode=OneWay}"
-                    Margin="0,0,0,12"/>
-
                 <Image
                     Grid.Row="1"
                     x:Name="BaseImageControl"
@@ -39,15 +39,15 @@
                         <ToolTip x:Uid="MaximizeableImageView/Image/Tooltip"/>
                     </ToolTipService.ToolTip>
                 </Image>
-            </Grid>
 
-            <ContentPresenter
-                x:Name="ImageOverlayContentPresenter"
-                Content="{x:Bind OverlayContent, Mode=OneWay}"
-                ContentTemplate="{x:Bind OverlayContentTemplate, Mode=OneWay}"
-                Visibility="{x:Bind OverlayContentVisibility, Mode=OneWay}"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"/>
+                <ContentPresenter
+                    x:Name="ImageOverlayContentPresenter"
+                    Content="{x:Bind OverlayContent, Mode=OneWay}"
+                    ContentTemplate="{x:Bind OverlayContentTemplate, Mode=OneWay}"
+                    Visibility="{x:Bind OverlayContentVisibility, Mode=OneWay}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"/>
+            </Grid>
         </Grid>
         
         <Popup
