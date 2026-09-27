@@ -401,7 +401,7 @@ namespace MilLeadershipBoard.Resources
         /// <param name="raiseEvent">Defines if an event should be raised for the resource deletion. Default: <see langword="true"/></param>
         public static void DeleteDatedResource(string resourceName, DateOnly date, bool raiseEvent = true)
         {
-            TryGetDatedResourceFiles(resourceName, date, out string[] paths);
+            raiseEvent &= TryGetDatedResourceFiles(resourceName, date, out string[] paths);
 
             // Delete all files assigned to the resource
             foreach (string path in paths)

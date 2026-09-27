@@ -281,8 +281,9 @@ namespace MilLeadershipBoard.UI.ViewModels
                 return;
             }
 
-            // Check if resource is outdated
-            if (args.Date < DateOnly.FromDateTime(DateTime.Today))
+            // Check if resource is outdated, ignore if the action is a remove action
+            if ((args.Date < DateOnly.FromDateTime(DateTime.Today)) &&
+                args.Action != DatedResourceChangedAction.Remove)
             {
                 // Delete outdated resource
                 ResourceManager.DeleteDatedResource(ResourceManager.DAILY_SCHEDULE_IMAGE_RESOURCE_NAME, args.Date);
