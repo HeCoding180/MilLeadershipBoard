@@ -24,6 +24,13 @@ namespace MilLeadershipBoard.UI.Pages
     /// </summary>
     public sealed partial class SoldiersPage : Page
     {
+        //   ---   Public Properties   ---
+
+        /// <summary>
+        /// Gets the <see cref="SoldiersPageViewModel"/> ViewModel instance of this page.
+        /// </summary>
+        public SoldiersPageViewModel ViewModel { get; }
+
         //   ---   Constructors   ---
 
         /// <summary>
@@ -31,6 +38,8 @@ namespace MilLeadershipBoard.UI.Pages
         /// </summary>
         public SoldiersPage()
         {
+            ViewModel = new SoldiersPageViewModel();
+
             InitializeComponent();
         }
 
