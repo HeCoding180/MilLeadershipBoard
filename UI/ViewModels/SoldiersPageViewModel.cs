@@ -1,7 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using MilLeadershipBoard.Config;
 using MilLeadershipBoard.Models.TroopData;
 using MilLeadershipBoard.Models.TroopData.Location;
+using MilLeadershipBoard.Util.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,7 +18,7 @@ using Windows.Foundation;
 
 namespace MilLeadershipBoard.UI.ViewModels
 {
-    internal class SoldiersPageViewModel : INotifyPropertyChanged
+    public class SoldiersPageViewModel : INotifyPropertyChanged
     {
         //   ---   Private Fields   ---
 
@@ -207,6 +210,27 @@ namespace MilLeadershipBoard.UI.ViewModels
         protected void OnSoldierCreated()
         {
             SoldierCreated?.Invoke(this, EventArgs.Empty);
+        }
+
+        //   ---   Public Methods   ---
+
+        /// <summary>
+        /// Callback method for the clicked event of deletion 
+        /// </summary>
+        /// <exception cref="ArgumentException">Raised when the type of the sender isn't valid.</exception>
+        public void OnDeletionContextFlyoutItemClicked(object sender, RoutedEventArgs e)
+        {
+            MenuFlyoutItem flyoutItem = sender as MenuFlyoutItem
+                ?? throw new ArgumentException($"The sender must be of type {typeof(MenuFlyoutItem).FullName}!", nameof(sender));
+
+            if (flyoutItem.DataContext is SoldierData soldier)
+            {
+                ConfigManager.Config.Soldiers.Remove(soldier);
+            }
+            else
+            {
+                throw new DataContextNotSupportedException($"The data context type of the deletion {typeof(MenuFlyoutItem).Name} has an unsupported type.");
+            }
         }
     }
 }

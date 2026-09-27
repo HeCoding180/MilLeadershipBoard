@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MilLeadershipBoard.Resources
 {
-    public class DatedResourceNotExistingException : Exception
+    public class DatedResourceNotExistingException : ApplicationException
     {
         //   ---   Public Properties   ---
 

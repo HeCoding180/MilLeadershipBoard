@@ -12,10 +12,6 @@
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
-    <Page.DataContext>
-        <vm:SoldiersPageViewModel/>
-    </Page.DataContext>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -38,27 +34,27 @@
                 x:Uid="SoldiersPage/RankTextBox"
                 x:Name="RankTextBox"
                 Grid.Column="0"
-                Text="{Binding NewSoldierRank, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                Text="{x:Bind ViewModel.NewSoldierRank, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBox
                 x:Uid="SoldiersPage/LastNameTextBox"
                 Grid.Column="1"
-                Text="{Binding NewSoldierLastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                Text="{x:Bind ViewModel.NewSoldierLastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBox
                 x:Uid="SoldiersPage/FirstNameTextBox"
                 Grid.Column="2"
-                Text="{Binding NewSoldierFirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                Text="{x:Bind ViewModel.NewSoldierFirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Button
                 x:Uid="SoldiersPage/AddButton"
                 Grid.Column="4"
-                Command="{Binding CreateCommand}"/>
+                Command="{x:Bind ViewModel.CreateCommand}"/>
         </Grid>
 
         <tv:TableView
             Grid.Row="1"
-            ItemsSource="{Binding Soldiers}"
+            ItemsSource="{x:Bind ViewModel.Soldiers}"
             AutoGenerateColumns="False"
             HorizontalAlignment="Stretch"
             Margin="16,8,16,16">
@@ -89,6 +85,7 @@
                                 Margin="8"/>
                         </DataTemplate>
                     </tv:TableViewTemplateColumn.CellTemplate>
+                    
                     <tv:TableViewTemplateColumn.EditingTemplate>
                         <DataTemplate>
                             <ComboBox
@@ -101,6 +98,24 @@
                     </tv:TableViewTemplateColumn.EditingTemplate>
                 </tv:TableViewTemplateColumn>
             </tv:TableView.Columns>
+
+            <tv:TableView.RowContextFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem
+                        Text="Delete Soldier"
+                        Icon="Delete"
+                        Click="{x:Bind ViewModel.OnDeletionContextFlyoutItemClicked, Mode=OneTime}"/>
+                </MenuFlyout>
+            </tv:TableView.RowContextFlyout>
+
+            <tv:TableView.CellContextFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem
+                        Text="Delete Soldier"
+                        Icon="Delete"
+                        Click="{x:Bind ViewModel.OnDeletionContextFlyoutItemClicked, Mode=OneTime}"/>
+                </MenuFlyout>
+            </tv:TableView.CellContextFlyout>
         </tv:TableView>
     </Grid>
 </Page>
