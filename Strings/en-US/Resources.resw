@@ -339,4 +339,19 @@
   <data name="AddDailySchedulePage.LoadingFailedMessage" xml:space="preserve">
     <value>The daily schedules could not be loaded</value>
   </data>
+  <data name="SoldiersPage.ContextFlyout.DeleteButton.Text" xml:space="preserve">
+    <value>Delete Soldier</value>
+  </data>
+  <data name="Generic.Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Generic.Soldier" xml:space="preserve">
+    <value>Soldier</value>
+  </data>
+  <data name="MainWindow.NavigationView.DashboardItem.Content" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="MainWindow.NavigationView.SoldiersItem.Content" xml:space="preserve">
+    <value>Soldiers</value>
+  </data>
 </root>

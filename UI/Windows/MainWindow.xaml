@@ -36,8 +36,13 @@
             ItemInvoked="MainNavigationView_ItemInvoked">
 
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="Dashboard" Tag="Dashboard" IsSelected="True"/>
-                <NavigationViewItem Content="Soldiers" Tag="Soldiers"/>
+                <NavigationViewItem
+                    x:Uid="MainWindow/NavigationView/DashboardItem"
+                    Tag="Dashboard"
+                    IsSelected="True"/>
+                <NavigationViewItem
+                    x:Uid="MainWindow/NavigationView/SoldiersItem"
+                    Tag="Soldiers"/>
             </NavigationView.MenuItems>
         </NavigationView>
 

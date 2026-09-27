@@ -102,7 +102,7 @@
             <tv:TableView.RowContextFlyout>
                 <MenuFlyout>
                     <MenuFlyoutItem
-                        Text="Delete Soldier"
+                        x:Uid="SoldiersPage/ContextFlyout/DeleteButton"
                         Icon="Delete"
                         Click="{x:Bind ViewModel.OnDeletionContextFlyoutItemClicked, Mode=OneTime}"/>
                 </MenuFlyout>
@@ -111,7 +111,7 @@
             <tv:TableView.CellContextFlyout>
                 <MenuFlyout>
                     <MenuFlyoutItem
-                        Text="Delete Soldier"
+                        x:Uid="SoldiersPage/ContextFlyout/DeleteButton"
                         Icon="Delete"
                         Click="{x:Bind ViewModel.OnDeletionContextFlyoutItemClicked, Mode=OneTime}"/>
                 </MenuFlyout>
