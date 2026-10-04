@@ -18,10 +18,26 @@ namespace MilLeadershipBoard.Util
     /// Since there is no absolute index of its own (items are a subset/projection
     /// of the source collection), this class does not support write operations
     /// such as Add, Remove, or item re-ordering directly.
+    ///
+    /// The non-generic <see cref="IList"/> is implemented explicitly (and throws on every
+    /// write operation) purely because the XAML layer requires it: an items source is only
+    /// observed for changes when it can be projected to a WinRT <c>IBindableVector</c>, which
+    /// is what <see cref="IList"/> maps to. <see cref="IReadOnlyList{T}"/> maps to
+    /// <c>IVectorView&lt;T&gt;</c> instead, which XAML does not accept as an items source, so a
+    /// view bound to such a list would fall back to the plain <see cref="IEnumerable"/> path,
+    /// take a one-time snapshot and never subscribe to <see cref="CollectionChanged"/>.
     /// </summary>
     /// <typeparam name="T">The type of elements in the list.</typeparam>
-    public class ObservableFilteredList<T> : IReadOnlyList<T>, INotifyCollectionChanged, INotifyPropertyChanged, IDisposable
+    public class ObservableFilteredList<T> : IReadOnlyList<T>, IList, INotifyCollectionChanged, INotifyPropertyChanged, IDisposable
     {
+        //   ---   Private Constants   ---
+
+        /// <summary>
+        /// Message used for the <see cref="NotSupportedException"/> instances thrown by the
+        /// write operations of the explicitly implemented <see cref="IList"/>.
+        /// </summary>
+        private const string WRITE_NOT_SUPPORTED_MESSAGE = "An ObservableFilteredList is a read-only view over its source collection. Modify the source collection instead.";
+
         //   ---   Private Fields   ---
 
         /// <summary>
@@ -82,6 +98,30 @@ namespace MilLeadershipBoard.Util
         /// encapsulated source collection.
         /// </summary>
         public T this[int index] => _filteredItems[index];
+
+        //   ---   Explicit Interface Properties   ---
+
+        /// <inheritdoc cref="IList.IsFixedSize"/>
+        bool IList.IsFixedSize => true;
+
+        /// <inheritdoc cref="IList.IsReadOnly"/>
+        bool IList.IsReadOnly => true;
+
+        /// <inheritdoc cref="ICollection.IsSynchronized"/>
+        bool ICollection.IsSynchronized => false;
+
+        /// <inheritdoc cref="ICollection.SyncRoot"/>
+        object ICollection.SyncRoot => _filteredItems;
+
+        /// <summary>
+        /// Gets the item at the given index within the filtered view. Replacing an item is not
+        /// supported and always throws a <see cref="NotSupportedException"/>.
+        /// </summary>
+        object? IList.this[int index]
+        {
+            set => throw new NotSupportedException(WRITE_NOT_SUPPORTED_MESSAGE);
+            get => this[index];
+        }
 
         //   ---   Public Events   ---
 
@@ -152,6 +192,30 @@ namespace MilLeadershipBoard.Util
         /// </summary>
         /// <returns>An <see cref="IEnumerator"/> object that can be used to iterate through the collection.</returns>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        /// <inheritdoc cref="IList.Add"/>
+        int IList.Add(object? value) => throw new NotSupportedException(WRITE_NOT_SUPPORTED_MESSAGE);
+
+        /// <inheritdoc cref="IList.Clear"/>
+        void IList.Clear() => throw new NotSupportedException(WRITE_NOT_SUPPORTED_MESSAGE);
+
+        /// <inheritdoc cref="IList.Contains"/>
+        bool IList.Contains(object? value) => value is T item && _filteredItems.Contains(item);
+
+        /// <inheritdoc cref="ICollection.CopyTo"/>
+        void ICollection.CopyTo(Array array, int index) => ((ICollection)_filteredItems).CopyTo(array, index);
+
+        /// <inheritdoc cref="IList.IndexOf"/>
+        int IList.IndexOf(object? value) => value is T item ? _filteredItems.IndexOf(item) : -1;
+
+        /// <inheritdoc cref="IList.Insert"/>
+        void IList.Insert(int index, object? value) => throw new NotSupportedException(WRITE_NOT_SUPPORTED_MESSAGE);
+
+        /// <inheritdoc cref="IList.Remove"/>
+        void IList.Remove(object? value) => throw new NotSupportedException(WRITE_NOT_SUPPORTED_MESSAGE);
+
+        /// <inheritdoc cref="IList.RemoveAt"/>
+        void IList.RemoveAt(int index) => throw new NotSupportedException(WRITE_NOT_SUPPORTED_MESSAGE);
 
         /// <summary>
         /// Re-evaluates <paramref name="item"/> against the filter predicate and

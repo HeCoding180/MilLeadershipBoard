@@ -5,6 +5,7 @@ using MilLeadershipBoard.Config;
 using MilLeadershipBoard.Models.TroopData;
 using MilLeadershipBoard.Models.TroopData.Location;
 using MilLeadershipBoard.Resources;
+using MilLeadershipBoard.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace MilLeadershipBoard.UI.ViewModels
 {
@@ -256,11 +258,79 @@ namespace MilLeadershipBoard.UI.ViewModels
         //   ---   Public Methods   ---
 
         /// <summary>
-        /// Method used to handle a <see cref="UIElement.Drop"/> event of the view's <see cref="ListView"/>.
+        /// Method used to handle a <see cref="UIElement.DragOver"/> event of the view's drop targets.
+        /// Accepts the drag operation as a move operation as long as the payload contains at least one
+        /// <see cref="SoldierData"/> instance that is not already assigned to this instance's <see cref="Location"/>.
+        /// </summary>
+        public void ItemDragOver(object sender, DragEventArgs e)
+        {
+            SoldierLocation? location = Location;
+
+            bool canDrop = location is not null
+                && SoldierDragDropHelper.GetSoldiers(e.DataView).Any(soldier => soldier.LocationId != location.Id);
+
+            if (!canDrop)
+            {
+                // Either no soldiers are being dragged or all of them already are at this location.
+                // Leave the event unhandled so that another drop target can still react to it.
+                return;
+            }
+
+            e.AcceptedOperation = DataPackageOperation.Move;
+            e.Handled = true;
+
+            if (e.DragUIOverride is not null)
+            {
+                e.DragUIOverride.Caption = string.Format(ResourceManager.GetString("SoldierLocationView/DropCaption"), LocationName);
+                e.DragUIOverride.IsCaptionVisible = true;
+            }
+        }
+
+        /// <summary>
+        /// Method used to handle a <see cref="UIElement.Drop"/> event of the view's drop targets.
+        /// Assigns every dropped <see cref="SoldierData"/> instance to this instance's <see cref="Location"/> by
+        /// setting its <see cref="SoldierData.LocationId"/>. The <see cref="ObservableFilteredList{T}"/> instances
+        /// of the source and the target location pick that change up on their own, so no list is modified here.
         /// </summary>
         public void ItemDropped(object sender, DragEventArgs e)
         {
-            
+            if (Location is null)
+            {
+                return;
+            }
+
+            IReadOnlyList<SoldierData> soldiers = SoldierDragDropHelper.GetSoldiers(e.DataView);
+
+            if (soldiers.Count == 0)
+            {
+                // The payload does not belong to this drag and drop behavior, leave it to another drop target.
+                return;
+            }
+
+            foreach (SoldierData soldier in soldiers)
+            {
+                soldier.LocationId = Location.Id;
+            }
+
+            e.AcceptedOperation = DataPackageOperation.Move;
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Method used to handle a <see cref="ListViewBase.DragItemsStarting"/> event of the view's <see cref="ListView"/>.
+        /// Writes the dragged <see cref="SoldierData"/> instances into the drag operation's <see cref="DataPackage"/>.
+        /// </summary>
+        public void ItemsDragStarting(object sender, DragItemsStartingEventArgs e)
+        {
+            SoldierData[] soldiers = [.. e.Items.OfType<SoldierData>()];
+
+            if (soldiers.Length == 0)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            SoldierDragDropHelper.SetSoldiers(e.Data, soldiers);
         }
     }
 }

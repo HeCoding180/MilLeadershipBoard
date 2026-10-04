@@ -63,6 +63,13 @@ namespace MilLeadershipBoard.UI.UserControls
             {
                 return;
             }
+
+            // Keep the viewmodel in sync, otherwise a recycled container would still display the soldiers of -
+            // and accept drops for - the previously assigned location.
+            if (view.RootBorder.DataContext is SoldierLocationViewModel vm)
+            {
+                vm.Location = view.Location;
+            }
         }
 
         //   ---   Private Methods   ---
@@ -73,6 +80,22 @@ namespace MilLeadershipBoard.UI.UserControls
             {
                 vm.XamlRoot = this.XamlRoot;
                 vm.Location = this.Location;
+            }
+        }
+
+        private void ContentListView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+        {
+            if (RootBorder.DataContext is SoldierLocationViewModel vm)
+            {
+                vm.ItemsDragStarting(sender, e);
+            }
+        }
+
+        private void ContentListView_DragOver(object sender, DragEventArgs e)
+        {
+            if (RootBorder.DataContext is SoldierLocationViewModel vm)
+            {
+                vm.ItemDragOver(sender, e);
             }
         }
 
@@ -90,6 +113,22 @@ namespace MilLeadershipBoard.UI.UserControls
             {
                 double availableWidth = ContentListView.ActualWidth;
                 wrapGrid.ItemWidth = availableWidth / 2;
+            }
+        }
+
+        private void RootBorder_DragOver(object sender, DragEventArgs e)
+        {
+            if (RootBorder.DataContext is SoldierLocationViewModel vm)
+            {
+                vm.ItemDragOver(sender, e);
+            }
+        }
+
+        private void RootBorder_Drop(object sender, DragEventArgs e)
+        {
+            if (RootBorder.DataContext is SoldierLocationViewModel vm)
+            {
+                vm.ItemDropped(sender, e);
             }
         }
     }
