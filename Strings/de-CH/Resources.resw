@@ -153,6 +153,9 @@
   <data name="SoldierLocationView.DeleteDialog.Title" xml:space="preserve">
     <value>Standort Löschen?</value>
   </data>
+  <data name="SoldierLocationView.DropCaption" xml:space="preserve">
+    <value>Nach {0} verschieben</value>
+  </data>
   <data name="SoldierLocationView.MakeDefaultFlyoutButton.Text" xml:space="preserve">
     <value>Als Standard festlegen</value>
   </data>
